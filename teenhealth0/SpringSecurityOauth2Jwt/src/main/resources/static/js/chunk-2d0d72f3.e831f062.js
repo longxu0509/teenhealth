@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0d72f3"],{7675:function(t,n,c){"use strict";c.r(n),c.d(n,"GetList",(function(){return o}));var e=c("22ce");function o(t){return Object(e["a"])({url:"/teacher/cardiolist1",method:"post",data:t})}}}]);

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springboot.mybatis.mapper.TWqxplanRecordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="springboot.mybatis.po.TWqxplanRecord">
+        <id column="id" property="id" />
+        <result column="student_id" property="studentId" />
+        <result column="wqxplan_id" property="wqxplanId" />
+        <result column="completionNum" property="completionNum" />
+        <result column="score" property="score" />
+        <result column="train_calorie" property="trainCalorie" />
+        <result column="create_time" property="createTime" />
+        <result column="upload_time" property="uploadTime" />
+        <result column="is_enable" property="isEnable" />
+    </resultMap>
+
+    <resultMap id="ResultMap1" type="springboot.mybatis.po.TWqxplanRecordCustom">
+        <id column="id" property="id" />
+        <result column="student_id" property="studentId" />
+        <result column="wqxplan_id" property="wqxplanId" />
+        <result column="completionNum" property="completionNum" />
+        <result column="score" property="score" />
+        <result column="train_calorie" property="trainCalorie" />
+        <result column="create_time" property="createTime" />
+        <result column="upload_time" property="uploadTime" />
+        <result column="is_enable" property="isEnable" />
+
+        <association property="tStudent" javaType="springboot.mybatis.po.TStudent">
+            <result column="student_no" jdbcType="VARCHAR" property="studentNo" />
+            <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+            <result column="age" jdbcType="INTEGER" property="age" />
+            <result column="sex" jdbcType="INTEGER" property="sex" />
+            <result column="stature" jdbcType="DOUBLE" property="stature" />
+            <result column="weight" jdbcType="DOUBLE" property="weight" />
+            <result column="bmi" jdbcType="VARCHAR" property="bmi" />
+            <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+            <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+            <result column="medical" jdbcType="VARCHAR" property="medical" />
+            <result column="phone_no" jdbcType="INTEGER" property="phoneNo" />
+        </association>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, student_id, wqxplan_id, completionNum, score, train_calorie, create_time, upload_time, is_enable
+    </sql>
+
+    <!--根据处方id查询xx学生无器械处方训练记录-->
+    <select id="selectAllStudent" parameterType="java.lang.String" resultMap="ResultMap1">
+      select
+        w.id, w.student_id, w.wqxplan_id, w.score, w.train_calorie, w.create_time, w.upload_time, w.completionNum,
+        s.student_no,s.student_name,s.sex
+       FROM
+	      t_student s,t_wqxplan_record w
+      WHERE
+        s.id = w.student_id and w.id = #{id}
+    </select>
+
+    <select id="selectTrainRecord" parameterType="java.lang.Long" resultMap="ResultMap1">
+      select
+        w.id, w.student_id, w.wqxplan_id, w.score, w.train_calorie, w.create_time, w.upload_time, w.completionNum,
+        s.student_no,s.student_name,s.sex
+       FROM
+	      t_student s,t_wqxplan_record w
+      WHERE
+        s.id = w.student_id and w.wqxplan_id = #{id}
+    </select>
+
+    <insert id="insertWqxplanRecord" parameterType="springboot.mybatis.po.TWqxplanRecord">
+        insert into t_wqxplan_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="studentId != null">
+                student_id,
+            </if>
+            <if test="wqxplanId != null">
+                wqxplan_id,
+            </if>
+            <if test="completionNum != null">
+                completionNum,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+            <if test="train_calorie != null">
+                train_calorie,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="uploadTime != null">
+                upload_time,
+            </if>
+            <if test="isEnable != null">
+                is_enable,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="studentId != null">
+                #{studentId,jdbcType=VARCHAR},
+            </if>
+            <if test="wqxplanId != null">
+                #{wqxplanId},
+            </if>
+            <if test="completionNum != null">
+                #{completionNum},
+            </if>
+            <if test="score != null">
+                #{score},
+            </if>
+            <if test="train_calorie != null">
+                #{train_calorie},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="uploadTime != null">
+                #{uploadTime},
+            </if>
+            <if test="isEnable != null">
+                #{isEnable},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

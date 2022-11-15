@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0deeb0"],{8860:function(t,n,e){"use strict";e.r(n),e.d(n,"GetList",(function(){return c}));var o=e("22ce");function c(t,n){return console.log(t),Object(o["a"])({url:"/teacher/studentplanhistory1/"+t,method:"post",data:n})}}}]);

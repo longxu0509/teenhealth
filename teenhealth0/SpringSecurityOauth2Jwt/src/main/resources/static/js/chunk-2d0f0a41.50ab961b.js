@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0f0a41"],{"9cde":function(t,e,n){"use strict";n.r(e),n.d(e,"GetList",(function(){return o}));var c=n("22ce");function o(t,e){return console.log(t),Object(c["a"])({url:"/teacher/WQXStudentfreetrain/"+t,method:"post",data:e})}}}]);

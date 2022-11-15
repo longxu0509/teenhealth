@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en" xmlns:th="http://www.thymeleaf.org"
+                         xmlns:sec="http://www.thymeleaf.org/extras/spring-security4"> <!--<![endif]-->
+
+<!-- BEGIN HEAD -->
+<head>
+   <meta charset="utf-8" />
+   <title>学校学生信息</title>
+   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+   <meta content="" name="description" />
+   <meta content="" name="author" />
+   <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+   <link href="/assets/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+   <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+   <link href="/css/style.css" rel="stylesheet" />
+   <link href="/css/style_responsive.css" rel="stylesheet" />
+   <link href="/css/style_default.css" rel="stylesheet" id="style_color" />
+   <link href="/assets/fancybox/source/jquery.fancybox.css" rel="stylesheet" />
+   <link rel="stylesheet" type="text/css" href="/assets/uniform/css/uniform.default.css" />
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="fixed-top">
+
+       <!-- 引入开始顶部导航栏 -->
+<div th:replace="commons/bars::topbar"></div>
+   <!-- END HEADER -->
+   <!-- BEGIN CONTAINER -->
+   <div id="container" class="row-fluid">
+
+      <!-- 引入侧边栏 -->
+       <div th:replace="commons/bars::#sidebar(activeUri='')"></div>
+
+      <!-- 页面开始 -->
+      <div id="main-content">
+         <!-- 开始页面容器-->
+         <div class="container-fluid">
+            <!-- 开始页眉-->
+            <div class="row-fluid">
+               <div class="span12">
+                   <!-- 开始主题编辑器-->
+                   <div id="theme-change" class="hidden-phone">
+                       <i class="icon-cogs"></i>
+                       <span class="settings">
+                            <span class="text">Theme:</span>
+                            <span class="colors">
+                                <span class="color-default" data-style="default"></span>
+                                <span class="color-gray" data-style="gray"></span>
+                                <span class="color-purple" data-style="purple"></span>
+                                <span class="color-navy-blue" data-style="navy-blue"></span>
+                            </span>
+                        </span>
+                   </div>
+                   <!-- END THEME CUSTOMIZER-->
+                  <!-- BEGIN PAGE TITLE & BREADCRUMB-->     
+                  <h3 class="page-title">
+                     主页
+                     <small>学校基本概况</small>
+                  </h3>
+                   <ul class="breadcrumb">
+                       <li>
+                           <a href="/teacher/homepage"><i class="icon-home"></i></a><span class="divider">&nbsp;</span>
+                       </li>
+<!--                       <li>-->
+<!--                           <a href="#">学生管理</a> <span class="divider">&nbsp;</span>-->
+<!--                       </li>-->
+<!--                       <li><a href="#">学生信息</a><span class="divider-last">&nbsp;</span></li>-->
+                   </ul>
+                  <!-- END PAGE TITLE & BREADCRUMB-->
+               </div>
+            </div>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->          
+            <div class="row-fluid">
+               <div class="span6">
+                  <!-- BEGIN SAMPLE TABLE widget-->
+                  <div class="widget">
+                     <div class="widget-title">
+                        <h4><i class="icon-reorder"></i>学校班级信息列表</h4>
+                        <span class="tools">
+                        <a href="javascript:;" class="icon-chevron-down"></a>
+                        <a href="javascript:;" class="icon-remove"></a>
+                        </span>
+                     </div>
+                     <div class="widget-body">
+                         <table id="classtab" class="table table-hover table-striped"></table>
+                         <div class="table-responsive">
+                        <table class="table table-striped table-bordered" id="sample_2" >
+                           <thead>
+                              <tr>
+                                 <th>班级名称</th>
+                                 <th>班级人数</th>
+                                 <th>管理老师</th>
+                                 <th>班级状态</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr th:each="ct:${classandTeacher}" class="odd gradeX">
+                                  <td th:text="${ct.className}"></td>
+                                  <td th:text="${ct.studentsNumber}"></td>
+                                  <td th:text="${ct.tTeacher.teacherName}"></td>
+                                  <td th:text="${ct.isend}==1?'结课':'开课中'"></td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+                  </div>
+                  <!-- END SAMPLE TABLE widget-->
+               </div>
+                <div class="span6">
+                    <!-- BEGIN SAMPLE TABLE widget-->
+                    <div class="widget">
+                        <div class="widget-title">
+                            <h4><i class="icon-cogs"></i>体质健康检测训练设备列表</h4>
+                            <span class="tools">
+                        <a href="javascript:;" class="icon-chevron-down"></a>
+                        <a href="javascript:;" class="icon-remove"></a>
+                        </span>
+                        </div>
+                        <div class="widget-body">
+                            <table class="table table-striped table-bordered table-advance table-hover"></table>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered" id="sample_3" >
+                                    <thead>
+                                    <tr>
+                                        <th>设备编号</th>
+                                        <th>设备名称</th>
+                                        <th>设备当前状态</th>
+                                        <th>设备所在位置</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="Equipment:${allEquipment}" class="odd gradeX">
+                                        <td th:text="${Equipment.equipmentNo}"></td>
+                                        <td th:text="${Equipment.typeId}==1?'核心体能要素测训设备':'心肺耐力测训设备'"></td>
+                                        <td th:text="${Equipment.status}==1?'正常':'损坏'"></td>
+                                        <td th:text="${Equipment.createId}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                        </div>
+                    </div>
+                    <!-- END SAMPLE TABLE widget-->
+                </div>
+            </div>
+            </div>
+            <!-- BEGIN ADVANCED TABLE widget-->
+<!--Managed Table-->
+            <div class="row-fluid">
+
+                <div class="span12">
+                    <!-- BEGIN EXAMPLE TABLE widget-->
+                    <div class="widget">
+                        <div class="widget-title">
+                            <h4><i class="icon-reorder"></i>学生基本信息列表</h4>
+                            <span class="tools">
+                                <a href="javascript:;" class="icon-chevron-down"></a>
+                                <a href="javascript:;" class="icon-remove"></a>
+                            </span>
+                        </div>
+
+                        <div class="widget-body">
+                            <table id="mytab" class="table table-hover table-striped"></table>
+                            <div class="table-responsive">
+                            <table class="table table-striped table-bordered" id="sample_1" >
+                            <thead>
+                                <tr >
+                                    <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
+                                    <th>学号</th>
+                                    <th class="hidden-phone">姓名</th>
+                                    <th class="hidden-phone">性别</th>
+                                    <th class="hidden-phone">年龄</th>
+                                    <th class="hidden-phone">身高(cm)</th>
+                                    <th class="hidden-phone">体重(kg) </th>
+                                    <th class="hidden-phone">左眼视力</th>
+                                    <th class="hidden-phone">右眼视力</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="students:${studentList}" class="odd gradeX">
+                                    <td><input type="checkbox" class="checkboxes" value="1" /></td>
+                                    <td th:text="${students.studentNo}"></td>
+                                    <td th:text="${students.studentName}"></td>
+                                    <td th:text="${students.sex}==2?'女':'男'"></td>
+                                    <td th:text="${students.age}"></td>
+                                    <td th:text="${students.stature}"></td>
+                                    <td th:text="${students.weight}"></td>
+                                    <td th:text="${students.leftSight}"></td>
+                                    <td th:text="${students.rightSight}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END EXAMPLE TABLE widget-->
+                </div>
+            </div>
+            <!-- END ADVANCED TABLE widget-->
+            <!-- END PAGE CONTENT-->
+         </div>
+         <!-- END PAGE CONTAINER-->
+      </div>
+      <!-- END PAGE -->
+   </div>
+   <!-- END CONTAINER -->
+   <!-- 引入页面底部 -->
+       <div th:replace="commons/bars::#footer"></div>
+   <!-- END FOOTER -->
+   <!-- BEGIN JAVASCRIPTS -->
+   <!-- Load javascripts at bottom, this will reduce page load time -->
+   <script src="/js/jquery-1.8.3.min.js"></script>
+   <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+   <script src="/js/jquery.blockui.js"></script>
+   <!-- ie8 fixes -->
+   <!--[if lt IE 9]>
+   <script src="/js/excanvas.js"></script>
+   <script src="/js/respond.js"></script>
+   <![endif]-->   
+   <script type="text/javascript" src="/assets/uniform/jquery.uniform.min.js"></script>
+   <script type="text/javascript" src="/assets/data-tables/jquery.dataTables.js"></script>
+   <script type="text/javascript" src="/assets/data-tables/DT_bootstrap.js"></script>
+   <script src="/js/scripts.js"></script>
+
+   <script type="text/javascript" src="/layui/layui.js"></script>
+
+   <script>
+       jQuery(document).ready(function() {
+           // initiate layout and plugins
+           App.init();
+       });
+   </script>
+</body>
+<!-- END BODY -->
+</html>

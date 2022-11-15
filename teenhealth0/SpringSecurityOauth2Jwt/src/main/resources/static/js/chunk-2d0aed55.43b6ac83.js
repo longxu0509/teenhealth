@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0aed55"],{"0c6b":function(o,t,n){"use strict";n.r(t),n.d(t,"GetList",(function(){return c}));var e=n("22ce");function c(o,t){return console.log(o),Object(e["a"])({url:"/teacher/BodyCompositionDetail/"+o,method:"post",data:t})}}}]);

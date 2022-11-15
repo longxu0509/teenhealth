@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d224ce4"],{e267:function(t,e,n){"use strict";n.r(e),n.d(e,"GetList",(function(){return i}));var c=n("22ce");function i(t){return Object(c["a"])({url:"/teacher/eyesightlist",method:"post",data:t})}}}]);

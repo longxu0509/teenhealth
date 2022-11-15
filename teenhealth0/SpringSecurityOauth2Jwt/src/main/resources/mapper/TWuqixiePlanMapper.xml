@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springboot.mybatis.mapper.TWuqixiePlanMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="springboot.mybatis.po.TWuqixiePlan">
+        <id column="id" property="id"/>
+        <result column="student_id" property="studentId"/>
+        <result column="difficulty_level" property="difficultyLevel"/>
+        <result column="training_content" property="trainingContent"/>
+        <result column="create_time" property="createTime"/>
+        <result column="is_enable" property="isEnable"/>
+    </resultMap>
+
+    <resultMap id="ResultMap1" type="springboot.mybatis.po.TWuqixiePlanCustom">
+        <id column="id" property="id"/>
+        <result column="student_id" property="studentId"/>
+        <result column="difficulty_level" property="difficultyLevel"/>
+        <result column="training_content" property="trainingContent"/>
+        <result column="create_time" property="createTime"/>
+        <result column="is_enable" property="isEnable"/>
+
+        <association property="tStudent" javaType="springboot.mybatis.po.TStudent">
+            <result column="student_no" jdbcType="VARCHAR" property="studentNo"/>
+            <result column="student_name" jdbcType="VARCHAR" property="studentName"/>
+            <result column="class_id" jdbcType="VARCHAR" property="classId"/>
+            <result column="school_id" jdbcType="VARCHAR" property="schoolId"/>
+            <result column="age" jdbcType="INTEGER" property="age"/>
+            <result column="sex" jdbcType="INTEGER" property="sex"/>
+            <result column="stature" jdbcType="DOUBLE" property="stature"/>
+            <result column="weight" jdbcType="DOUBLE" property="weight"/>
+            <result column="heart_rate" jdbcType="INTEGER" property="heartRate"/>
+            <result column="bmi" jdbcType="VARCHAR" property="bmi"/>
+            <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+            <result column="medical" jdbcType="VARCHAR" property="medical"/>
+            <result column="phone_no" jdbcType="INTEGER" property="phoneNo"/>
+            <result column="left_sight" jdbcType="DOUBLE" property="leftSight"/>
+            <result column="right_sight" jdbcType="DOUBLE" property="rightSight"/>
+        </association>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, student_id, difficulty_level, training_content, create_time, is_enable
+    </sql>
+
+    <!--查询所有学生无器械处方-->
+    <select id="ListTWQXPlan" parameterType="java.lang.String" resultMap="ResultMap1">
+       SELECT
+	     w.id, w.student_id, s.student_no, s.student_name, s.sex, w.training_content, w.is_enable, w.create_time,w.difficulty_level
+       FROM
+         t_student s, t_wuqixie_plan w,
+        (SELECT  student_id , MAX(create_time) AS maxdate FROM t_wuqixie_plan GROUP BY student_id) x
+       WHERE
+	     w.student_id = x.student_id and s.id=x.student_id and x.maxdate=w.create_time
+    </select>
+
+    <!--根据studentId查询学生无器械历史处方-->
+    <select id="OneListTWQXPlan" parameterType="java.lang.String" resultMap="ResultMap1">
+        SELECT
+          w.id, w.student_id, s.student_no, s.student_name, s.sex, w.training_content, w.is_enable, w.create_time, w.difficulty_level
+        FROM
+          t_student s,t_wuqixie_plan w
+        WHERE
+          s.id=w.student_id and w.student_id = #{student_id}
+    </select>
+
+    <!--新增无器械处方-->
+    <insert id="insertWQXplan" parameterType="springboot.mybatis.po.TWuqixiePlan">
+        insert into t_wuqixie_plan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="studentId != null">
+                student_id,
+            </if>
+
+            <if test="difficultyLevel != null">
+                difficulty_level,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="studentId != null">
+                #{studentId},
+            </if>
+
+            <if test="difficultyLevel != null">
+                #{difficultyLevel},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectWQXPlan" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include>
+        from t_wuqixie_plan
+        where student_id=#{studentId} and is_enable=1
+    </select>
+
+    <select id="selectWQXPlanbyStudentId1" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include>
+        from t_wuqixie_plan
+        where student_id=#{studentId} and is_enable=1 ORDER BY create_time DESC LIMIT 1
+    </select>
+
+    <select id="selectByplanId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_wuqixie_plan
+        where id=#{planId} and is_enable=1
+    </select>
+
+    <delete id="deleteWQXplan" parameterType="java.lang.Long">
+    delete from t_wuqixie_plan
+    where id = #{id}
+  </delete>
+</mapper>

@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0bfea8"],{"400f":function(t,e,n){"use strict";n.r(e),n.d(e,"GetList",(function(){return c}));var o=n("22ce");function c(t,e){return console.log(t),Object(o["a"])({url:"/teacher/somaticgame1/"+t,method:"post",data:e})}}}]);

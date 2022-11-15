@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springboot.mybatis.mapper.TTestCorestrengthMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="springboot.mybatis.po.TTestCorestrength">
+        <id column="id" property="id" />
+        <result column="test_id" property="testId" />
+        <result column="test_name" property="testName" />
+        <result column="level" property="level" />
+        <result column="test_result1" property="testResult1" />
+        <result column="test_result2" property="testResult2" />
+        <result column="score" property="score" />
+        <result column="remark" property="remark" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, test_id, test_name, level, test_result1, test_result2, score, remark, update_time, create_time
+    </sql>
+
+</mapper>

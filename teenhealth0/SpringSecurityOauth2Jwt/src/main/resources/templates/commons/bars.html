@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- BEGIN HEADER -->
+<div id="header" class="navbar navbar-inverse navbar-fixed-top" th:fragment="topbar">
+<!-- 开始顶部导航栏 -->
+<div class="navbar-inner">
+    <div class="container-fluid">
+        <!-- BEGIN LOGO -->
+        <a class="brand" href="/teacher/homepage">
+            <img src="/img/logo.png" alt="Admin Lab" />
+        </a>
+        <!-- END LOGO -->
+        <!-- 开始响应式菜单切换器 -->
+        <a class="btn btn-navbar collapsed" id="main_menu_trigger" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="arrow"></span>
+        </a>
+        <!-- 结束响应式菜单切换器 -->
+        <div id="top_menu" class="nav notify-row">
+            <!-- 开始通知栏 -->
+            <ul class="nav top-menu">
+                <!-- 开始设置   -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle element" data-placement="bottom" data-toggle="tooltip" href="#" data-original-title="Settings">
+                        <i class="icon-cog"></i>
+                    </a>
+                </li>
+                <!-- 结束设置 -->
+                <!-- 开始收件箱下拉 -->
+                <li class="dropdown" id="header_inbox_bar">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-envelope-alt"></i>
+                        <span class="badge badge-important">5</span>
+                    </a>
+                    <ul class="dropdown-menu extended inbox">
+                        <li>
+                            <p>You have 5 new messages</p>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="photo"><img src="/img/avatar-mini.png" alt="avatar" /></span>
+                                <span class="subject">
+									<span class="from">Dulal Khan</span>
+									<span class="time">Just now</span>
+									</span>
+                                <span class="message">
+									    Hello, this is an example messages please check
+									</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="photo"><img src="/img/avatar-mini.png" alt="avatar" /></span>
+                                <span class="subject">
+									<span class="from">Rafiqul Islam</span>
+									<span class="time">10 mins</span>
+									</span>
+                                <span class="message">
+									 Hi, Mosaddek Bhai how are you ?
+									</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="photo"><img src="/img/avatar-mini.png" alt="avatar" /></span>
+                                <span class="subject">
+									<span class="from">Sumon Ahmed</span>
+									<span class="time">3 hrs</span>
+									</span>
+                                <span class="message">
+									    This is awesome dashboard templates
+									</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="photo"><img src="/img/avatar-mini.png" alt="avatar" /></span>
+                                <span class="subject">
+									<span class="from">Dulal Khan</span>
+									<span class="time">Just now</span>
+									</span>
+                                <span class="message">
+									    Hello, this is an example messages please check
+									</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">See all messages</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- 结束收件箱下拉 -->
+                <!-- 开始通知下拉 -->
+                <li class="dropdown" id="header_notification_bar">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+                        <i class="icon-bell-alt"></i>
+                        <span class="badge badge-warning">7</span>
+                    </a>
+                    <ul class="dropdown-menu extended notification">
+                        <li>
+                            <p>You have 7 new notifications</p>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="label label-important"><i class="icon-bolt"></i></span>
+                                Server #3 overloaded.
+                                <span class="small italic">34 mins</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="label label-warning"><i class="icon-bell"></i></span>
+                                Server #10 not respoding.
+                                <span class="small italic">1 Hours</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="label label-important"><i class="icon-bolt"></i></span>
+                                Database overloaded 24%.
+                                <span class="small italic">4 hrs</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="label label-success"><i class="icon-plus"></i></span>
+                                New user registered.
+                                <span class="small italic">Just now</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="label label-info"><i class="icon-bullhorn"></i></span>
+                                Application error.
+                                <span class="small italic">10 mins</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">See all notifications</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- 结束通知下拉 -->
+
+            </ul>
+        </div>
+        <!-- 结束通知栏 -->
+
+        <div class="top-nav ">
+            <ul class="nav pull-right top-menu" >
+                <!-- 开始配置聊天与通知 -->
+                <li class="dropdown mtop5">
+                    <a class="dropdown-toggle element" data-placement="bottom" data-toggle="tooltip" href="#" data-original-title="Chat">
+                        <i class="icon-comments-alt"></i>
+                    </a>
+                </li>
+                <li class="dropdown mtop5">
+                    <a class="dropdown-toggle element" data-placement="bottom" data-toggle="tooltip" href="#" data-original-title="Help">
+                        <i class="icon-headphones"></i>
+                    </a>
+                </li>
+                <!-- 结束配置 聊天与通知 -->
+                <!-- 开始用户登录下拉菜单 -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="/img/avatar1_small.jpg" alt="用户头像">
+                       <span sec:authentication="principal.username"></span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#"><i class="icon-user"></i> 修改用户信息</a></li>
+                        <li><a href="#"><i class="icon-tasks"></i> 更改密码</a></li>
+                        <li><a href="#"><i class="icon-calendar"></i> 日志</a></li>
+                        <li class="divider"></li>
+                        <li><a href="javascript:void(0); " onclick="document.getElementById('myform0').submit();" >
+                            <i class="icon-key"></i> 注销</a></li>
+                        <form id="myform0" method="post" action="/logout"></form>
+
+                    </ul>
+                </li>
+                <!-- 结束用户登录下拉菜单 -->
+            </ul>
+            <!-- 结束配置导航菜单 -->
+        </div>
+    </div>
+</div>
+<!-- 结束顶端导航菜单 -->
+</div>
+
+<!-- 开始侧边栏 -->
+<div id="sidebar" class="nav-collapse collapse" >
+
+    <!-- 开始响应快速搜索表单 -->
+    <div class="navbar-inverse">
+        <form class="navbar-search visible-phone">
+            <input type="text" class="search-query" placeholder="Search" />
+        </form>
+    </div>
+    <!-- 结束响应快速搜索表单 -->
+    <!-- 开始菜单栏 -->
+    <ul class="sidebar-menu">
+        <li class="has-sub">
+            <a href="javascript:;" class="">
+                <span class="icon-box"> <i class="icon-dashboard"></i></span> 体质健康管理
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub">
+                <li><a class="nav-link active" th:class="${activeUri=='cardiopulmonaryList'?'nav-link active':'nav-link'}"
+                       th:href="@{/teacher/cardiolist}">心肺耐力水平</a></li>
+                <li><a class="nav-link active" th:class="${activeUri=='somaticgameList'?'nav-link active':'nav-link'}"
+                       th:href="@{/teacher/somaticgamelist}">核心体能要素</a></li>
+            </ul>
+        </li>
+<!--   activeUri=='页面路径'     -->
+        <li class="has-sub" >
+            <a href="javascript:;" class="">
+                <span class="icon-box"> <i class="icon-book"></i></span> 训练计划管理
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub">
+                <li><a class="nav-link active" th:class="${activeUri=='cardiopulmanaryPlanList'?'nav-link active':'nav-link'}"
+                       th:href="@{/teacher/cardioplanlist}">心肺耐力训练处方</a></li>
+                <li><a class="nav-link active" th:class="${activeUri=='somaticPlanList'?'nav-link active':'nav-link'}"
+                       th:href="@{/teacher/somaticplanlist}">体感游戏训练处方</a></li>
+            </ul>
+        </li>
+        <li class="has-sub">
+            <a href="javascript:;" class="">
+                <span class="icon-box"><i class="icon-cogs"></i></span> 学生管理
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub">
+                <li><a class="nav-link active" th:class="${activeUri=='classList'?'nav-link active':'nav-link'}"
+                       th:href="@{/teacher/classList}">班级管理</a></li>
+                <li><a class="nav-link active" th:class="${activeUri=='studentList'?'nav-link active':'nav-link'}"
+                       th:href="@{/teacher/studentList}">学生信息</a></li>
+
+            </ul>
+        </li>
+        <li class="has-sub">
+            <a href="javascript:;" class="">
+                <span class="icon-box"><i class="icon-tasks"></i></span> 设备管理
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub">
+                <li><a class="nav-link active" th:class="${activeUri==''?'nav-link active':'nav-link'}"
+                       th:href="@{/teacher/equipmentList}">设备总体信息</a></li>
+                <!--<li><a class="nav-link active" th:class="${activeUri==''?'nav-link active':'nav-link'}"-->
+                       <!--th:href="@{/teacher/}">智能化恒功率健身车</a></li>-->
+                <!--<li><a class="nav-link active" th:class="${activeUri==''?'nav-link active':'nav-link'}"-->
+                       <!--th:href="@{/teacher/}">体能要素检测训练设备</a></li>-->
+            </ul>
+        </li>
+    </ul>
+    <!-- 结束侧边栏菜单 -->
+</div>
+<!-- 结束侧边栏 -->
+
+<!--页面底部-->
+<div id="footer">
+    中科院合肥技术创新工程院：<a href="http://www.hfiti.cn/" target="_blank">主页</a>
+    <div class="span pull-right">
+        <span class="go-top"><i class="icon-arrow-up"></i></span>
+    </div>
+</div>
+</body>
+</html>

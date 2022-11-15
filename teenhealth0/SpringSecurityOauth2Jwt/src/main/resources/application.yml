@@ -1,0 +1,107 @@
+spring:
+  datasource:
+    #数据源基本配置
+    name: mysql
+    # 赣南医学院
+#    url: jdbc:mysql://localhost:3306/teenhealth0?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    # 本地调试
+    url: jdbc:mysql://localhost:3306/ai_traintest?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    # 阿里云服务器
+#    url: jdbc:mysql://47.97.157.98:3306/adolescent_health?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
+    username: root
+    password: "0509"
+#    password: jkzx:2021
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 扩展插件
+    druid:
+    # 监控统计用的filter:stat 日志用的filter:log4j 防御sql注入的filter:wall
+      filters: stat
+    # 最大连接池数量
+      maxActive: 20
+    # 初始化时建立物理连接的个数。初始化发生在显示调用init方法，或者第一次getConnection时
+      initialSize: 1
+    # 获取连接时最大等待时间，单位毫秒
+      maxWait: 60000
+    # 最小连接池数量
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+    # 连接保持空闲而不被驱逐的最长时间
+      minEvictableIdleTimeMillis: 300000
+    # 用来检测连接是否有效的sql，要求是一个查询语句
+    # 如果validationQuery为null，testOnBorrow、testOnReturn、testWhileIdle都不会其作用
+      validationQuery: select count(1) from 'table'
+    # 申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
+      testWhileIdle: true
+    # 申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
+      testOnBorrow: false
+    # 归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
+      testOnReturn: false
+    # 是否缓存preparedStatement，即PSCache
+      poolPreparedStatements: false
+    # 要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true
+      maxOpenPreparedStatements: -1
+  servlet:
+      multipart:
+        enabled: true
+        max-file-size: 500MB
+        max-request-size: 250MB
+  # pagehelper分页插件
+  main:
+    allow-bean-definition-overriding: true
+#  thymeleaf:
+#    #  关闭缓存，即时刷新，上线生产环境需要改为true
+#      cache: false
+#      encoding: UTF-8
+#      mode: LEGACYHTML5
+#      suffix: .html
+#      enabled: true
+  #spring转json的默认实现jackson中会根据时区去转换时间，jackson的默认时区跟国内是相差8小时的，所以重新设置当前项目地所在时区
+  jackson:
+    time-zone: GMT+8
+
+  redis:
+    database: 0
+    host: 47.122.6.103
+    port: 6379
+    ## Redis服务器连接密码（默认为空）
+    password: JKCJZX-Redis
+    ## 连接超时时间（毫秒）
+    timeout: 0s
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+        time-between-eviction-runs: 100s
+
+#    lettuce:
+#      pool:
+#        ## 连接池最大连接数（使用负值表示没有限制）
+#        max-active: 20
+#        ## 连接池最大阻塞等待时间（使用负值表示没有限制）
+#        max-wait: -1ms
+#        ## 连接池中的最大空闲连接
+#        max-idle: 8
+#        ## 连接池中的最小空闲连接
+#        min-idle: 0
+
+pagehelper:
+  helperDialect: mysql
+    # 启用合理化，如果pageNum < 1会查询第一页，如果pageNum > pages会查询最后一页
+  reasonable: true
+  support-methods-arguments: true
+  page-size-zero: false
+
+mybatis:
+  config-location: classpath:mybatisConfig/mybatis-config.xml
+  mapper-locations: classpath:/mapper/*.xml
+
+
+server:
+  port: 8081
+logging:
+  level:
+    springboot.mybatis.mapper: debug
+

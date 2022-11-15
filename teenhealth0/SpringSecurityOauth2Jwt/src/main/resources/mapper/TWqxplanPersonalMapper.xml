@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springboot.mybatis.mapper.TWqxplanPersonalMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="springboot.mybatis.po.TWqxplanPersonal">
+        <id column="id" property="id" />
+        <result column="student_id" property="studentId" />
+        <result column="plan_id" property="planId" />
+        <result column="trainvideo_id" property="trainvideoId" />
+        <result column="sort" property="sort" />
+        <result column="indexNO" property="indexNO" />
+        <result column="time" property="time" />
+        <result column="target" property="target" />
+        <result column="rest" property="rest" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, student_id, plan_id, trainvideo_id, sort, indexNO, time, target, rest
+    </sql>
+
+    <!--根据planId查询无器械处方内容-->
+    <select id="PersonalPlan" parameterType="java.lang.Long" resultMap="BaseResultMap">
+       SELECT
+        <include refid="Base_Column_List" />
+       FROM
+	     t_wqxplan_personal
+       WHERE
+         plan_id =  #{planId}
+    </select>
+
+    <!--新增无器械处方内容-->
+    <insert id="insertPlanContent" parameterType="springboot.mybatis.po.TWqxplanPersonal">
+        insert into t_wqxplan_personal
+        (student_id, plan_id, trainvideo_id, sort, indexNO, time, target, rest)
+        values
+        <foreach collection="list" item="model" separator=",">
+            (#{model.studentId},#{model.planId},#{model.trainvideoId},#{model.sort},#{model.indexNO},
+            #{model.time},#{model.target},#{model.rest})
+        </foreach>
+    </insert>
+
+    <!--修改无器械处方内容-->
+    <update id="updatePlanContent" parameterType="springboot.mybatis.po.TWqxplanPersonal">
+        update t_wqxplan_personal
+        <set>
+            <if test="studentId != null">
+                student_id = #{studentId},
+            </if>
+            <if test="planId != null">
+                plan_id = #{planId},
+            </if>
+            <if test="trainvideoId != null">
+                trainvideo_id= #{trainvideoId},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="indexNO != null">
+                indexNO = #{indexNO},
+            </if>
+            <if test="time != null">
+                time = #{time},
+            </if>
+            <if test="target != null">
+                target = #{target},
+            </if>
+            <if test="rest != null">
+                rest = #{rest},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--删除无器械处方内容-->
+    <delete id="deletePlanContent" parameterType="springboot.mybatis.po.TWqxplanPersonal">
+    delete from t_wqxplan_personal
+    where id = #{id}
+  </delete>
+</mapper>

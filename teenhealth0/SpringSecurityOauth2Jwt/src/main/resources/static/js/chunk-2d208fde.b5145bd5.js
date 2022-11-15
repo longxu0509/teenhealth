@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d208fde"],{a6c6:function(n,o,t){"use strict";t.r(o),t.d(o,"GetList",(function(){return e}));var c=t("22ce");function e(n,o){return console.log(n),Object(c["a"])({url:"/teacher/cardiopulmonary1/"+n,method:"post",data:o})}}}]);

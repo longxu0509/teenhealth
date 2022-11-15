@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springboot.mybatis.mapper.TWqxTrainMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="springboot.mybatis.po.TWqxTrain">
+        <id column="id" property="id" />
+        <result column="training_calorie" property="trainingCalorie" />
+        <result column="training_path" property="trainingPath" />
+        <result column="student_id" property="studentId" />
+        <result column="training_video_id" property="trainingVideoId" />
+        <result column="training_score" property="trainingScore" />
+        <result column="upload_time" property="uploadTime" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 联合t_student表查询映射结果 -->
+    <resultMap id="ResultMap0" type="springboot.mybatis.po.TWqxTrainCustom">
+        <id column="id" property="id" />
+        <result column="training_calorie" property="trainingCalorie" />
+        <result column="training_path" property="trainingPath" />
+        <result column="student_id" property="studentId" />
+        <result column="training_video_id" property="trainingVideoId" />
+        <result column="training_score" property="trainingScore" />
+        <result column="upload_time" property="uploadTime" />
+        <result column="create_time" property="createTime" />
+
+        <association property="tStudent" javaType="springboot.mybatis.po.TStudent">
+            <result column="student_no" jdbcType="VARCHAR" property="studentNo" />
+            <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+            <result column="class_id" jdbcType="VARCHAR" property="classId" />
+            <result column="school_id" jdbcType="VARCHAR" property="schoolId" />
+            <result column="age" jdbcType="INTEGER" property="age" />
+            <result column="sex" jdbcType="INTEGER" property="sex" />
+            <result column="stature" jdbcType="DOUBLE" property="stature" />
+            <result column="weight" jdbcType="DOUBLE" property="weight" />
+            <result column="heart_rate" jdbcType="INTEGER" property="heartRate" />
+            <result column="bmi" jdbcType="VARCHAR" property="bmi" />
+            <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+            <result column="medical" jdbcType="VARCHAR" property="medical" />
+            <result column="phone_no" jdbcType="INTEGER" property="phoneNo" />
+            <result column="left_sight" jdbcType="DOUBLE" property="leftSight" />
+            <result column="right_sight" jdbcType="DOUBLE" property="rightSight" />
+        </association>
+
+        <association property="tTrainingVideo" javaType="springboot.mybatis.po.TTrainingVideo">
+            <result column="sort" property="sort" />
+            <result column="file_name" property="fileName" />
+            <result column="save_path" property="savePath" />
+            <result column="upload_time" property="uploadTime" />
+        </association>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, training_calorie, training_path, student_id, training_video_id, training_score, upload_time, create_time
+    </sql>
+
+    <insert id="insertTrainRecord" parameterType="springboot.mybatis.po.TWqxTrain">
+        insert into t_wqx_train
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="trainingCalorie != null">
+                training_calorie,
+            </if>
+            <if test="trainingPath != null">
+                training_path,
+            </if>
+            <if test="studentId != null">
+                student_id,
+            </if>
+            <if test="trainingVideoId != null">
+                training_video_id,
+            </if>
+            <if test="trainingScore != null">
+                training_score,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="uploadTime != null">
+                upload_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="trainingCalorie != null">
+                #{trainingCalorie},
+            </if>
+            <if test="trainingPath != null">
+                #{trainingPath},
+            </if>
+            <if test="studentId != null">
+                #{studentId},
+            </if>
+            <if test="trainingVideoId != null">
+                #{trainingVideoId},
+            </if>
+            <if test="trainingScore != null">
+                #{trainingScore},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="uploadTime != null">
+                #{uploadTime},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="listWqxTrainStudent" parameterType="java.lang.String" resultMap="ResultMap0">
+        SELECT
+        s.student_name, s.student_no, s.sex, s.class_id, w.id, w.student_id, w.training_calorie, w.training_path, w.training_score,
+        w.training_video_id, w.upload_time,t.sort
+        FROM t_student s, t_wqx_train w,t_training_video t,
+          (SELECT student_id, MAX(create_time) as maxtime FROM t_wqx_train GROUP BY student_id)a
+          WHERE s.id=a.student_id and w.student_id=a.student_id AND w.create_time=a.maxtime and t.id=w.training_video_id
+    </select>
+
+    <select id="listWQXsutdentfreetrain" parameterType="java.lang.String" resultMap="ResultMap0">
+        SELECT
+        s.student_name, s.student_no, s.sex, s.class_id, w.id, w.student_id, w.training_calorie, w.training_path, w.training_score,
+        w.training_video_id, w.upload_time,t.sort
+        FROM t_student s, t_wqx_train w, t_training_video t
+        WHERE s.id=#{studentId} and w.student_id=#{studentId} and t.id=w.training_video_id
+    </select>
+
+    <select id="selectWqxTrainbyId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM t_wqx_train
+        WHERE id=#{wqxtrainId}
+    </select>
+
+</mapper>

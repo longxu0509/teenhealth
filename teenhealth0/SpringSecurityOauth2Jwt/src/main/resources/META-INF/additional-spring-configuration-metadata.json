@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "spring.server.tomcat.max-swallow-size",
+      "type": "java.lang.String",
+      "description": "Description for spring.server.tomcat.max-swallow-size."
+  }
+] }

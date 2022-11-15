@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0d5c40"],{"704e":function(t,e,n){"use strict";n.r(e),n.d(e,"GetList",(function(){return o}));var c=n("22ce");function o(t,e){return console.log(t),Object(c["a"])({url:"/teacher/studentHCQtest/"+t,method:"post",data:e})}}}]);

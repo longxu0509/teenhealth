@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d2259d2"],{e4c0:function(t,n,e){"use strict";e.r(n),e.d(n,"GetList",(function(){return o}));var c=e("22ce");function o(t,n){return console.log(t),Object(c["a"])({url:"/teacher/physicalfitnesshistory/"+t,method:"post",data:n})}}}]);

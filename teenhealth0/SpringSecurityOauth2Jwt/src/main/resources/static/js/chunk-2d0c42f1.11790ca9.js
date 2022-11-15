@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0c42f1"],{"3a6c":function(t,n,c){"use strict";c.r(n),c.d(n,"GetList",(function(){return a}));var e=c("22ce");function a(t){return Object(e["a"])({url:"/teacher/somaticplanlist1",method:"post",data:t})}}}]);
