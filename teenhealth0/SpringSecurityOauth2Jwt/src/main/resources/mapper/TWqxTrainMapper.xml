@@ -28,26 +28,22 @@
         <association property="tStudent" javaType="springboot.mybatis.po.TStudent">
             <result column="student_no" jdbcType="VARCHAR" property="studentNo" />
             <result column="student_name" jdbcType="VARCHAR" property="studentName" />
-            <result column="class_id" jdbcType="VARCHAR" property="classId" />
-            <result column="school_id" jdbcType="VARCHAR" property="schoolId" />
             <result column="age" jdbcType="INTEGER" property="age" />
             <result column="sex" jdbcType="INTEGER" property="sex" />
             <result column="stature" jdbcType="DOUBLE" property="stature" />
             <result column="weight" jdbcType="DOUBLE" property="weight" />
-            <result column="heart_rate" jdbcType="INTEGER" property="heartRate" />
             <result column="bmi" jdbcType="VARCHAR" property="bmi" />
             <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+            <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
             <result column="medical" jdbcType="VARCHAR" property="medical" />
             <result column="phone_no" jdbcType="INTEGER" property="phoneNo" />
-            <result column="left_sight" jdbcType="DOUBLE" property="leftSight" />
-            <result column="right_sight" jdbcType="DOUBLE" property="rightSight" />
         </association>
 
         <association property="tTrainingVideo" javaType="springboot.mybatis.po.TTrainingVideo">
             <result column="sort" property="sort" />
             <result column="file_name" property="fileName" />
             <result column="save_path" property="savePath" />
-            <result column="upload_time" property="uploadTime" />
+            <result column="update_time" property="updateTime" />
         </association>
     </resultMap>
 
@@ -114,16 +110,16 @@
 
     <select id="listWqxTrainStudent" parameterType="java.lang.String" resultMap="ResultMap0">
         SELECT
-        s.student_name, s.student_no, s.sex, s.class_id, w.id, w.student_id, w.training_calorie, w.training_path, w.training_score,
+        s.student_name, s.student_no, s.sex, w.id, w.student_id, w.training_calorie, w.training_path, w.training_score,
         w.training_video_id, w.upload_time,t.sort
         FROM t_student s, t_wqx_train w,t_training_video t,
           (SELECT student_id, MAX(create_time) as maxtime FROM t_wqx_train GROUP BY student_id)a
           WHERE s.id=a.student_id and w.student_id=a.student_id AND w.create_time=a.maxtime and t.id=w.training_video_id
     </select>
 
-    <select id="listWQXsutdentfreetrain" parameterType="java.lang.String" resultMap="ResultMap0">
+    <select id="listWQXsutdentfreetrain" parameterType="java.lang.Long" resultMap="ResultMap0">
         SELECT
-        s.student_name, s.student_no, s.sex, s.class_id, w.id, w.student_id, w.training_calorie, w.training_path, w.training_score,
+        s.student_name, s.student_no, s.sex, w.id, w.student_id, w.training_calorie, w.training_path, w.training_score,
         w.training_video_id, w.upload_time,t.sort
         FROM t_student s, t_wqx_train w, t_training_video t
         WHERE s.id=#{studentId} and w.student_id=#{studentId} and t.id=w.training_video_id

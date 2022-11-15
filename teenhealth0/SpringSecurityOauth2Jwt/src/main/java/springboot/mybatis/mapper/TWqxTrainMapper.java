@@ -1,5 +1,6 @@
 package springboot.mybatis.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import springboot.mybatis.po.TWqxTrain;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import springboot.mybatis.po.TWqxTrainCustom;
@@ -14,6 +15,7 @@ import java.util.List;
  * @author 王君洪
  * @since 2022-03-02
  */
+@Mapper
 public interface TWqxTrainMapper extends BaseMapper<TWqxTrain> {
 
     //    插入无器械自由训练记录
