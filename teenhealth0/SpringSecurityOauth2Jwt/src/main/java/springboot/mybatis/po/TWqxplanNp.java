@@ -35,5 +35,4 @@ public class TWqxplanNp implements Serializable {
      * 1：可用，0：不可用
      */
     private Integer isEnable;
-
 }

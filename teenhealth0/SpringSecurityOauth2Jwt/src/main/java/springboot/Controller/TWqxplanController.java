@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
 import springboot.mybatis.po.*;
-import springboot.service.TTrainingVideoService;
-import springboot.service.TWqxplanPersonalService;
-import springboot.service.TWqxplanRecordService;
-import springboot.service.TWuqixiePlanService;
+import springboot.service.*;
 import springboot.utils.RedisUtil;
 
 import java.io.File;
@@ -34,30 +31,32 @@ import java.util.*;
 public class TWqxplanController {
     @Autowired
     private TWqxplanRecordService tWqxplanRecordService;
+
     @Autowired
-    private TWuqixiePlanService tTWuqixiePlanService;
+    private TWqxplanNpService tWqxplanNpService;
+
     @Autowired
     private TWqxplanPersonalService tWqxplanPersonalService;
     @Autowired
     RedisUtil redisUtil;
 
-    //查询所有学生无器械处方
+    //查询所有无器械处方
     @RequestMapping("/WQXPlanList")
     public CommonResult WQXPlanList(@RequestBody PageInfo pageInfo){
         PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
-        List<TWQXPlanListCustom> list= tTWuqixiePlanService.ListTWQXPlan();
+        List<TWqxplanNp> list= tWqxplanNpService.ListTWQXPlan();
         PageInfo pageInfo1=new PageInfo(list);
         return CommonResult.success(pageInfo1);
     }
 
-    //根据studentId查询学生无器械历史处方
-    @RequestMapping("/WQXHistoryPlan/{id}")
-    public CommonResult WQXHistoryPlan(@PathVariable("id")Long studentid,@RequestBody PageInfo pageInfo){
-        PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
-        List<TWQXPlanListCustom> WQXHistoryPlan=tTWuqixiePlanService.OneListTWQXPlan(studentid);
-        PageInfo pageInfo1=new PageInfo(WQXHistoryPlan);
-        return CommonResult.success(pageInfo1);
-    }
+//    //根据studentId查询学生无器械历史处方
+//    @RequestMapping("/WQXHistoryPlan/{id}")
+//    public CommonResult WQXHistoryPlan(@PathVariable("id")Long studentid,@RequestBody PageInfo pageInfo){
+//        PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
+//        List<TWQXPlanListCustom> WQXHistoryPlan= tTWuqixiePlanService.OneListTWQXPlan(studentid);
+//        PageInfo pageInfo1=new PageInfo(WQXHistoryPlan);
+//        return CommonResult.success(pageInfo1);
+//    }
 
     //根据处方id查询xx学生无器械处方训练记录
     @RequestMapping("/WQXTrainingRecord/{id}")
@@ -71,7 +70,18 @@ public class TWqxplanController {
     //删除处方
     @RequestMapping("/deleteWQXTrainPlan/{planId}")
     public CommonResult deleteWQXplan(@PathVariable("planId") Long planId){
-        if (tTWuqixiePlanService.deleteWQXplan(planId)){
+        if (tWqxplanNpService.deleteWQXplan(planId)){
+            return CommonResult.success();
+        }else {
+            return CommonResult.fail();
+        }
+    }
+
+    //修改训练处方内容
+    @PostMapping("/editWQXTrainPlan/{id}")
+    public CommonResult editPlanContent(@RequestBody TWqxplanNp TWqxplanNp, @PathVariable("id")Long id){
+        TWqxplanNp.setId(id);
+        if (tWqxplanNpService.updatePlan(TWqxplanNp)==1){
             return CommonResult.success();
         }else {
             return CommonResult.fail();
@@ -80,43 +90,45 @@ public class TWqxplanController {
 
     //新增无器械处方
     @PostMapping("/addWQXplan")
-    public CommonResult addWQXplan(@RequestBody TWuqixiePlan tWuqixiePlan){
-            if (tTWuqixiePlanService.insertWQXplan(tWuqixiePlan)==1){
+    public CommonResult addWQXplan(@RequestBody TWqxplanNp TWqxplanNp){
+            TWqxplanNp.setCreateTime(new Date());
+            if (tWqxplanNpService.insertWQXplan(TWqxplanNp)==1){
                 return CommonResult.success();
             }else {
                 return CommonResult.fail();
             }
     }
 
-    //根据PlanId查询处方内容
-    @RequestMapping("/PersonalPlan/{id}")
-    public CommonResult WQXPersonalPlan(@PathVariable("id")Long planId,@RequestBody PageInfo pageInfo){
-        PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
-        List<TWqxplanPersonal> TWqxplanPersonal=tWqxplanPersonalService.PersonalPlan(planId);
-        PageInfo pageInfo1=new PageInfo(TWqxplanPersonal);
-        return CommonResult.success(pageInfo1);
-    }
+//    //根据PlanId查询处方内容
+//    @RequestMapping("/PersonalPlan/{id}")
+//    public CommonResult WQXPersonalPlan(@PathVariable("id")Long planId,@RequestBody PageInfo pageInfo){
+//        PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
+//        List<TWqxplanPersonal> TWqxplanPersonal=tWqxplanPersonalService.PersonalPlan(planId);
+//        PageInfo pageInfo1=new PageInfo(TWqxplanPersonal);
+//        return CommonResult.success(pageInfo1);
+//    }
 
     //修改训练处方内容
-    @PostMapping("/editPlanContent/{id}")
-    public CommonResult editPlanContent(@RequestBody TWqxplanPersonal tWqxplanPersonal,@PathVariable("id")long id){
-        tWqxplanPersonal.setId(id);
-        if(tWqxplanPersonalService.updatePlanContent(tWqxplanPersonal)==1){
-            return CommonResult.success();
-        }else {
-            return CommonResult.fail();
-        }
-    }
+//    @PostMapping("/editPlanContent/{id}")
+//    public CommonResult editPlanContent(@RequestBody TWqxplanPersonal tWqxplanPersonal,@PathVariable("id")long id){
+//        tWqxplanPersonal.setId(id);
+//        if(tWqxplanPersonalService.updatePlanContent(tWqxplanPersonal)==1){
+//            return CommonResult.success();
+//        }else {
+//            return CommonResult.fail();
+//        }
+//    }
+
 
     //删除训练处方内容
-    @RequestMapping("/deletePlanContent/{id}")
-    public CommonResult deletePlanContent(@PathVariable("id")long id){
-        if (tWqxplanPersonalService.deletePlanContent(id)==1){
-            return CommonResult.success();
-        }else {
-            return CommonResult.fail();
-        }
-    }
+//    @RequestMapping("/deletePlanContent/{id}")
+//    public CommonResult deletePlanContent(@PathVariable("id")long id){
+//        if (tWqxplanPersonalService.deletePlanContent(id)==1){
+//            return CommonResult.success();
+//        }else {
+//            return CommonResult.fail();
+//        }
+//    }
 
 //    Redis
     //添加处方内容页面（从查询redis中查询）

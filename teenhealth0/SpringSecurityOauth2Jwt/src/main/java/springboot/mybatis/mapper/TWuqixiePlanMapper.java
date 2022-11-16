@@ -1,5 +1,6 @@
 package springboot.mybatis.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import springboot.mybatis.po.TWQXPlanListCustom;
 import springboot.mybatis.po.TWuqixiePlan;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -14,6 +15,7 @@ import java.util.List;
  * @author 王君洪
  * @since 2022-03-02
  */
+@Mapper
 public interface TWuqixiePlanMapper extends BaseMapper<TWuqixiePlan> {
 
     //查询所有学生无器械处方

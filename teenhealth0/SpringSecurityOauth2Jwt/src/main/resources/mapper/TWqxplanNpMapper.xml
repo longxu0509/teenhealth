@@ -17,4 +17,59 @@
         id, prescription_name, remark, create_time, update_time, is_enable
     </sql>
 
+    <select id="listWqxTrainNp" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM t_wqxplan_np
+    </select>
+
+    <delete id="deleteWQXplan" parameterType="java.lang.Long">
+        delete from t_wqxplan_np
+        where id = #{id}
+    </delete>
+
+    <!--新增无器械处方-->
+    <insert id="insertWQXplan" parameterType="springboot.mybatis.po.TWqxplanNp">
+        insert into t_wqxplan_np
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="prescriptionName != null">
+                prescription_name,
+            </if>
+
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="isEnable != null">
+                is_enable,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="prescriptionName != null">
+                #{prescriptionName},
+            </if>
+            <if test="remark != null">
+                #{remark},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="isEnable != null">
+                #{isEnable},
+            </if>
+        </trim>
+    </insert>
+
+    <!--修改处方-->
+    <update id="updatePlanByPK" parameterType="springboot.mybatis.po.TWqxplanNp">
+        update t_wqxplan_np
+        set prescription_name = #{prescriptionName,jdbcType=VARCHAR},
+            remark = #{remark,jdbcType=VARCHAR},
+            save_path = #{savePath,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            is_enable = #{is_enable}
+        where id = #{id}
+    </update>
 </mapper>
