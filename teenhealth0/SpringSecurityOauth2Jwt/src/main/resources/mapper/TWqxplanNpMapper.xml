@@ -67,9 +67,8 @@
         update t_wqxplan_np
         set prescription_name = #{prescriptionName,jdbcType=VARCHAR},
             remark = #{remark,jdbcType=VARCHAR},
-            save_path = #{savePath,jdbcType=VARCHAR},
             create_time = #{createTime,jdbcType=TIMESTAMP},
-            is_enable = #{is_enable}
+            is_enable = #{isEnable}
         where id = #{id}
     </update>
 </mapper>
