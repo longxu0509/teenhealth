@@ -67,7 +67,9 @@
             <if test="id != null">
                 id,
             </if>
-            NP_id,
+            <if test="npId != null">
+                NP_id,
+            </if>
             <if test="trainvideoId != null">
                 trainvideo_id,
             </if>
@@ -97,7 +99,9 @@
             <if test="id != null">
                 #{id},
             </if>
-            #{npId},
+            <if test="npId != null">
+                #{npId},
+            </if>
             <if test="trainvideoId != null">
                 #{trainvideoId},
             </if>
@@ -124,4 +128,34 @@
             </if>
         </trim>
     </insert>
+
+    <select id="findPlanContByIndexNO" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        t_wqxplan_prescription
+        WHERE
+        NP_id =  #{npId} AND indexNO >= #{indexNO}
+    </select>
+
+    <update id="updateIndexNO">
+        update t_wqxplan_prescription
+        set indexNO = indexNO + 1
+        where NP_id =  #{npId} AND indexNO >= #{indexNO}
+    </update>
+
+    <update id="subIndexNO">
+        update t_wqxplan_prescription
+        set indexNO = indexNO - 1
+        where NP_id =  #{npId} AND indexNO > #{indexNO}
+    </update>
+
+    <select id="findPlanContentById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        t_wqxplan_prescription
+        WHERE
+        id =  #{id}
+    </select>
 </mapper>

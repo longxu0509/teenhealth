@@ -134,11 +134,48 @@ public class TWqxplanController {
         }
     }
 
+    // 新增训练处方内容
+    @PostMapping("/insertPlanContent")
+    public CommonResult insertPlanContent(@RequestBody TWqxplanPrescription tWqxplanPrescription){
+        tWqxplanPrescription.setCreateTime(new Date());
+        Long indexNO = tWqxplanPrescription.getIndexNO();
+        Long npId = tWqxplanPrescription.getNpId();
+        // 查询是否存在>=indexNO 则不是在最后一条记录后插入 需要更新后面的indexNo
+        if(tWqxplanPrescriptionService.findPlanContByIndexNO(npId, indexNO) != null) {
+            //如果存在后面 >= indexNo的记录 indexNO+1
+            tWqxplanPrescriptionService.updateIndexNO(npId, indexNO);
+        }
+
+        if(tWqxplanPrescriptionService.insertPlanContent(tWqxplanPrescription)==1){
+            return CommonResult.success();
+        }else {
+            return CommonResult.fail();
+        }
+    }
+
+    // 根据id查询训练处方动作
+    @RequestMapping("/findPlanContentById/{id}")
+    public CommonResult findPlanContentById(@PathVariable("id")long id){
+        TWqxplanPrescription tWqxplanPrescription = tWqxplanPrescriptionService.findPlanContentById(id);
+        if (tWqxplanPrescription != null){
+            return CommonResult.success(tWqxplanPrescription);
+        }else {
+            return CommonResult.fail();
+        }
+    }
 
     //删除训练处方内容
     @RequestMapping("/deletePlanContent/{id}")
     public CommonResult deletePlanContent(@PathVariable("id")long id){
+        TWqxplanPrescription tWqxplanPrescription = tWqxplanPrescriptionService.findPlanContentById(id);
+        Long indexNO = tWqxplanPrescription.getIndexNO();
+        Long npId = tWqxplanPrescription.getNpId();
         if (tWqxplanPrescriptionService.deletePlanContent(id)==1){
+            // 如果存在记录indexNo >= 删除记录的indexNo
+            if(tWqxplanPrescriptionService.findPlanContByIndexNO(npId, indexNO) != null) {
+                //如果存在后面 >= indexNo的记录 indexNO-1
+                tWqxplanPrescriptionService.subIndexNO(npId, indexNO);
+            }
             return CommonResult.success();
         }else {
             return CommonResult.fail();
