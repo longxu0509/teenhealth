@@ -12,10 +12,7 @@ import springboot.service.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/tph/service")
@@ -32,6 +29,9 @@ public class TWqxtrainingController {
     private TWqxplanPersonalService tWqxplanPersonalService;
     @Autowired
     private TWqxplanRecordService tWqxplanRecordService;
+
+    @Autowired
+    private TTestItemsService tTestItemsService;
 //    @Autowired
 //    private TPhysicalFitnessService tPhysicalFitnessService;
 
@@ -50,6 +50,35 @@ public class TWqxtrainingController {
             return CommonResult.fail();
         }else {
             return CommonResult.success(trainingVideoList);
+        }
+    }
+
+    //客户端获取测试视频列表
+    @GetMapping(value = "/testingVideoList", produces = {"application/json;charset=UTF-8"})
+    public CommonResult testingVideoList()throws Exception{
+        List<TTestItems> testingVideoList =tTestItemsService.findTestingVideo();
+        if (testingVideoList.size()==0){
+            return CommonResult.fail();
+        }else {
+            return CommonResult.success(testingVideoList);
+        }
+    }
+    // 客户端上传test结果
+    @PostMapping(value = "/testTrainingUpload", produces = {"application/json;charset=UTF-8"})
+    public CommonResult testTrainingResult(@RequestBody StudentTestInfo studentTestInfo)throws Exception{
+
+        Long studentId = studentTestInfo.getUserId();
+        Long testId = studentTestInfo.getTestId();
+        Long count = studentTestInfo.getCount();
+
+        System.out.println(studentId + " " + testId + " " + count);
+        // 存在就update
+        // 否则就修改
+//        if (tWqxTrainService.insertTrainRecord()){
+        if (true) {
+            return CommonResult.success();
+        } else {
+            return CommonResult.fail();
         }
     }
 

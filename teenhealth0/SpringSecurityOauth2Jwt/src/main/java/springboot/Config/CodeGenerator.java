@@ -45,7 +45,7 @@ public class CodeGenerator {
         StrategyConfig strategy = new StrategyConfig();
         // strategy.setTablePrefix(new String[] { "sys_" });// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略(下划线转驼峰)
-        strategy.setInclude("t_wqxplan_np", "t_wqxplan_prescription","t_wqxplan_record", "t_wqxplan_student", "t_test_lowermf"); // 需要生成的表名
+        strategy.setInclude("t_test_items"); // 需要生成的表名
         strategy.setSuperServiceClass(null);
         strategy.setSuperServiceImplClass(null);
         strategy.setSuperMapperClass(null);

@@ -21,4 +21,107 @@
         id, NP_id, trainvideo_id, sort, indexNO, time, target, rest, update_time, create_time
     </sql>
 
+    <select id="PlanDetail" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        t_wqxplan_prescription
+        WHERE
+        NP_id =  #{planId}
+        ORDER BY
+        indexNO
+    </select>
+
+    <update id="updatePlanContent" parameterType="springboot.mybatis.po.TWqxplanPrescription">
+        update t_wqxplan_prescription
+        <set>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="indexNO != null">
+                indexNO = #{indexNO},
+            </if>
+            <if test="time != null">
+                time = #{time},
+            </if>
+            <if test="target != null">
+                target = #{target},
+            </if>
+            <if test="rest != null">
+                rest = #{rest},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--删除无器械处方内容-->
+    <delete id="deletePlanContent" parameterType="springboot.mybatis.po.TWqxplanPrescription">
+        delete from t_wqxplan_prescription
+        where id = #{id}
+    </delete>
+
+    <!--新增处方训练动作-->
+    <insert id="insertPlanContent" parameterType="springboot.mybatis.po.TWqxplanPrescription">
+        insert into t_wqxplan_prescription
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            NP_id,
+            <if test="trainvideoId != null">
+                trainvideo_id,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="indexNO != null">
+                indexNO,
+            </if>
+            <if test="time != null">
+                time,
+            </if>
+            <if test="target != null">
+                target,
+            </if>
+            <if test="rest != null">
+                rest,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            #{npId},
+            <if test="trainvideoId != null">
+                #{trainvideoId},
+            </if>
+            <if test="sort != null">
+                #{sort},
+            </if>
+            <if test="indexNO != null">
+                #{indexNO},
+            </if>
+            <if test="time != null">
+                #{time},
+            </if>
+            <if test="target != null">
+                #{target},
+            </if>
+            <if test="rest != null">
+                #{rest},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+        </trim>
+    </insert>
 </mapper>
