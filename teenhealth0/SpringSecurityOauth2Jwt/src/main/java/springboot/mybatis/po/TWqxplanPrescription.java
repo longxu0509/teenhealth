@@ -41,7 +41,7 @@ public class TWqxplanPrescription implements Serializable {
      * 训练项目序号
      */
     @TableField("indexNO")
-    private String indexNO;
+    private Long indexNO;
 
     /**
      * 训练时长（单位秒）
