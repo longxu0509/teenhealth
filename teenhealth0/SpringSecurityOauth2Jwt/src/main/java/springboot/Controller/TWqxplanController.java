@@ -37,6 +37,10 @@ public class TWqxplanController {
 
     @Autowired
     private TWqxplanPersonalService tWqxplanPersonalService;
+
+    @Autowired
+    private TWqxplanPrescriptionService tWqxplanPrescriptionService;
+
     @Autowired
     RedisUtil redisUtil;
 
@@ -99,36 +103,48 @@ public class TWqxplanController {
             }
     }
 
-//    //根据PlanId查询处方内容
-//    @RequestMapping("/PersonalPlan/{id}")
-//    public CommonResult WQXPersonalPlan(@PathVariable("id")Long planId,@RequestBody PageInfo pageInfo){
-//        PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
-//        List<TWqxplanPersonal> TWqxplanPersonal=tWqxplanPersonalService.PersonalPlan(planId);
-//        PageInfo pageInfo1=new PageInfo(TWqxplanPersonal);
-//        return CommonResult.success(pageInfo1);
-//    }
+    //根据PlanId查询处方内容
+    @RequestMapping("/WQXPlanDetail/{id}")
+    public CommonResult WQXPersonalPlan(@PathVariable("id")Long planId,@RequestBody PageInfo pageInfo){
+        PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
+        List<TWqxplanPrescription> tWqxplanPrescriptions = tWqxplanPrescriptionService.PlanDetail(planId);
+        PageInfo pageInfo1=new PageInfo(tWqxplanPrescriptions);
+        return CommonResult.success(pageInfo1);
+    }
 
-    //修改训练处方内容
-//    @PostMapping("/editPlanContent/{id}")
-//    public CommonResult editPlanContent(@RequestBody TWqxplanPersonal tWqxplanPersonal,@PathVariable("id")long id){
-//        tWqxplanPersonal.setId(id);
-//        if(tWqxplanPersonalService.updatePlanContent(tWqxplanPersonal)==1){
-//            return CommonResult.success();
-//        }else {
-//            return CommonResult.fail();
-//        }
-//    }
+    // 修改训练处方内容
+    @PostMapping("/editPlanContent/{id}")
+    public CommonResult editPlanContent(@RequestBody TWqxplanPrescription tWqxplanPrescription,@PathVariable("id")Long id){
+        tWqxplanPrescription.setId(id);
+        if(tWqxplanPrescriptionService.updatePlanContent(tWqxplanPrescription)==1){
+            return CommonResult.success();
+        }else {
+            return CommonResult.fail();
+        }
+    }
+
+    // 新增训练处方内容
+    @PostMapping("/addPlanContent")
+    public CommonResult addPlanContent(@RequestBody TWqxplanPrescription tWqxplanPrescription){
+        tWqxplanPrescription.setCreateTime(new Date());
+        if(tWqxplanPrescriptionService.insertPlanContent(tWqxplanPrescription)==1){
+            return CommonResult.success();
+        }else {
+            return CommonResult.fail();
+        }
+    }
 
 
     //删除训练处方内容
-//    @RequestMapping("/deletePlanContent/{id}")
-//    public CommonResult deletePlanContent(@PathVariable("id")long id){
-//        if (tWqxplanPersonalService.deletePlanContent(id)==1){
-//            return CommonResult.success();
-//        }else {
-//            return CommonResult.fail();
-//        }
-//    }
+    @RequestMapping("/deletePlanContent/{id}")
+    public CommonResult deletePlanContent(@PathVariable("id")long id){
+        if (tWqxplanPrescriptionService.deletePlanContent(id)==1){
+            return CommonResult.success();
+        }else {
+            return CommonResult.fail();
+        }
+    }
+
 
 //    Redis
     //添加处方内容页面（从查询redis中查询）

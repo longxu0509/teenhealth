@@ -67,7 +67,9 @@
         update t_wqxplan_np
         set prescription_name = #{prescriptionName,jdbcType=VARCHAR},
             remark = #{remark,jdbcType=VARCHAR},
-            create_time = #{createTime,jdbcType=TIMESTAMP},
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
             is_enable = #{isEnable}
         where id = #{id}
     </update>
