@@ -85,7 +85,7 @@
             <if test="score != null">
                 score,
             </if>
-            <if test="train_calorie != null">
+            <if test="trainCalorie != null">
                 train_calorie,
             </if>
             <if test="createTime != null">
@@ -115,8 +115,8 @@
             <if test="score != null">
                 #{score},
             </if>
-            <if test="train_calorie != null">
-                #{train_calorie},
+            <if test="trainCalorie != null">
+                #{trainCalorie},
             </if>
             <if test="createTime != null">
                 #{createTime},

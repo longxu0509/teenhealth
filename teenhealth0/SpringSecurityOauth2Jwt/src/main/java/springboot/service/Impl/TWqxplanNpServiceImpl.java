@@ -41,4 +41,9 @@ public class TWqxplanNpServiceImpl extends ServiceImpl<TWqxplanNpMapper, TWqxpla
     public int updatePlan(TWqxplanNp tWqxplanNp) {
         return tWqxplanNpMapper.updatePlanByPK(tWqxplanNp);
     }
+
+    @Override
+    public TWqxplanNp getWQXplanById(Long planId) {
+        return tWqxplanNpMapper.getWQXplanById(planId);
+    }
 }

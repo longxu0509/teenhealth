@@ -13,4 +13,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface TStudentPftestService extends IService<TStudentPftest> {
 
+    TStudentPftest findByStudentId(Long studentId);
+
+    int addTestItem(TStudentPftest tStudentPftest);
+
+    int insertTestRecord(TStudentPftest studentPftest);
 }

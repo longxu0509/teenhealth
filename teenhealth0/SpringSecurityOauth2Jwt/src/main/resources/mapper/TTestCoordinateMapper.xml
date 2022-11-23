@@ -20,5 +20,13 @@
     <sql id="Base_Column_List">
         id, test_id, test_name, level, test_result1, test_result2, score, remark, update_time, create_time
     </sql>
+    <select id="getAdviceAndScore" resultType="springboot.mybatis.po.TTestCoordinate">
+        SELECT
+            level, score, remark
+        FROM
+            t_test_coordinate
+        WHERE
+            test_result1 &lt;= #{count}  AND test_result2 &gt;= #{count}
+    </select>
 
 </mapper>

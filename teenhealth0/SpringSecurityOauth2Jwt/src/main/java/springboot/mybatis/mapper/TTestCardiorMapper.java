@@ -1,5 +1,6 @@
 package springboot.mybatis.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import springboot.mybatis.po.TTestCardior;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -11,6 +12,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author ${author}
  * @since 2022-11-14
  */
+@Mapper
 public interface TTestCardiorMapper extends BaseMapper<TTestCardior> {
 
+    TTestCardior getAdviceAndScore(Long count);
 }

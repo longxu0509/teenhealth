@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface TTestCorestrengthService extends IService<TTestCorestrength> {
 
+    TTestCorestrength getAdviceAndScore(Long count);
 }

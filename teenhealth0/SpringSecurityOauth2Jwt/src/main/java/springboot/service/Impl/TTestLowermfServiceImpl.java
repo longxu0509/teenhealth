@@ -1,5 +1,6 @@
 package springboot.service.Impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import springboot.mybatis.po.TTestLowermf;
 import springboot.mybatis.mapper.TTestLowermfMapper;
 import springboot.service.TTestLowermfService;
@@ -17,4 +18,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class TTestLowermfServiceImpl extends ServiceImpl<TTestLowermfMapper, TTestLowermf> implements TTestLowermfService {
 
+    @Autowired
+    private TTestLowermfMapper tTestLowermfMapper;
+    @Override
+    public TTestLowermf getAdviceAndScore(Long count) {
+        return tTestLowermfMapper.getAdviceAndScore(count);
+    }
 }

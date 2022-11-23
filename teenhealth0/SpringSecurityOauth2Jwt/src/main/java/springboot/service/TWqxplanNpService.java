@@ -26,4 +26,7 @@ public interface TWqxplanNpService extends IService<TWqxplanNp> {
 
     // 修改处方
     int updatePlan(TWqxplanNp tWqxplanNp);
+
+    // 根据id获取处方
+    TWqxplanNp getWQXplanById(Long planId);
 }

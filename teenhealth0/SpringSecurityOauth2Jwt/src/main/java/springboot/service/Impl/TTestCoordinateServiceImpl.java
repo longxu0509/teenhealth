@@ -1,5 +1,6 @@
 package springboot.service.Impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import springboot.mybatis.po.TTestCoordinate;
 import springboot.mybatis.mapper.TTestCoordinateMapper;
 import springboot.service.TTestCoordinateService;
@@ -17,4 +18,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class TTestCoordinateServiceImpl extends ServiceImpl<TTestCoordinateMapper, TTestCoordinate> implements TTestCoordinateService {
 
+    @Autowired
+    private TTestCoordinateMapper tTestCoordinateMapper;
+
+    @Override
+    public TTestCoordinate getAdviceAndScore(Long count) {
+        return tTestCoordinateMapper.getAdviceAndScore(count);
+    }
 }

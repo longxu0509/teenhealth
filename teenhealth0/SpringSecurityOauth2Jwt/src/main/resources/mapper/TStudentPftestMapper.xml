@@ -24,4 +24,121 @@
         id, student_id, cardior_level, cardior_score, corestrength_level, corestrength_score, coordinate_level, coordinate_score, lowerMF_level, lowerMF_score, upMF_level, upMF_score, update_time
     </sql>
 
+    <update id="addTestItem" parameterType="springboot.mybatis.po.TStudentPftest">
+        update t_student_pftest
+        <set>
+            <if test="cardiorLevel != null">
+                cardior_level = #{cardiorLevel},
+            </if>
+            <if test="cardiorScore != null">
+                cardior_score = #{cardiorScore},
+            </if>
+            <if test="corestrengthLevel != null">
+                corestrength_level = #{corestrengthLevel},
+            </if>
+            <if test="corestrengthScore != null">
+                corestrength_score = #{corestrengthScore},
+            </if>
+            <if test="coordinateLevel != null">
+                coordinate_level = #{coordinateLevel},
+            </if>
+            <if test="coordinateScore != null">
+                coordinate_score = #{coordinateScore},
+            </if>
+            <if test="lowermfLevel != null">
+                lowerMF_level = #{lowermfLevel},
+            </if>
+            <if test="lowermfScore != null">
+                lowerMF_score = #{lowermfScore},
+            </if>
+            <if test="upmfLevel != null">
+                upMF_level = #{upmfLevel},
+            </if>
+            <if test="upmfScore != null">
+                upMF_score = #{upmfScore}
+            </if>
+        </set>
+        where student_id = #{studentId}
+    </update>
+
+    <insert id="insertTestRecord" parameterType="springboot.mybatis.po.TStudentPftest">
+        insert into t_student_pftest
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="studentId != null">
+                student_id,
+            </if>
+            <if test="cardiorLevel != null">
+                cardior_level,
+            </if>
+            <if test="cardiorScore != null">
+                cardior_score,
+            </if>
+            <if test="corestrengthLevel != null">
+                corestrength_level,
+            </if>
+            <if test="corestrengthScore != null">
+                corestrength_score,
+            </if>
+            <if test="coordinateLevel != null">
+                coordinate_level,
+            </if>
+            <if test="coordinateScore != null">
+                coordinate_score,
+            </if>
+            <if test="lowermfLevel != null">
+                lowerMF_level,
+            </if>
+            <if test="lowermfScore != null">
+                lowerMF_score,
+            </if>
+            <if test="upmfLevel != null">
+                upMF_level,
+            </if>
+            <if test="upmfScore != null">
+                upMF_score,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="studentId != null">
+                #{studentId},
+            </if>
+            <if test="cardiorLevel != null">
+                #{cardiorLevel},
+            </if>
+            <if test="cardiorScore != null">
+                #{cardiorScore},
+            </if>
+            <if test="corestrengthLevel != null">
+                #{corestrengthLevel},
+            </if>
+            <if test="corestrengthScore != null">
+                #{corestrengthScore},
+            </if>
+            <if test="coordinateLevel != null">
+                #{coordinateLevel},
+            </if>
+            <if test="coordinateScore != null">
+                #{coordinateScore},
+            </if>
+            <if test="lowermfLevel != null">
+                #{lowermfLevel},
+            </if>
+            <if test="lowermfScore != null">
+                #{lowermfScore},
+            </if>
+            <if test="upmfLevel != null">
+                #{upmfLevel},
+            </if>
+            <if test="upmfScore != null">
+                #{upmfScore},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="findByStudentId" resultType="springboot.mybatis.po.TStudentPftest">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM t_student_pftest
+        WHERE student_id=#{studentId}
+    </select>
 </mapper>

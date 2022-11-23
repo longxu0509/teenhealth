@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface TTestCoordinateService extends IService<TTestCoordinate> {
 
+    TTestCoordinate getAdviceAndScore(Long count);
 }

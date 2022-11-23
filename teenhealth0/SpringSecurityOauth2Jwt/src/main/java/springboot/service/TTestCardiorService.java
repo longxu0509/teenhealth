@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface TTestCardiorService extends IService<TTestCardior> {
 
+    TTestCardior getAdviceAndScore(Long count);
 }

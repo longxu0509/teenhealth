@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface TTestLowermfService extends IService<TTestLowermf> {
 
+    TTestLowermf getAdviceAndScore(Long count);
 }
