@@ -3,7 +3,10 @@ package springboot.Controller.terminal;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sun.corba.se.impl.ior.OldJIDLObjectKeyTemplate;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springboot.mybatis.po.*;
@@ -31,9 +34,33 @@ public class TWqxtrainingController {
     private TWqxplanRecordService tWqxplanRecordService;
 
     @Autowired
+    private TWqxplanStudentService tWqxplanStudentService;
+
+    @Autowired
+    private TWqxplanPrescriptionService tWqxplanPrescriptionService;
+
+    @Autowired
+    private  TWqxplanNpService tWqxplanNpService;
+    @Autowired
     private TTestItemsService tTestItemsService;
-//    @Autowired
-//    private TPhysicalFitnessService tPhysicalFitnessService;
+
+    @Autowired
+    private TTestCardiorService tTestCardiorService;  // 1
+
+    @Autowired
+    private TTestCorestrengthService tTestCorestrengthService; // 2
+
+    @Autowired
+    private TTestCoordinateService tTestCoordinateService; // 3
+
+    @Autowired
+    private TTestUpmfService tTestUpmfService; // 4
+
+    @Autowired
+    private TTestLowermfService tTestLowermfService; // 5
+
+    @Autowired
+    private TStudentPftestService tStudentPftestService;
 
 
     private String userUploadpath="/media/userUploads/";    //阿里云上传用户训练文件地址
@@ -66,17 +93,61 @@ public class TWqxtrainingController {
     // 客户端上传test结果
     @PostMapping(value = "/testTrainingUpload", produces = {"application/json;charset=UTF-8"})
     public CommonResult testTrainingResult(@RequestBody StudentTestInfo studentTestInfo)throws Exception{
-
         Long studentId = studentTestInfo.getUserId();
         Long testId = studentTestInfo.getTestId();
         Long count = studentTestInfo.getCount();
+        String level = null;
+        Integer score = 0;
+        Object o = null;
+        TStudentPftest studentPftest = new TStudentPftest();
+        studentPftest.setStudentId(studentId);
+        switch (testId.intValue()) {
+            case 1: {
+                TTestCardior adviceAndScore = tTestCardiorService.getAdviceAndScore(count);
+                studentPftest.setCardiorLevel(adviceAndScore.getLevel());
+                studentPftest.setCardiorScore(adviceAndScore.getScore());
+                o = adviceAndScore;
+            } break;
+            case 2: {
+                TTestCorestrength tTestCorestrength = tTestCorestrengthService.getAdviceAndScore(count);
+                studentPftest.setCorestrengthLevel(tTestCorestrength.getLevel());
+                studentPftest.setCorestrengthScore(tTestCorestrength.getScore());
+                o = tTestCorestrength;
+            } break;
+            case 3: {
+                TTestCoordinate tTestCoordinate = tTestCoordinateService.getAdviceAndScore(count);
+                studentPftest.setCoordinateLevel(tTestCoordinate.getLevel());
+                studentPftest.setCoordinateScore(tTestCoordinate.getScore());
+                o = tTestCoordinate;
+            } break;
+            case 4: {
+                TTestUpmf tTestUpmf = tTestUpmfService.getAdviceAndScore(count);
+                studentPftest.setUpmfLevel(tTestUpmf.getLevel());
+                studentPftest.setUpmfScore(tTestUpmf.getScore());
+                o = tTestUpmf;
+            } break;
+            case 5: {
+                TTestLowermf testLowermf = tTestLowermfService.getAdviceAndScore(count);
+                studentPftest.setLowermfLevel(testLowermf.getLevel());
+                studentPftest.setLowermfScore(testLowermf.getScore());
+                o = testLowermf;
+            } break;
+            default:
+                break;
+        }
 
         System.out.println(studentId + " " + testId + " " + count);
         // 存在就update
         // 否则就修改
-//        if (tWqxTrainService.insertTrainRecord()){
-        if (true) {
-            return CommonResult.success();
+        if (o != null) {
+            // 根据studentId查询 t_student_pftest 表中是否有对应的记录 没有则插入 一条 有则update
+            if (tStudentPftestService.findByStudentId(studentId) != null) {
+                tStudentPftestService.addTestItem(studentPftest);
+            } else {
+                // insert
+                tStudentPftestService.insertTestRecord(studentPftest);
+            }
+            return CommonResult.success(o);
         } else {
             return CommonResult.fail();
         }
@@ -211,40 +282,49 @@ public class TWqxtrainingController {
     }
 
     //根据student_id获取xxx用户运动处方
-    @GetMapping("/getWQXtrainplan/{studentId}")
+    @GetMapping("/WQXtrainplan/{studentId}")
     public CommonResult GetWQXtrainplan(@PathVariable("studentId") Long studentId){
         if (studentService.selectById(studentId)==null){
             return CommonResult.fail("该用户不存在");
         }else {
-            List<TWuqixiePlan> list=tWuqixiePlanService.selectWQXPlan(studentId);
+            List<TWqxplanStudentCustom> list = tWqxplanStudentService.getStudentWQXPlan(studentId);
             return CommonResult.success(list);
         }
     }
 
     //根据plan_id获取处方详细内容
-    @GetMapping("/getWQXplan/{planId}")
+    @GetMapping("/getWQXplanDetail/{planId}")
     public CommonResult GetWQXplan(@PathVariable("planId") Long planId){
-        if (tWuqixiePlanService.selectWQXplanbyid(planId)==null){
+        if (tWqxplanNpService.getWQXplanById(planId)==null){
             return CommonResult.fail("处方不存在");
         }else {
-            List<TWqxplanPersonal> list=tWqxplanPersonalService.PersonalPlan(planId);
+            List<TWqxplanPrescription> list=tWqxplanPrescriptionService.PlanDetail(planId);
             return CommonResult.success(list);
         }
     }
-
+//    @GetMapping("/testInterface/{planId}")
+//    public CommonResult testInterface(@PathVariable("planId") Long planId){
+//        TWqxplanNp tWqxplanNp = tWqxplanNpService.getWQXplanById(planId);
+//        if (tWqxplanNp != null){
+//            return CommonResult.success(tWqxplanNp);
+//        }else {
+//            return CommonResult.fail("处方不存在");
+//        }
+//    }
     //处方训练记录上传
     @PostMapping("/uploadWQXtrainRecord")
     public CommonResult uploadWQXtrainRecord(@RequestBody TWqxplanRecord tWqxplanRecord){
-        if (tWuqixiePlanService.selectWQXplanbyid(tWqxplanRecord.getWqxplanId())!=null &&
-                studentService.selectById(tWqxplanRecord.getStudentId())!=null){
+        if (tWqxplanNpService.getWQXplanById(tWqxplanRecord.getWqxplanId()) != null &&
+                studentService.selectById(tWqxplanRecord.getStudentId())!=null) {
+            tWqxplanRecord.setCreateTime(new Date());
+            tWqxplanRecord.setUploadTime(new Date());
             if (tWqxplanRecordService.insertWqxplanRecord(tWqxplanRecord)==1){
                 return CommonResult.success();
-            }else {
+            } else {
                 return CommonResult.fail();
             }
-        }else {
+        } else {
             return CommonResult.fail();
         }
     }
-
 }

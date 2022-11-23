@@ -25,4 +25,6 @@ public interface TWqxplanNpMapper extends BaseMapper<TWqxplanNp> {
     int insertWQXplan(TWqxplanNp tWqxplanNp);
 
     int updatePlanByPK(TWqxplanNp tWqxplanNp);
+
+    TWqxplanNp getWQXplanById(Long planId);
 }

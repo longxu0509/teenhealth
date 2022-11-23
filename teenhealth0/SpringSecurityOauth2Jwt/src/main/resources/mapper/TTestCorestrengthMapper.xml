@@ -21,4 +21,13 @@
         id, test_id, test_name, level, test_result1, test_result2, score, remark, update_time, create_time
     </sql>
 
+    <select id="getAdviceAndScore" resultType="springboot.mybatis.po.TTestCorestrength">
+        SELECT
+            level, score, remark
+        FROM
+            t_test_corestrength
+        WHERE
+            test_result1 &lt;= #{count}  AND test_result2 &gt;= #{count}
+    </select>
+
 </mapper>

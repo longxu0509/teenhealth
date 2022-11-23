@@ -15,7 +15,7 @@ public class StudentTestInfo {
     // 测试动作id
     private Long testId;
 
-    // 测试动作id
+    // 测试动作name
     private String testName;
 
     // 测试动作计数

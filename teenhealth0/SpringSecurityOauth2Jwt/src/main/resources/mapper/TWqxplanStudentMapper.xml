@@ -14,9 +14,37 @@
         <result column="update_time" property="updateTime" />
     </resultMap>
 
+    <resultMap id="ResultMap1" type="springboot.mybatis.po.TWqxplanStudentCustom">
+        <id column="id" property="id" />
+        <result column="student_id" property="studentId" />
+        <result column="NP_id" property="npId" />
+        <result column="train_period" property="trainPeriod" />
+        <result column="train_frequency" property="trainFrequency" />
+        <result column="is_enable" property="isEnable" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <association property="tWqxplanNp" javaType="springboot.mybatis.po.TWqxplanNp">
+            <result column="prescription_name" property="prescriptionName" />
+            <result column="remark" property="remark" />
+            <result column="create_time" property="createTime" />
+            <result column="update_time" property="updateTime" />
+            <result column="is_enable" property="isEnable" />
+        </association>
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, student_id, NP_id, train_period, train_frequency, is_enable, create_time, update_time
     </sql>
+
+    <!--根据studentId查询学生所有训练处方-->
+    <select id="getStudentWQXPlan" parameterType="java.lang.Long" resultMap="ResultMap1">
+        SELECT
+            w.prescription_name, s.create_time, w.remark, s.NP_id, s.student_id
+        FROM
+            t_wqxplan_student s,t_wqxplan_np w
+        WHERE
+            s.student_id = #{studentId} AND s.NP_id=w.id
+    </select>
 
 </mapper>
