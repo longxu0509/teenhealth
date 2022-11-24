@@ -42,6 +42,9 @@ public class TWqxplanController {
     private TWqxplanPrescriptionService tWqxplanPrescriptionService;
 
     @Autowired
+    private  TWqxplanStudentService tWqxplanStudentService;
+
+    @Autowired
     RedisUtil redisUtil;
 
     //查询所有无器械处方
@@ -50,6 +53,15 @@ public class TWqxplanController {
         PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
         List<TWqxplanNp> list= tWqxplanNpService.ListTWQXPlan();
         PageInfo pageInfo1=new PageInfo(list);
+        return CommonResult.success(pageInfo1);
+    }
+
+    //获取所有所有用户最新一条处方
+    @RequestMapping("/getWQXPlanLatest")
+    public CommonResult getWQXPlanLatest(@RequestBody PageInfo pageInfo){
+        PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
+        List<TWqxplanStudentCustom> wqxPlanLatest = tWqxplanStudentService.getWQXPlanLatest();
+        PageInfo pageInfo1=new PageInfo(wqxPlanLatest);
         return CommonResult.success(pageInfo1);
     }
 
