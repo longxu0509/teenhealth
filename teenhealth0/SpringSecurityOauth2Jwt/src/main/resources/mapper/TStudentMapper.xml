@@ -241,6 +241,13 @@
     </if>
   </select>
 
+  <select id="getStudentByNo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_student
+    where student_no = #{studentNo}
+  </select>
+
   <update id="updateByExampleSelective" parameterType="map">
     update t_student
     <set>

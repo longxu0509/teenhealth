@@ -69,4 +69,9 @@ public class StudentServiceImpl implements StudentService {
         return tStudentMapper.updateByStudentNO(tStudent);
     }
 
+    @Override
+    public TStudent getStudentByNo(String studentNo) {
+        return tStudentMapper.getStudentByNo(studentNo);
+    }
+
 }

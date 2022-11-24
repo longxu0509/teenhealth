@@ -47,6 +47,18 @@ public class NewTeacherController {
         return CommonResult.success(pageInfo);
     }
 
+    // 根据ID查询用户
+    @RequestMapping("/getStudentByNo/{studentNo}")
+    @ResponseBody
+    public CommonResult getStudentByNo(@PathVariable("studentNo")String studentNo) throws Exception{
+        TStudent student =studentService.getStudentByNo(studentNo);
+        if (student != null) {
+            return CommonResult.success(student);
+        }else {
+            return CommonResult.fail();
+        }
+    }
+
     //添加并保存学生信息
     @PostMapping("/addstudent1")
     @ResponseBody
