@@ -23,12 +23,26 @@
         <result column="is_enable" property="isEnable" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
+
         <association property="tWqxplanNp" javaType="springboot.mybatis.po.TWqxplanNp">
             <result column="prescription_name" property="prescriptionName" />
             <result column="remark" property="remark" />
             <result column="create_time" property="createTime" />
             <result column="update_time" property="updateTime" />
             <result column="is_enable" property="isEnable" />
+        </association>
+        <association property="tStudent" javaType="springboot.mybatis.po.TStudent">
+            <result column="student_no" jdbcType="VARCHAR" property="studentNo" />
+            <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+            <result column="age" jdbcType="INTEGER" property="age" />
+            <result column="sex" jdbcType="INTEGER" property="sex" />
+            <result column="stature" jdbcType="DOUBLE" property="stature" />
+            <result column="weight" jdbcType="DOUBLE" property="weight" />
+            <result column="bmi" jdbcType="VARCHAR" property="bmi" />
+            <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+            <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+            <result column="medical" jdbcType="VARCHAR" property="medical" />
+            <result column="phone_no" jdbcType="INTEGER" property="phoneNo" />
         </association>
     </resultMap>
 
@@ -45,6 +59,23 @@
             t_wqxplan_student s,t_wqxplan_np w
         WHERE
             s.student_id = #{studentId} AND s.NP_id=w.id
+    </select>
+
+    <select id="getWQXPlanLatest" resultMap="ResultMap1">
+
+        select w.student_id, s.student_name, s.sex, s.age, n.prescription_name, w.train_period, w.train_frequency, w.is_enable, w.create_time
+        from
+            t_student s, t_wqxplan_student w, t_wqxplan_np n,
+
+            (select student_id, max(create_time) as create_time from t_wqxplan_student group by student_id) t
+
+        where s.id = t.student_id
+
+          AND w.student_id = t.student_id
+
+          AND w.create_time = t.create_time
+
+          AND n.id = w.NP_id
     </select>
 
 </mapper>

@@ -17,6 +17,9 @@ import java.util.List;
  */
 @Mapper
 public interface TWqxplanStudentMapper extends BaseMapper<TWqxplanStudent> {
+    
 
     List<TWqxplanStudentCustom> getStudentWQXPlan(Long studentId);
+
+    List<TWqxplanStudentCustom> getWQXPlanLatest();
 }
