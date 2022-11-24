@@ -19,4 +19,6 @@ public interface TWqxplanStudentService extends IService<TWqxplanStudent> {
     List<TWqxplanStudentCustom> getStudentWQXPlan(Long studentId);
 
     List<TWqxplanStudentCustom>  getWQXPlanLatest();
+
+    int addStudentWQXplan(TWqxplanStudent tWqxplanStudent);
 }

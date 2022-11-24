@@ -42,4 +42,6 @@ public interface TStudentMapper {
 
     //根据学号修改学生信息
     Integer updateByStudentNO(TStudent tStudent);
+
+    TStudent getStudentByNo(String studentNo);
 }

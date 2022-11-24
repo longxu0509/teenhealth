@@ -30,4 +30,6 @@ public interface StudentService {
 
     //根据学号修改学生信息
     Integer updateStudentbyStudengNO(TStudent tStudent);
+
+    TStudent getStudentByNo(String studentNo);
 }

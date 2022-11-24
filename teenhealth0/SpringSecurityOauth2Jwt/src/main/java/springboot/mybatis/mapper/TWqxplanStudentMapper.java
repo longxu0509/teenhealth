@@ -22,4 +22,6 @@ public interface TWqxplanStudentMapper extends BaseMapper<TWqxplanStudent> {
     List<TWqxplanStudentCustom> getStudentWQXPlan(Long studentId);
 
     List<TWqxplanStudentCustom> getWQXPlanLatest();
+
+    int addStudentWQXplan(TWqxplanStudent tWqxplanStudent);
 }

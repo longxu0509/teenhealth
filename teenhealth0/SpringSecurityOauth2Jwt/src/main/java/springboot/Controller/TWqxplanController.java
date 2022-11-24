@@ -65,6 +65,18 @@ public class TWqxplanController {
         return CommonResult.success(pageInfo1);
     }
 
+    // 给用户添加一条处方
+    //新增无器械处方
+    @PostMapping("/addStudentWQXplan")
+    public CommonResult addStudentWQXplan(@RequestBody TWqxplanStudent TWqxplanStudent){
+        TWqxplanStudent.setCreateTime(new Date());
+        if (tWqxplanStudentService.addStudentWQXplan(TWqxplanStudent)==1){
+            return CommonResult.success();
+        }else {
+            return CommonResult.fail();
+        }
+    }
+
 //    //根据studentId查询学生无器械历史处方
 //    @RequestMapping("/WQXHistoryPlan/{id}")
 //    public CommonResult WQXHistoryPlan(@PathVariable("id")Long studentid,@RequestBody PageInfo pageInfo){

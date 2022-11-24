@@ -33,4 +33,9 @@ public class TWqxplanStudentServiceImpl extends ServiceImpl<TWqxplanStudentMappe
     public List<TWqxplanStudentCustom> getWQXPlanLatest() {
         return tWqxplanStudentMapper.getWQXPlanLatest();
     }
+
+    @Override
+    public int addStudentWQXplan(TWqxplanStudent tWqxplanStudent) {
+        return tWqxplanStudentMapper.addStudentWQXplan(tWqxplanStudent);
+    }
 }
