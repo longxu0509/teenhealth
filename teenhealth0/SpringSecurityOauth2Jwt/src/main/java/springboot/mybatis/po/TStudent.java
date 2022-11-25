@@ -81,6 +81,4 @@ public class TStudent implements Serializable {
      * 个人用户手机号登录校验码
      */
     private Integer phoneNo;
-
-
 }

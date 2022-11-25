@@ -38,4 +38,9 @@ public class TWqxplanRecordServiceImpl extends ServiceImpl<TWqxplanRecordMapper,
         return tWqxplanRecordMapper.selectTrainRecord(id);
     }
 
+    @Override
+    public List<TWqxplanRecord> getStudentWQXTrainingRecord(Long id) {
+        return tWqxplanRecordMapper.getStudentWQXTrainingRecord(id);
+    }
+
 }
