@@ -46,6 +46,9 @@ public class TWqxplanController {
     private  TWqxplanStudentService tWqxplanStudentService;
 
     @Autowired
+    private StudentService studentService;
+
+    @Autowired
     RedisUtil redisUtil;
 
     //查询所有无器械处方
@@ -71,6 +74,17 @@ public class TWqxplanController {
         List<TWqxplanStudentCustom> wqxPlanLatest = tWqxplanStudentService.getWQXPlanLatest();
         PageInfo pageInfo1=new PageInfo(wqxPlanLatest);
         return CommonResult.success(pageInfo1);
+    }
+
+    // 根据studentId 获取用户所有处方
+    @GetMapping("/WQXtrainplan/{studentId}")
+    public CommonResult GetWQXtrainplan(@PathVariable("studentId") Long studentId){
+        if (studentService.selectById(studentId)==null){
+            return CommonResult.fail("该用户不存在");
+        }else {
+            List<TWqxplanStudentCustom> list = tWqxplanStudentService.getStudentWQXPlan(studentId);
+            return CommonResult.success(list);
+        }
     }
 
     // 给用户添加一条处方
