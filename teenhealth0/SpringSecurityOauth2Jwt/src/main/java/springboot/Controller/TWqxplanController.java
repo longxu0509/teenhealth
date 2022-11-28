@@ -86,6 +86,15 @@ public class TWqxplanController {
 //        return CommonResult.success(pageInfo1);
 //    }
 
+    //根据student_id 查询学生无器械处方训练记录
+    @RequestMapping("/getStudentWQXTrainingRecord/{id}")
+    public CommonResult getStudentWQXTrainingRecord(@PathVariable("id")Long id,@RequestBody PageInfo pageInfo){
+        PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
+        List<TWqxplanRecord> list=tWqxplanRecordService.getStudentWQXTrainingRecord(id);
+        PageInfo pageInfo1=new PageInfo(list);
+        return CommonResult.success(pageInfo1);
+    }
+
     //根据处方id查询xx学生无器械处方训练记录
     @RequestMapping("/WQXTrainingRecord/{id}")
     public CommonResult WQXTrainingRecord(@PathVariable("id")Long id,@RequestBody PageInfo pageInfo){

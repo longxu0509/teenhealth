@@ -25,4 +25,6 @@ public interface TWqxplanRecordService extends IService<TWqxplanRecord> {
 
    //根据处方id查询训练记录
     List<TWqxplanRecordCustom> selectTrainRecord(Long id);
+
+    List<TWqxplanRecord> getStudentWQXTrainingRecord(Long id);
 }

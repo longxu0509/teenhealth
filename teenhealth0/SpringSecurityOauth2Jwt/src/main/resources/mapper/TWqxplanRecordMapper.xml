@@ -67,6 +67,16 @@
         s.id = w.student_id and w.wqxplan_id = #{id}
     </select>
 
+    <select id="getStudentWQXTrainingRecord" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        t_wqxplan_record
+        WHERE
+        student_id =  #{id}
+        ORDER BY upload_time desc
+    </select>
+
     <insert id="insertWqxplanRecord" parameterType="springboot.mybatis.po.TWqxplanRecord">
         insert into t_wqxplan_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
