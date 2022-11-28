@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import springboot.mybatis.po.TWqxplanRecord;
 import springboot.mybatis.mapper.TWqxplanRecordMapper;
 import springboot.mybatis.po.TWqxplanRecordCustom;
+import springboot.mybatis.po.TWqxplanRecordCustom1;
 import springboot.service.TWqxplanRecordService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -39,8 +40,8 @@ public class TWqxplanRecordServiceImpl extends ServiceImpl<TWqxplanRecordMapper,
     }
 
     @Override
-    public List<TWqxplanRecord> getStudentWQXTrainingRecord(Long id) {
-        return tWqxplanRecordMapper.getStudentWQXTrainingRecord(id);
+    public List<TWqxplanRecordCustom1> getStudentWQXTrainingRecord(Long id, Long planId) {
+        return tWqxplanRecordMapper.getStudentWQXTrainingRecord(id, planId);
     }
 
 }

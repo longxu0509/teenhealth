@@ -4,6 +4,7 @@ import io.swagger.models.auth.In;
 import springboot.mybatis.po.TWqxplanRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 import springboot.mybatis.po.TWqxplanRecordCustom;
+import springboot.mybatis.po.TWqxplanRecordCustom1;
 
 import java.util.List;
 
@@ -26,5 +27,5 @@ public interface TWqxplanRecordService extends IService<TWqxplanRecord> {
    //根据处方id查询训练记录
     List<TWqxplanRecordCustom> selectTrainRecord(Long id);
 
-    List<TWqxplanRecord> getStudentWQXTrainingRecord(Long id);
+    List<TWqxplanRecordCustom1> getStudentWQXTrainingRecord(Long id, Long planId);
 }
