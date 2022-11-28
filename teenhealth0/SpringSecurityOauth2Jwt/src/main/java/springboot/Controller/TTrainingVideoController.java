@@ -38,6 +38,13 @@ public class TTrainingVideoController {
         return CommonResult.success(pageInfo1);
     }
 
+    @GetMapping("/videoList")
+    public CommonResult videolist() throws Exception{
+        List<TTrainingVideo> trainingVideoList=tTrainingVideoService.findTrainingVideo();
+        return CommonResult.success(trainingVideoList);
+    }
+
+
     //删除训练视频
     @RequestMapping(value = "/deleteVideo/{id}", method = RequestMethod.DELETE)
     public CommonResult deleteVideo(@PathVariable("id") Integer trainingVideo_id)throws Exception{

@@ -86,11 +86,22 @@ public class TWqxplanController {
 //        return CommonResult.success(pageInfo1);
 //    }
 
-    //根据student_id 查询学生无器械处方训练记录
-    @RequestMapping("/getStudentWQXTrainingRecord/{id}")
-    public CommonResult getStudentWQXTrainingRecord(@PathVariable("id")Long id,@RequestBody PageInfo pageInfo){
+    //根据student_id planId 查询学生该无器械处方训练记录
+    @RequestMapping("/getStudentWQXTrainingRecord")
+    public CommonResult getStudentWQXTrainingRecord(Long id, Long planId, @RequestBody PageInfo pageInfo){
         PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
-        List<TWqxplanRecord> list=tWqxplanRecordService.getStudentWQXTrainingRecord(id);
+        List<TWqxplanRecordCustom1> list=tWqxplanRecordService.getStudentWQXTrainingRecord(id, planId);
+
+//        for(TWqxplanRecordCustom1 custom1: list) {
+//            Map<String, String> hashmap = new HashMap<>();
+//            String completionNum = custom1.getCompletionNum();
+//            String[] str = completionNum.split("|");
+//            for (String s : str) {
+//                String[] kv = s.split(":");
+//                hashmap.put(kv[0], kv[1]);
+//            }
+//            custom1.setHm(hashmap);
+//        }
         PageInfo pageInfo1=new PageInfo(list);
         return CommonResult.success(pageInfo1);
     }

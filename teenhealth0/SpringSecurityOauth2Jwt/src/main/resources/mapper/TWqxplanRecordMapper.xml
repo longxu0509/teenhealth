@@ -41,6 +41,27 @@
         </association>
     </resultMap>
 
+
+    <resultMap id="ResultMap2" type="springboot.mybatis.po.TWqxplanRecordCustom1">
+        <id column="id" property="id" />
+        <result column="student_id" property="studentId" />
+        <result column="wqxplan_id" property="wqxplanId" />
+        <result column="completionNum" property="completionNum" />
+        <result column="score" property="score" />
+        <result column="train_calorie" property="trainCalorie" />
+        <result column="create_time" property="createTime" />
+        <result column="upload_time" property="uploadTime" />
+        <result column="is_enable" property="isEnable" />
+
+        <association property="tWqxplanNp" javaType="springboot.mybatis.po.TWqxplanNp">
+            <result column="prescription_name" property="prescriptionName" />
+            <result column="remark" property="remark" />
+            <result column="create_time" property="createTime" />
+            <result column="update_time" property="updateTime" />
+            <result column="is_enable" property="isEnable" />
+        </association>
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, student_id, wqxplan_id, completionNum, score, train_calorie, create_time, upload_time, is_enable
@@ -67,14 +88,14 @@
         s.id = w.student_id and w.wqxplan_id = #{id}
     </select>
 
-    <select id="getStudentWQXTrainingRecord" resultMap="BaseResultMap">
+    <select id="getStudentWQXTrainingRecord" resultMap="ResultMap2">
         SELECT
-        <include refid="Base_Column_List" />
+        *
         FROM
-        t_wqxplan_record
+        t_wqxplan_record r, t_wqxplan_np n
         WHERE
-        student_id =  #{id}
-        ORDER BY upload_time desc
+        r.student_id = #{id} AND r.wqxplan_id = #{planId} AND n.id = #{planId}
+        ORDER BY r.upload_time desc
     </select>
 
     <insert id="insertWqxplanRecord" parameterType="springboot.mybatis.po.TWqxplanRecord">
