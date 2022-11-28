@@ -57,6 +57,13 @@ public class TWqxplanController {
         return CommonResult.success(pageInfo1);
     }
 
+    @RequestMapping("/planList")
+    public CommonResult planList(){
+        List<TWqxplanNp> list= tWqxplanNpService.ListTWQXPlan();
+        return CommonResult.success(list);
+    }
+
+
     //获取所有所有用户最新一条处方
     @RequestMapping("/getWQXPlanLatest")
     public CommonResult getWQXPlanLatest(@RequestBody PageInfo pageInfo){
