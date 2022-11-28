@@ -28,4 +28,6 @@ public interface TWqxplanRecordService extends IService<TWqxplanRecord> {
     List<TWqxplanRecordCustom> selectTrainRecord(Long id);
 
     List<TWqxplanRecordCustom1> getStudentWQXTrainingRecord(Long id, Long planId);
+
+    TWqxplanRecord getMapByRecordId(Long id);
 }

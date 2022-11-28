@@ -6,6 +6,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
+import com.sun.javaws.IconUtil;
 import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,13 @@ public class TWqxplanController {
         return CommonResult.success(pageInfo1);
     }
 
+    @RequestMapping("/planList")
+    public CommonResult planList(){
+        List<TWqxplanNp> list= tWqxplanNpService.ListTWQXPlan();
+        return CommonResult.success(list);
+    }
+
+
     //获取所有所有用户最新一条处方
     @RequestMapping("/getWQXPlanLatest")
     public CommonResult getWQXPlanLatest(@RequestBody PageInfo pageInfo){
@@ -104,6 +112,20 @@ public class TWqxplanController {
 //        }
         PageInfo pageInfo1=new PageInfo(list);
         return CommonResult.success(pageInfo1);
+    }
+
+    @GetMapping("/getMapByRecordId/{id}")
+    public CommonResult getMapByRecordId(@PathVariable("id")Long id){
+        TWqxplanRecord tWqxplanRecord= tWqxplanRecordService.getMapByRecordId(id);
+        String completionNum = tWqxplanRecord.getCompletionNum();
+        System.out.println(completionNum);
+        Map<String, String> hashmap = new HashMap<>();
+        String[] kvs = completionNum.split(",");
+        for (String kv : kvs) {
+            String[] items = kv.split(":");
+            hashmap.put(items[0], items[1]);
+        }
+        return CommonResult.success(hashmap);
     }
 
     //根据处方id查询xx学生无器械处方训练记录

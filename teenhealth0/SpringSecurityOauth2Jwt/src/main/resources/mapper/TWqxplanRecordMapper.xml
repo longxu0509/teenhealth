@@ -98,6 +98,15 @@
         ORDER BY r.upload_time desc
     </select>
 
+    <select id="getMapByRecordId" parameterType="java.lang.Long" resultType="springboot.mybatis.po.TWqxplanRecord">
+        SELECT
+            *
+        FROM
+            t_wqxplan_record
+        WHERE
+           id = #{id}
+    </select>
+
     <insert id="insertWqxplanRecord" parameterType="springboot.mybatis.po.TWqxplanRecord">
         insert into t_wqxplan_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
