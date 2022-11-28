@@ -21,4 +21,6 @@ public interface TWqxplanRecordMapper extends BaseMapper<TWqxplanRecord> {
     List<TWqxplanRecordCustom> selectTrainRecord(Long id);
 
     List<TWqxplanRecordCustom1> getStudentWQXTrainingRecord(Long id, Long planId);
+
+    TWqxplanRecord getMapByRecordId(Long id);
 }

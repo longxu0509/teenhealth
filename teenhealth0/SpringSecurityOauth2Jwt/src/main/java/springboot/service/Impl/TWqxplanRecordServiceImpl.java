@@ -44,4 +44,9 @@ public class TWqxplanRecordServiceImpl extends ServiceImpl<TWqxplanRecordMapper,
         return tWqxplanRecordMapper.getStudentWQXTrainingRecord(id, planId);
     }
 
+    @Override
+    public TWqxplanRecord getMapByRecordId(Long id) {
+        return tWqxplanRecordMapper.getMapByRecordId(id);
+    }
+
 }
