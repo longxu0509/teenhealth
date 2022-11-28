@@ -1,6 +1,7 @@
 package springboot.service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import springboot.mybatis.po.TWqxplanNp;
 import springboot.mybatis.po.TWqxplanStudent;
 import springboot.mybatis.mapper.TWqxplanStudentMapper;
 import springboot.mybatis.po.TWqxplanStudentCustom;
