@@ -42,4 +42,14 @@ public class TStudentPftestServiceImpl extends ServiceImpl<TStudentPftestMapper,
     public List<TStudentPftestCustom> getStudentPftestLatest() {
         return tStudentPftestMapper.getStudentPftestLatest();
     }
+
+    @Override
+    public List<TStudentPftestCustom> getStudentPftestById(Long id) {
+        return tStudentPftestMapper.getStudentPftestById(id);
+    }
+
+    @Override
+    public boolean deleteStudentPftest(Long id) {
+        return tStudentPftestMapper.deleteStudentPftest(id);
+    }
 }

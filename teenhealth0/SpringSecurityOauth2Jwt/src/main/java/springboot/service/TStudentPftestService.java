@@ -23,4 +23,8 @@ public interface TStudentPftestService extends IService<TStudentPftest> {
     int insertTestRecord(TStudentPftest studentPftest);
 
     List<TStudentPftestCustom> getStudentPftestLatest();
+
+    List<TStudentPftestCustom> getStudentPftestById(Long id);
+
+    boolean deleteStudentPftest(Long id);
 }

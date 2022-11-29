@@ -35,7 +35,7 @@
         <result column="update_time" property="updateTime" />
 
         <association property="tStudent" javaType="springboot.mybatis.po.TStudent">
-            <id column="id" property="id" />
+            <id column="sid" property="id" />
             <result column="student_no" jdbcType="VARCHAR" property="studentNo" />
             <result column="student_name" jdbcType="VARCHAR" property="studentName" />
             <result column="age" jdbcType="INTEGER" property="age" />
@@ -91,6 +91,11 @@
         </set>
         where student_id = #{studentId}
     </update>
+
+    <delete id="deleteStudentPftest">
+        delete from t_student_pftest
+        where id = #{id}
+    </delete>
 
     <insert id="insertTestRecord" parameterType="springboot.mybatis.po.TStudentPftest">
         insert into t_student_pftest
@@ -185,5 +190,16 @@
           AND w.student_id = t.student_id
 
           AND w.update_time = t.update_time
+    </select>
+
+    <select id="getStudentPftestById" resultMap="ResultMap1">
+        select w.*, s.id as sid, s.student_no, s.student_name, s.age, s.sex, s.stature, s.weight, s.bmi,
+               s.create_time, s.medical, s.phone_no
+        from
+            t_student s, t_student_pftest w
+
+        where s.id = w.student_id
+
+        AND s.id = #{id}
     </select>
 </mapper>
