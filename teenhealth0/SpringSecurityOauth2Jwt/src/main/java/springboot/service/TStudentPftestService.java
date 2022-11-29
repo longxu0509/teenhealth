@@ -2,6 +2,9 @@ package springboot.service;
 
 import springboot.mybatis.po.TStudentPftest;
 import com.baomidou.mybatisplus.extension.service.IService;
+import springboot.mybatis.po.TStudentPftestCustom;
+
+import java.util.List;
 
 /**
  * <p>
@@ -18,4 +21,6 @@ public interface TStudentPftestService extends IService<TStudentPftest> {
     int addTestItem(TStudentPftest tStudentPftest);
 
     int insertTestRecord(TStudentPftest studentPftest);
+
+    List<TStudentPftestCustom> getStudentPftestLatest();
 }

@@ -6,8 +6,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
-import com.sun.javaws.IconUtil;
-import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
@@ -133,13 +131,16 @@ public class TWqxplanController {
         TWqxplanRecord tWqxplanRecord= tWqxplanRecordService.getMapByRecordId(id);
         String completionNum = tWqxplanRecord.getCompletionNum();
         System.out.println(completionNum);
-        Map<String, String> hashmap = new HashMap<>();
+        List<KeyValue> list = new ArrayList<>();
         String[] kvs = completionNum.split(",");
         for (String kv : kvs) {
             String[] items = kv.split(":");
-            hashmap.put(items[0], items[1]);
+            KeyValue keyValue = new KeyValue();
+            keyValue.setKey(items[0]);
+            keyValue.setValue(items[1]);
+            list.add(keyValue);
         }
-        return CommonResult.success(hashmap);
+        return CommonResult.success(list);
     }
 
     //根据处方id查询xx学生无器械处方训练记录
