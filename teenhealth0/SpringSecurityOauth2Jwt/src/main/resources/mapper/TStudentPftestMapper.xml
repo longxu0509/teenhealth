@@ -19,6 +19,37 @@
         <result column="update_time" property="updateTime" />
     </resultMap>
 
+    <resultMap id="ResultMap1" type="springboot.mybatis.po.TStudentPftestCustom">
+        <id column="id" property="id" />
+        <result column="student_id" property="studentId" />
+        <result column="cardior_level" property="cardiorLevel" />
+        <result column="cardior_score" property="cardiorScore" />
+        <result column="corestrength_level" property="corestrengthLevel" />
+        <result column="corestrength_score" property="corestrengthScore" />
+        <result column="coordinate_level" property="coordinateLevel" />
+        <result column="coordinate_score" property="coordinateScore" />
+        <result column="lowerMF_level" property="lowermfLevel" />
+        <result column="lowerMF_score" property="lowermfScore" />
+        <result column="upMF_level" property="upmfLevel" />
+        <result column="upMF_score" property="upmfScore" />
+        <result column="update_time" property="updateTime" />
+
+        <association property="tStudent" javaType="springboot.mybatis.po.TStudent">
+            <id column="id" property="id" />
+            <result column="student_no" jdbcType="VARCHAR" property="studentNo" />
+            <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+            <result column="age" jdbcType="INTEGER" property="age" />
+            <result column="sex" jdbcType="INTEGER" property="sex" />
+            <result column="stature" jdbcType="DOUBLE" property="stature" />
+            <result column="weight" jdbcType="DOUBLE" property="weight" />
+            <result column="bmi" jdbcType="VARCHAR" property="bmi" />
+            <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+            <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+            <result column="medical" jdbcType="VARCHAR" property="medical" />
+            <result column="phone_no" jdbcType="INTEGER" property="phoneNo" />
+        </association>
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, student_id, cardior_level, cardior_score, corestrength_level, corestrength_score, coordinate_level, coordinate_score, lowerMF_level, lowerMF_score, upMF_level, upMF_score, update_time
@@ -140,5 +171,19 @@
         <include refid="Base_Column_List" />
         FROM t_student_pftest
         WHERE student_id=#{studentId}
+    </select>
+
+    <select id="getStudentPftestLatest" resultMap="ResultMap1">
+        select *
+        from
+            t_student s, t_student_pftest w,
+
+            (select student_id, max(update_time) as update_time from t_student_pftest group by student_id) t
+
+        where s.id = t.student_id
+
+          AND w.student_id = t.student_id
+
+          AND w.update_time = t.update_time
     </select>
 </mapper>

@@ -3,9 +3,12 @@ package springboot.service.Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import springboot.mybatis.po.TStudentPftest;
 import springboot.mybatis.mapper.TStudentPftestMapper;
+import springboot.mybatis.po.TStudentPftestCustom;
 import springboot.service.TStudentPftestService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -33,5 +36,10 @@ public class TStudentPftestServiceImpl extends ServiceImpl<TStudentPftestMapper,
     @Override
     public int insertTestRecord(TStudentPftest studentPftest) {
         return tStudentPftestMapper.insertTestRecord(studentPftest);
+    }
+
+    @Override
+    public List<TStudentPftestCustom> getStudentPftestLatest() {
+        return tStudentPftestMapper.getStudentPftestLatest();
     }
 }
