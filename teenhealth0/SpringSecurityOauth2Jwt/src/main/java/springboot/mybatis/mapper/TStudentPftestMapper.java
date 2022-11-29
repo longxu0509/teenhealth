@@ -25,4 +25,8 @@ public interface TStudentPftestMapper extends BaseMapper<TStudentPftest> {
     int insertTestRecord(TStudentPftest studentPftest);
 
     List<TStudentPftestCustom> getStudentPftestLatest();
+
+    List<TStudentPftestCustom> getStudentPftestById(Long id);
+
+    boolean deleteStudentPftest(Long id);
 }
