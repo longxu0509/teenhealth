@@ -21,5 +21,5 @@ public interface TTestCardiorMapper extends BaseMapper<TTestCardior> {
 
     List<TTestCardior> testList();
 
-    int updateTestCriteria(TTestCardior tTestCardior);
+    int updateTestCardior(TTestCardior tTestCardior);
 }

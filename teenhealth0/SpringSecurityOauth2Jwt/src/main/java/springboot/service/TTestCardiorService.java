@@ -19,5 +19,5 @@ public interface TTestCardiorService extends IService<TTestCardior> {
 
     List<TTestCardior> testList();
 
-    int updateTestCriteria(TTestCardior tTestCardior);
+    int updateTestCardior(TTestCardior tTestCardior);
 }

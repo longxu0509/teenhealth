@@ -34,7 +34,7 @@ public class TTestCardiorServiceImpl extends ServiceImpl<TTestCardiorMapper, TTe
     }
 
     @Override
-    public int updateTestCriteria(TTestCardior tTestCardior) {
-        return tTestCardiorMapper.updateTestCriteria(tTestCardior);
+    public int updateTestCardior(TTestCardior tTestCardior) {
+        return tTestCardiorMapper.updateTestCardior(tTestCardior);
     }
 }
