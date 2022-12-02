@@ -31,4 +31,10 @@ public class TTestUpmfServiceImpl extends ServiceImpl<TTestUpmfMapper, TTestUpmf
     public List<TTestUpmf> testList() {
         return tTestUpmfMapper.testList();
     }
+
+    @Override
+    public int updateTestUpmf(TTestUpmf tTestUpmf, long id) {
+        tTestUpmf.setId(id);
+        return tTestUpmfMapper.updateTestUpmf(tTestUpmf);
+    }
 }

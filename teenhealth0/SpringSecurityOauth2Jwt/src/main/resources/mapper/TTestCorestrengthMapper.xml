@@ -21,6 +21,37 @@
         id, test_id, test_name, level, test_result1, test_result2, score, remark, update_time, create_time
     </sql>
 
+    <update id="updateTestCorestrength">
+        update t_test_corestrength
+        <set>
+            <if test="testId != null">
+                test_id = #{testId},
+            </if>
+            <if test="testName != null">
+                test_name = #{testName},
+            </if>
+            <if test="level != null">
+                level = #{level},
+            </if>
+            <if test="testResult1 != null">
+                test_result1 = #{testResult1},
+            </if>
+            <if test="testResult2 != null">
+                test_result2 = #{testResult2},
+            </if>
+            <if test="score != null">
+                score = #{testResult1},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
     <select id="getAdviceAndScore" resultType="springboot.mybatis.po.TTestCorestrength">
         SELECT
             level, score, remark

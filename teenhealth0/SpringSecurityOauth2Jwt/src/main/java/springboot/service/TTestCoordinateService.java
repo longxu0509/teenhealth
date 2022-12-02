@@ -18,4 +18,6 @@ public interface TTestCoordinateService extends IService<TTestCoordinate> {
     TTestCoordinate getAdviceAndScore(Long count);
 
     List<TTestCoordinate> testList();
+
+    int updateTestCoordinate(TTestCoordinate tTestCoordinate, long id);
 }

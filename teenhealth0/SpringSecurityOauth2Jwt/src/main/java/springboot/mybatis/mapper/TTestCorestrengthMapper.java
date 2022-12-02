@@ -20,4 +20,6 @@ public interface TTestCorestrengthMapper extends BaseMapper<TTestCorestrength> {
     TTestCorestrength getAdviceAndScore(Long count);
 
     List<TTestCorestrength> testList();
+
+    int updateTestCorestrength(TTestCorestrength tTestCorestrength);
 }

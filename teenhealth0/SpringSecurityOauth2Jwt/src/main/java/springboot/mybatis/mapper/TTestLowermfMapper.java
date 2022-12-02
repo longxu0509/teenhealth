@@ -20,4 +20,6 @@ public interface TTestLowermfMapper extends BaseMapper<TTestLowermf> {
     TTestLowermf getAdviceAndScore(Long count);
 
     List<TTestLowermf> testList();
+
+    int updateTestLowermf(TTestLowermf tTestLowermf);
 }

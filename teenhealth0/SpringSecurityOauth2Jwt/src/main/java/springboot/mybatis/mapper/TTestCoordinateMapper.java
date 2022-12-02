@@ -20,4 +20,6 @@ public interface TTestCoordinateMapper extends BaseMapper<TTestCoordinate> {
     TTestCoordinate getAdviceAndScore(Long count);
 
     List<TTestCoordinate> testList();
+
+    int updateTestCoordinate(TTestCoordinate tTestCoordinate);
 }

@@ -5,12 +5,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
 import springboot.mybatis.po.*;
 import springboot.service.*;
 
@@ -80,34 +77,58 @@ public class TTestCardiorController {
         return CommonResult.fail();
     }
 
-    @RequestMapping("/updateTestCardior/{id}")
-    public CommonResult updateTestCardior(@RequestBody TTestCardior tTestCardior, @PathVariable("id") int id) throws Exception{
-        int result = 0;
-        switch (id) {
-            case 1: {
-                result = tTestCardiorService.updateTestCardior(tTestCardior);
-            } break;
-            case 2: {
-//                result=tTestCorestrengthService.updateTestCriteria();
-            } break;
-            case 3: {
-//                result =tTestCoordinateService.updateTestCriteria();
-            } break;
-            case 4: {
-//                result =tTestUpmfService.updateTestCriteria();
-            } break;
-            case 5: {
-//                result =tTestLowermfService.updateTestCriteria();
-            } break;
-            default:
-                break;
-        }
-        if (result == 1) {
+    @PostMapping("/updateTestCardior/{id}")
+    @ResponseBody
+    public CommonResult updateTestCardior(@RequestBody TTestCardior tTestCardior, @PathVariable("id") long id) throws Exception{
+        if(tTestCardiorService.updateTestCardior(tTestCardior, id)==1){
             return CommonResult.success();
         }else {
             return CommonResult.fail();
         }
     }
+
+    @PostMapping("/updateTestCorestrength/{id}")
+    @ResponseBody
+    public CommonResult updateTestCorestrength(@RequestBody TTestCorestrength tTestCorestrength, @PathVariable("id") long id) throws Exception{
+        if(tTestCorestrengthService.updateTestCorestrength(tTestCorestrength, id)==1){
+            return CommonResult.success();
+        }else {
+            return CommonResult.fail();
+        }
+    }
+
+    @PostMapping("/updateTestCoordinate/{id}")
+    @ResponseBody
+    public CommonResult updateTestCoordinate(@RequestBody TTestCoordinate tTestCoordinate, @PathVariable("id") long id) throws Exception{
+        if(tTestCoordinateService.updateTestCoordinate(tTestCoordinate, id)==1){
+            return CommonResult.success();
+        }else {
+            return CommonResult.fail();
+        }
+    }
+
+
+    @PostMapping("/updateTestUpmf/{id}")
+    @ResponseBody
+    public CommonResult updateTestUpmf(@RequestBody TTestUpmf tTestCardior, @PathVariable("id") long id) throws Exception{
+        if(tTestUpmfService.updateTestUpmf(tTestCardior, id)==1){
+            return CommonResult.success();
+        }else {
+            return CommonResult.fail();
+        }
+    }
+
+    @PostMapping("/updateTestLowermf/{id}")
+    @ResponseBody
+    public CommonResult updateTestLowermf(@RequestBody TTestLowermf tTestLowermf, @PathVariable("id") long id) throws Exception{
+        if(tTestLowermfService.updateTestLowermf(tTestLowermf, id)==1){
+            return CommonResult.success();
+        }else {
+            return CommonResult.fail();
+        }
+    }
+
+
 
 }
 

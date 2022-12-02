@@ -18,4 +18,6 @@ public interface TTestUpmfService extends IService<TTestUpmf> {
     TTestUpmf getAdviceAndScore(Long count);
 
     List<TTestUpmf> testList();
+
+    int updateTestUpmf(TTestUpmf tTestUpmf, long id);
 }
