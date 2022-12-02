@@ -18,4 +18,6 @@ public interface TTestLowermfService extends IService<TTestLowermf> {
     TTestLowermf getAdviceAndScore(Long count);
 
     List<TTestLowermf> testList();
+
+    int updateTestLowermf(TTestLowermf tTestLowermf, long id);
 }

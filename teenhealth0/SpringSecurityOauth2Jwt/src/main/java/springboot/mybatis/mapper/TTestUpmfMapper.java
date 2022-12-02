@@ -20,4 +20,6 @@ public interface TTestUpmfMapper extends BaseMapper<TTestUpmf> {
     TTestUpmf getAdviceAndScore(Long count);
 
     List<TTestUpmf> testList();
+
+    int updateTestUpmf(TTestUpmf tTestUpmf);
 }

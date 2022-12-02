@@ -20,7 +20,8 @@
     <sql id="Base_Column_List">
         id, test_id, test_name, level, test_result1, test_result2, score, remark, update_time, create_time
     </sql>
-    <update id="updateTestCardior" parameterType="springboot.mybatis.po.TTestCardior">
+
+    <update id="updateTestCardior">
         update t_test_cardior
         <set>
             <if test="testId != null">

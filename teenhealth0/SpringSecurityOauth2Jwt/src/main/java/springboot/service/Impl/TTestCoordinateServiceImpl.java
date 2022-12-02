@@ -32,4 +32,10 @@ public class TTestCoordinateServiceImpl extends ServiceImpl<TTestCoordinateMappe
     public List<TTestCoordinate> testList() {
         return tTestCoordinateMapper.testList();
     }
+
+    @Override
+    public int updateTestCoordinate(TTestCoordinate tTestCoordinate, long id) {
+        tTestCoordinate.setId(id);
+        return tTestCoordinateMapper.updateTestCoordinate(tTestCoordinate);
+    }
 }
