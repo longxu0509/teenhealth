@@ -63,7 +63,7 @@ public class TWqxtrainingController {
     private TStudentPftestService tStudentPftestService;
 
 
-    private String userUploadpath="/media/userUploads/";    //阿里云上传用户训练文件地址
+    private String userUploadpath="/media/AITraining/userUploads/";    //阿里云上传用户训练文件地址
     private String moxingpath="/usr/java/xunlianmoxing/";   //阿里云算法模型文件地址
 //    private String uploadpath = "D:\\Works\\WQXtest\\uploadpath\\";    //本地地址教学视频地址
 //    private String userUploadpath = "D:\\Works\\WQXtest\\JYWQXtest\\";    //本地地址上传用户训练文件地址

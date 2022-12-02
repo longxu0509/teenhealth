@@ -27,7 +27,7 @@ public class TTrainingVideoController {
     private TTrainingVideoService tTrainingVideoService;
 
 //    private String localpath = ("D:\\Works\\WQXtest\\JYWQXtest\\");//本地视频地址
-    String localpath =("/media/uploads/");     //阿里云视频存放地址
+    String localpath =("/media/AITraining/uploads/");     //阿里云视频存放地址
 
     //分页查询显示训练视频列表
     @RequestMapping("/page4VideoList")

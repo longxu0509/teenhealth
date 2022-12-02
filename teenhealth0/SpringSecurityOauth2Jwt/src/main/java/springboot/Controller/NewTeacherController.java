@@ -64,7 +64,7 @@ public class NewTeacherController {
     @ResponseBody
     public CommonResult addStudent(@RequestBody TStudent tStudent)throws Exception{
         double bmi = tStudent.getWeight()/ (tStudent.getStature() * tStudent.getStature());
-        tStudent.setBmi(String.valueOf(bmi*10000));
+        tStudent.setBmi(String.valueOf((int)(bmi*10000)));
         Date date = new Date();
         tStudent.setCreateTime(date);
         if (studentService.insertStudent(tStudent)==1){

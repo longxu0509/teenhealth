@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.Mapper;
 import springboot.mybatis.po.TTestUpmf;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -16,4 +18,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 public interface TTestUpmfMapper extends BaseMapper<TTestUpmf> {
 
     TTestUpmf getAdviceAndScore(Long count);
+
+    List<TTestUpmf> testList();
 }

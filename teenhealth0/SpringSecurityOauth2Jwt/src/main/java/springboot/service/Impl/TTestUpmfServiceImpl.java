@@ -7,6 +7,8 @@ import springboot.service.TTestUpmfService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -23,5 +25,10 @@ public class TTestUpmfServiceImpl extends ServiceImpl<TTestUpmfMapper, TTestUpmf
     @Override
     public TTestUpmf getAdviceAndScore(Long count) {
         return tTestUpmfMapper.getAdviceAndScore(count);
+    }
+
+    @Override
+    public List<TTestUpmf> testList() {
+        return tTestUpmfMapper.testList();
     }
 }

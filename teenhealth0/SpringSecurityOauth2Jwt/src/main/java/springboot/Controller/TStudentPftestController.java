@@ -42,7 +42,6 @@ public class TStudentPftestController {
         return CommonResult.success(pageInfo1);
     }
 
-
     // 根据学生id查询用户历史的测试记录
     @RequestMapping("/getStudentPftestById/{id}")
     public CommonResult getStudentPftestById(@PathVariable("id") Long id,@RequestBody PageInfo pageInfo){

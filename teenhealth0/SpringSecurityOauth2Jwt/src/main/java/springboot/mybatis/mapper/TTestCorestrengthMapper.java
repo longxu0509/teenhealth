@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.Mapper;
 import springboot.mybatis.po.TTestCorestrength;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -16,4 +18,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 public interface TTestCorestrengthMapper extends BaseMapper<TTestCorestrength> {
 
     TTestCorestrength getAdviceAndScore(Long count);
+
+    List<TTestCorestrength> testList();
 }

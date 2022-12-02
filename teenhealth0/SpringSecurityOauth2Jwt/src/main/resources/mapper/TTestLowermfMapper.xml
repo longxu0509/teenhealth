@@ -28,5 +28,10 @@
         WHERE
             test_result1 &lt;= #{count}  AND test_result2 &gt;= #{count}
     </select>
+    <select id="testList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_test_lowermf
+    </select>
 
 </mapper>
