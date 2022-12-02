@@ -48,41 +48,44 @@ public class TTestCardiorController {
     @RequestMapping("/testList/{id}")
     public CommonResult testList(@PathVariable("id") int id, @RequestBody PageInfo pageInfo) throws Exception{
         PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
-        PageInfo pageInfo1=new PageInfo();
         switch (id) {
             case 1: {
                 List<TTestCardior> list =tTestCardiorService.testList();
-                pageInfo1.setList(list);
-            } break;
+                PageInfo pageInfo1=new PageInfo(list);
+                return CommonResult.success(pageInfo1);
+            }
             case 2: {
                 List<TTestCorestrength> list =tTestCorestrengthService.testList();
-                pageInfo1.setList(list);
-            } break;
+                PageInfo pageInfo1=new PageInfo(list);
+                return CommonResult.success(pageInfo1);
+            }
             case 3: {
                 List<TTestCoordinate> list =tTestCoordinateService.testList();
-                pageInfo1.setList(list);
-            } break;
+                PageInfo pageInfo1=new PageInfo(list);
+                return CommonResult.success(pageInfo1);
+            }
             case 4: {
                 List<TTestUpmf> list =tTestUpmfService.testList();
-                pageInfo1.setList(list);
-            } break;
+                PageInfo pageInfo1=new PageInfo(list);
+                return CommonResult.success(pageInfo1);
+            }
             case 5: {
                 List<TTestLowermf> list =tTestLowermfService.testList();
-                pageInfo1.setList(list);
-            } break;
+                PageInfo pageInfo1=new PageInfo(list);
+                return CommonResult.success(pageInfo1);
+            }
             default:
                 break;
         }
-        return CommonResult.success(pageInfo1);
+        return CommonResult.fail();
     }
 
-    @RequestMapping("/updateTestCriteria/{id}")
-    public CommonResult updateTestCriteria(@RequestBody Object obj, @PathVariable("id") int id) throws Exception{
+    @RequestMapping("/updateTestCardior/{id}")
+    public CommonResult updateTestCardior(@RequestBody TTestCardior tTestCardior, @PathVariable("id") int id) throws Exception{
         int result = 0;
         switch (id) {
             case 1: {
-                TTestCardior tTestCardior = (TTestCardior) obj;
-                result = tTestCardiorService.updateTestCriteria(tTestCardior);
+                result = tTestCardiorService.updateTestCardior(tTestCardior);
             } break;
             case 2: {
 //                result=tTestCorestrengthService.updateTestCriteria();
