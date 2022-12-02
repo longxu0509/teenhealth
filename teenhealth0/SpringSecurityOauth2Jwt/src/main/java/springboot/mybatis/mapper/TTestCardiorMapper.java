@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.Mapper;
 import springboot.mybatis.po.TTestCardior;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -16,4 +18,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 public interface TTestCardiorMapper extends BaseMapper<TTestCardior> {
 
     TTestCardior getAdviceAndScore(Long count);
+
+    List<TTestCardior> testList();
+
+    int updateTestCriteria(TTestCardior tTestCardior);
 }

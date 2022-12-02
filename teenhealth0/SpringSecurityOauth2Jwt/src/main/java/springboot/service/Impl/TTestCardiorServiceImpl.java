@@ -7,6 +7,8 @@ import springboot.service.TTestCardiorService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -24,5 +26,15 @@ public class TTestCardiorServiceImpl extends ServiceImpl<TTestCardiorMapper, TTe
     @Override
     public TTestCardior getAdviceAndScore(Long count) {
         return tTestCardiorMapper.getAdviceAndScore(count);
+    }
+
+    @Override
+    public List<TTestCardior> testList() {
+        return tTestCardiorMapper.testList();
+    }
+
+    @Override
+    public int updateTestCriteria(TTestCardior tTestCardior) {
+        return tTestCardiorMapper.updateTestCriteria(tTestCardior);
     }
 }

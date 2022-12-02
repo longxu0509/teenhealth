@@ -3,6 +3,8 @@ package springboot.service;
 import springboot.mybatis.po.TTestUpmf;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -14,4 +16,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface TTestUpmfService extends IService<TTestUpmf> {
 
     TTestUpmf getAdviceAndScore(Long count);
+
+    List<TTestUpmf> testList();
 }

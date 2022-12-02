@@ -7,6 +7,8 @@ import springboot.service.TTestLowermfService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -23,5 +25,10 @@ public class TTestLowermfServiceImpl extends ServiceImpl<TTestLowermfMapper, TTe
     @Override
     public TTestLowermf getAdviceAndScore(Long count) {
         return tTestLowermfMapper.getAdviceAndScore(count);
+    }
+
+    @Override
+    public List<TTestLowermf> testList() {
+        return tTestLowermfMapper.testList();
     }
 }

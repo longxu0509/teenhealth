@@ -1,1 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0d30f5"],{"5ac6":function(n,t,c){"use strict";c.r(t),c.d(t,"GetList",(function(){return o}));var e=c("22ce");function o(n,t){return console.log(n),Object(e["a"])({url:"/teacher/WQXTrainingRecord/"+n,method:"post",data:t})}}}]);

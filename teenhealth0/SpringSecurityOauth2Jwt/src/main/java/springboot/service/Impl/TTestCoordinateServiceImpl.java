@@ -7,6 +7,8 @@ import springboot.service.TTestCoordinateService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -24,5 +26,10 @@ public class TTestCoordinateServiceImpl extends ServiceImpl<TTestCoordinateMappe
     @Override
     public TTestCoordinate getAdviceAndScore(Long count) {
         return tTestCoordinateMapper.getAdviceAndScore(count);
+    }
+
+    @Override
+    public List<TTestCoordinate> testList() {
+        return tTestCoordinateMapper.testList();
     }
 }

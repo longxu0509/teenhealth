@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.Mapper;
 import springboot.mybatis.po.TTestCoordinate;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -16,4 +18,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 public interface TTestCoordinateMapper extends BaseMapper<TTestCoordinate> {
 
     TTestCoordinate getAdviceAndScore(Long count);
+
+    List<TTestCoordinate> testList();
 }
