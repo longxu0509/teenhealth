@@ -22,4 +22,6 @@ public interface TTestUpmfMapper extends BaseMapper<TTestUpmf> {
     List<TTestUpmf> testList();
 
     int updateTestUpmf(TTestUpmf tTestUpmf);
+
+    TTestUpmf getTestById(long id);
 }

@@ -63,5 +63,11 @@
         <include refid="Base_Column_List" />
         from t_test_lowermf
     </select>
+    <select id="getTestById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_test_lowermf
+        where id = #{id}
+    </select>
 
 </mapper>

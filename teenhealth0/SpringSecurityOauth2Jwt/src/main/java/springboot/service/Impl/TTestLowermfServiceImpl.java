@@ -37,4 +37,9 @@ public class TTestLowermfServiceImpl extends ServiceImpl<TTestLowermfMapper, TTe
         tTestLowermf.setId(id);
         return tTestLowermfMapper.updateTestLowermf(tTestLowermf);
     }
+
+    @Override
+    public TTestLowermf getTestById(long id) {
+        return tTestLowermfMapper.getTestById(id);
+    }
 }

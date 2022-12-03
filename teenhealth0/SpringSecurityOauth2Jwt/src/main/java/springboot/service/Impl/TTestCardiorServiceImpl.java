@@ -38,4 +38,9 @@ public class TTestCardiorServiceImpl extends ServiceImpl<TTestCardiorMapper, TTe
         tTestCardior.setId(id);
         return tTestCardiorMapper.updateTestCardior(tTestCardior);
     }
+
+    @Override
+    public TTestCardior getTestById(long id) {
+        return tTestCardiorMapper.getTestById(id);
+    }
 }

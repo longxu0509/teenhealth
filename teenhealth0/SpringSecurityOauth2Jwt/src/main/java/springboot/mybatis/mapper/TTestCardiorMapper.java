@@ -22,4 +22,6 @@ public interface TTestCardiorMapper extends BaseMapper<TTestCardior> {
     List<TTestCardior> testList();
 
     int updateTestCardior(TTestCardior tTestCardior);
+
+    TTestCardior getTestById(long id);
 }

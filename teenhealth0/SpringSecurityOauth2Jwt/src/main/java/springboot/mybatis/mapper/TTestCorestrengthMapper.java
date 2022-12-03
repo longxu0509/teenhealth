@@ -22,4 +22,6 @@ public interface TTestCorestrengthMapper extends BaseMapper<TTestCorestrength> {
     List<TTestCorestrength> testList();
 
     int updateTestCorestrength(TTestCorestrength tTestCorestrength);
+
+    TTestCorestrength getTestById(long id);
 }

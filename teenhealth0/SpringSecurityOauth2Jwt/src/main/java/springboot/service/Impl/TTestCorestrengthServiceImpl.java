@@ -37,4 +37,9 @@ public class TTestCorestrengthServiceImpl extends ServiceImpl<TTestCorestrengthM
         tTestCorestrength.setId(id);
         return tTestCorestrengthMapper.updateTestCorestrength(tTestCorestrength);
     }
+
+    @Override
+    public TTestCorestrength getTestById(long id) {
+        return tTestCorestrengthMapper.getTestById(id);
+    }
 }
