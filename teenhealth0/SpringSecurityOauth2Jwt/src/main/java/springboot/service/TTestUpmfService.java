@@ -20,4 +20,6 @@ public interface TTestUpmfService extends IService<TTestUpmf> {
     List<TTestUpmf> testList();
 
     int updateTestUpmf(TTestUpmf tTestUpmf, long id);
+
+    TTestUpmf getTestById(long l);
 }

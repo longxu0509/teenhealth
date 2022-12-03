@@ -22,4 +22,6 @@ public interface TTestCoordinateMapper extends BaseMapper<TTestCoordinate> {
     List<TTestCoordinate> testList();
 
     int updateTestCoordinate(TTestCoordinate tTestCoordinate);
+
+    TTestCoordinate getTestById(long id);
 }

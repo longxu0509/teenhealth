@@ -22,4 +22,6 @@ public interface TTestLowermfMapper extends BaseMapper<TTestLowermf> {
     List<TTestLowermf> testList();
 
     int updateTestLowermf(TTestLowermf tTestLowermf);
+
+    TTestLowermf getTestById(long id);
 }

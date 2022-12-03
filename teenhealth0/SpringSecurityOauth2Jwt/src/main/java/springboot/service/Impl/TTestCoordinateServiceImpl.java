@@ -38,4 +38,9 @@ public class TTestCoordinateServiceImpl extends ServiceImpl<TTestCoordinateMappe
         tTestCoordinate.setId(id);
         return tTestCoordinateMapper.updateTestCoordinate(tTestCoordinate);
     }
+
+    @Override
+    public TTestCoordinate getTestById(long id) {
+        return tTestCoordinateMapper.getTestById(id);
+    }
 }

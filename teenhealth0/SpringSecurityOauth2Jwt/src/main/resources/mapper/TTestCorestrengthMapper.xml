@@ -66,4 +66,11 @@
         from t_test_corestrength
     </select>
 
+    <select id="getTestById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_test_corestrength
+        where id = #{id}
+    </select>
+
 </mapper>

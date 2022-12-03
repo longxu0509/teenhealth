@@ -67,4 +67,11 @@
         from t_test_cardior
     </select>
 
+    <select id="getTestById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_test_cardior
+        where id = #{id}
+    </select>
+
 </mapper>

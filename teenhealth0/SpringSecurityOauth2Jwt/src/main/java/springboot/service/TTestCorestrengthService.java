@@ -20,4 +20,6 @@ public interface TTestCorestrengthService extends IService<TTestCorestrength> {
     List<TTestCorestrength> testList();
 
     int updateTestCorestrength(TTestCorestrength tTestCorestrength, long id);
+
+    TTestCorestrength getTestById(long id);
 }

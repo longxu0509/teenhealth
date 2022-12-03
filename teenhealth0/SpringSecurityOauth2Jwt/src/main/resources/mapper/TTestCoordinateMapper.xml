@@ -64,5 +64,11 @@
         <include refid="Base_Column_List" />
         from t_test_coordinate
     </select>
+    <select id="getTestById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_test_coordinate
+        where id = #{id}
+    </select>
 
 </mapper>

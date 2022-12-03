@@ -20,4 +20,6 @@ public interface TTestLowermfService extends IService<TTestLowermf> {
     List<TTestLowermf> testList();
 
     int updateTestLowermf(TTestLowermf tTestLowermf, long id);
+
+    TTestLowermf getTestById(long l);
 }
