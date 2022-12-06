@@ -129,6 +129,17 @@
         </trim>
     </insert>
 
+    <!--批量插入无器械处方内容-->
+    <insert id="insertPlanContentList" parameterType="springboot.mybatis.po.TWqxplanPrescription">
+        insert into t_wqxplan_prescription
+        (NP_id, trainvideo_id, sort, indexNO, time, target, rest, create_time)
+        values
+        <foreach collection="list" item="model" separator=",">
+            (#{model.npId},#{model.trainvideoId},#{model.sort},#{model.indexNO},
+            #{model.time},#{model.target},#{model.rest},#{model.createTime})
+        </foreach>
+    </insert>
+
     <select id="findPlanContByIndexNO" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List" />

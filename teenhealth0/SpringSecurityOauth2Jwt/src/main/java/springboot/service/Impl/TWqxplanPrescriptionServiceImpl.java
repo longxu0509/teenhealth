@@ -62,4 +62,9 @@ public class TWqxplanPrescriptionServiceImpl extends ServiceImpl<TWqxplanPrescri
     public int subIndexNO(Long npId, Long indexNO) {
         return tWqxplanPrescriptionMapper.subIndexNO(npId, indexNO);
     }
+
+    @Override
+    public int insertPlanContentList(List<TWqxplanPrescription> list) {
+        return tWqxplanPrescriptionMapper.insertPlanContentList(list);
+    }
 }
