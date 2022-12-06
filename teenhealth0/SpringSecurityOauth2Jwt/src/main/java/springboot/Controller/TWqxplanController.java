@@ -36,9 +36,6 @@ public class TWqxplanController {
     private TWqxplanNpService tWqxplanNpService;
 
     @Autowired
-    private TWqxplanPersonalService tWqxplanPersonalService;
-
-    @Autowired
     private TWqxplanPrescriptionService tWqxplanPrescriptionService;
 
     @Autowired
@@ -176,13 +173,13 @@ public class TWqxplanController {
     }
 
     //根据PlanId查询处方内容 $
-    @RequestMapping("/WQXPlanDetail/{id}")
-    public CommonResult WQXPersonalPlan(@PathVariable("id")Long planId,@RequestBody PageInfo pageInfo){
-        PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
-        List<TWqxplanPrescription> tWqxplanPrescriptions = tWqxplanPrescriptionService.PlanDetail(planId);
-        PageInfo pageInfo1=new PageInfo(tWqxplanPrescriptions);
-        return CommonResult.success(pageInfo1);
-    }
+//    @RequestMapping("/WQXPlanDetail/{id}")
+//    public CommonResult WQXPersonalPlan(@PathVariable("id")Long planId,@RequestBody PageInfo pageInfo){
+//        PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
+//        List<TWqxplanPrescription> tWqxplanPrescriptions = tWqxplanPrescriptionService.PlanDetail(planId);
+//        PageInfo pageInfo1=new PageInfo(tWqxplanPrescriptions);
+//        return CommonResult.success(pageInfo1);
+//    }
 
     // 修改训练处方内容 $
 //    @PostMapping("/editPlanContent/{id}")
@@ -257,10 +254,23 @@ public class TWqxplanController {
 
 //    Redis
     // 根据npId获取详细处方信息
-//    @RequestMapping("/WQXPlanDetail/{id}")
-//    public CommonResult getWQXPlan(@PathVariable("id") String id){
-//        return CommonResult.success(redisUtil.hmget(id));
-//    }
+    @RequestMapping("/WQXPlanDetail/{npId}")
+    public CommonResult getWQXPlan(@PathVariable("npId") long npId){
+        if (redisUtil.hasKey(String.valueOf(npId))) {  // redis里有直接返回
+            return CommonResult.success(redisUtil.hmget(String.valueOf(npId)));
+        }
+        // 否则 查出mysql 写入到redis
+        List<TWqxplanPrescription> list = tWqxplanPrescriptionService.PlanDetail(npId);
+        for (TWqxplanPrescription tWqxplanPrescription : list) {
+            String key = String.valueOf(tWqxplanPrescription.getNpId());    //redis的Key设置为PlanId
+            String item = String.valueOf(tWqxplanPrescription.getIndexNO());
+            if (!redisUtil.hHasKey(key, item)){    //判断该条处方是否存在
+                redisUtil.hset(key, item, tWqxplanPrescription);   //插入
+                redisUtil.expire(key,300);  //redis有效期为5分钟
+            }
+        }
+        return CommonResult.success(redisUtil.hmget(String.valueOf(npId)));
+    }
 
     //处方内容从前端添加到redis
     @RequestMapping("/addPlanContent")
