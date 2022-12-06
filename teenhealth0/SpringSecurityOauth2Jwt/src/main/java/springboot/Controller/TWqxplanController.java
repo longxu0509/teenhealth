@@ -176,13 +176,13 @@ public class TWqxplanController {
     }
 
     //根据PlanId查询处方内容 $
-//    @RequestMapping("/WQXPlanDetail/{id}")
-//    public CommonResult WQXPersonalPlan(@PathVariable("id")Long planId,@RequestBody PageInfo pageInfo){
-//        PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
-//        List<TWqxplanPrescription> tWqxplanPrescriptions = tWqxplanPrescriptionService.PlanDetail(planId);
-//        PageInfo pageInfo1=new PageInfo(tWqxplanPrescriptions);
-//        return CommonResult.success(pageInfo1);
-//    }
+    @RequestMapping("/WQXPlanDetail/{id}")
+    public CommonResult WQXPersonalPlan(@PathVariable("id")Long planId,@RequestBody PageInfo pageInfo){
+        PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
+        List<TWqxplanPrescription> tWqxplanPrescriptions = tWqxplanPrescriptionService.PlanDetail(planId);
+        PageInfo pageInfo1=new PageInfo(tWqxplanPrescriptions);
+        return CommonResult.success(pageInfo1);
+    }
 
     // 修改训练处方内容 $
 //    @PostMapping("/editPlanContent/{id}")
@@ -257,10 +257,10 @@ public class TWqxplanController {
 
 //    Redis
     // 根据npId获取详细处方信息
-    @RequestMapping("/WQXPlanDetail/{id}")
-    public CommonResult getWQXPlan(@PathVariable("id") String id){
-        return CommonResult.success(redisUtil.hmget(id));
-    }
+//    @RequestMapping("/WQXPlanDetail/{id}")
+//    public CommonResult getWQXPlan(@PathVariable("id") String id){
+//        return CommonResult.success(redisUtil.hmget(id));
+//    }
 
     //处方内容从前端添加到redis
     @RequestMapping("/addPlanContent")
