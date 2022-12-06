@@ -62,10 +62,12 @@ spring:
 
   redis:
     database: 0
-    host: 47.122.6.103
+#    host: 47.122.6.103
+    host: 127.0.0.1
     port: 6379
     ## Redis服务器连接密码（默认为空）
-    password: JKCJZX-Redis
+#    password: JKCJZX-Redis
+    password:
     ## 连接超时时间（毫秒）
     timeout: 0s
     jedis:

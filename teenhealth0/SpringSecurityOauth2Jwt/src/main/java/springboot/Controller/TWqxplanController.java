@@ -6,6 +6,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
@@ -112,16 +113,6 @@ public class TWqxplanController {
         PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
         List<TWqxplanRecordCustom1> list=tWqxplanRecordService.getStudentWQXTrainingRecord(id, planId);
 
-//        for(TWqxplanRecordCustom1 custom1: list) {
-//            Map<String, String> hashmap = new HashMap<>();
-//            String completionNum = custom1.getCompletionNum();
-//            String[] str = completionNum.split("|");
-//            for (String s : str) {
-//                String[] kv = s.split(":");
-//                hashmap.put(kv[0], kv[1]);
-//            }
-//            custom1.setHm(hashmap);
-//        }
         PageInfo pageInfo1=new PageInfo(list);
         return CommonResult.success(pageInfo1);
     }
@@ -152,15 +143,15 @@ public class TWqxplanController {
         return CommonResult.success(pageInfo1);
     }
 
-    //删除处方
-    @RequestMapping("/deleteWQXTrainPlan/{planId}")
-    public CommonResult deleteWQXplan(@PathVariable("planId") Long planId){
-        if (tWqxplanNpService.deleteWQXplan(planId)){
-            return CommonResult.success();
-        }else {
-            return CommonResult.fail();
-        }
-    }
+    //删除处方 $
+//    @RequestMapping("/deleteWQXTrainPlan/{planId}")
+//    public CommonResult deleteWQXplan(@PathVariable("planId") Long planId){
+//        if (tWqxplanNpService.deleteWQXplan(planId)){
+//            return CommonResult.success();
+//        }else {
+//            return CommonResult.fail();
+//        }
+//    }
 
     //修改训练处方内容
     @PostMapping("/editWQXTrainPlan/{id}")
@@ -184,55 +175,55 @@ public class TWqxplanController {
             }
     }
 
-    //根据PlanId查询处方内容
-    @RequestMapping("/WQXPlanDetail/{id}")
-    public CommonResult WQXPersonalPlan(@PathVariable("id")Long planId,@RequestBody PageInfo pageInfo){
-        PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
-        List<TWqxplanPrescription> tWqxplanPrescriptions = tWqxplanPrescriptionService.PlanDetail(planId);
-        PageInfo pageInfo1=new PageInfo(tWqxplanPrescriptions);
-        return CommonResult.success(pageInfo1);
-    }
+    //根据PlanId查询处方内容 $
+//    @RequestMapping("/WQXPlanDetail/{id}")
+//    public CommonResult WQXPersonalPlan(@PathVariable("id")Long planId,@RequestBody PageInfo pageInfo){
+//        PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
+//        List<TWqxplanPrescription> tWqxplanPrescriptions = tWqxplanPrescriptionService.PlanDetail(planId);
+//        PageInfo pageInfo1=new PageInfo(tWqxplanPrescriptions);
+//        return CommonResult.success(pageInfo1);
+//    }
 
-    // 修改训练处方内容
-    @PostMapping("/editPlanContent/{id}")
-    public CommonResult editPlanContent(@RequestBody TWqxplanPrescription tWqxplanPrescription,@PathVariable("id")Long id){
-        tWqxplanPrescription.setId(id);
-        if(tWqxplanPrescriptionService.updatePlanContent(tWqxplanPrescription)==1){
-            return CommonResult.success();
-        }else {
-            return CommonResult.fail();
-        }
-    }
+    // 修改训练处方内容 $
+//    @PostMapping("/editPlanContent/{id}")
+//    public CommonResult editPlanContent(@RequestBody TWqxplanPrescription tWqxplanPrescription,@PathVariable("id")Long id){
+//        tWqxplanPrescription.setId(id);
+//        if(tWqxplanPrescriptionService.updatePlanContent(tWqxplanPrescription)==1){
+//            return CommonResult.success();
+//        }else {
+//            return CommonResult.fail();
+//        }
+//    }
 
-    // 新增训练处方内容
-    @PostMapping("/addPlanContent")
-    public CommonResult addPlanContent(@RequestBody TWqxplanPrescription tWqxplanPrescription){
-        tWqxplanPrescription.setCreateTime(new Date());
-        if(tWqxplanPrescriptionService.insertPlanContent(tWqxplanPrescription)==1){
-            return CommonResult.success();
-        }else {
-            return CommonResult.fail();
-        }
-    }
+    // 新增训练处方内容 #
+//    @PostMapping("/addPlanContent")
+//    public CommonResult addPlanContent(@RequestBody TWqxplanPrescription tWqxplanPrescription){
+//        tWqxplanPrescription.setCreateTime(new Date());
+//        if(tWqxplanPrescriptionService.insertPlanContent(tWqxplanPrescription)==1){
+//            return CommonResult.success();
+//        }else {
+//            return CommonResult.fail();
+//        }
+//    }
 
-    // 新增训练处方内容
-    @PostMapping("/insertPlanContent")
-    public CommonResult insertPlanContent(@RequestBody TWqxplanPrescription tWqxplanPrescription){
-        tWqxplanPrescription.setCreateTime(new Date());
-        Long indexNO = tWqxplanPrescription.getIndexNO();
-        Long npId = tWqxplanPrescription.getNpId();
-        // 查询是否存在>=indexNO 则不是在最后一条记录后插入 需要更新后面的indexNo
-        if(tWqxplanPrescriptionService.findPlanContByIndexNO(npId, indexNO) != null) {
-            //如果存在后面 >= indexNo的记录 indexNO+1
-            tWqxplanPrescriptionService.updateIndexNO(npId, indexNO);
-        }
-
-        if(tWqxplanPrescriptionService.insertPlanContent(tWqxplanPrescription)==1){
-            return CommonResult.success();
-        }else {
-            return CommonResult.fail();
-        }
-    }
+    // 新增训练处方内容 $
+//    @PostMapping("/insertPlanContent")
+//    public CommonResult insertPlanContent(@RequestBody TWqxplanPrescription tWqxplanPrescription){
+//        tWqxplanPrescription.setCreateTime(new Date());
+//        Long indexNO = tWqxplanPrescription.getIndexNO();
+//        Long npId = tWqxplanPrescription.getNpId();
+//        // 查询是否存在>=indexNO 则不是在最后一条记录后插入 需要更新后面的indexNo
+//        if(tWqxplanPrescriptionService.findPlanContByIndexNO(npId, indexNO) != null) {
+//            //如果存在后面 >= indexNo的记录 indexNO+1
+//            tWqxplanPrescriptionService.updateIndexNO(npId, indexNO);
+//        }
+//
+//        if(tWqxplanPrescriptionService.insertPlanContent(tWqxplanPrescription)==1){
+//            return CommonResult.success();
+//        }else {
+//            return CommonResult.fail();
+//        }
+//    }
 
     // 根据id查询训练处方动作
     @RequestMapping("/findPlanContentById/{id}")
@@ -245,62 +236,64 @@ public class TWqxplanController {
         }
     }
 
-    //删除训练处方内容
-    @RequestMapping("/deletePlanContent/{id}")
-    public CommonResult deletePlanContent(@PathVariable("id")long id){
-        TWqxplanPrescription tWqxplanPrescription = tWqxplanPrescriptionService.findPlanContentById(id);
-        Long indexNO = tWqxplanPrescription.getIndexNO();
-        Long npId = tWqxplanPrescription.getNpId();
-        if (tWqxplanPrescriptionService.deletePlanContent(id)==1){
-            // 如果存在记录indexNo >= 删除记录的indexNo
-            if(tWqxplanPrescriptionService.findPlanContByIndexNO(npId, indexNO) != null) {
-                //如果存在后面 >= indexNo的记录 indexNO-1
-                tWqxplanPrescriptionService.subIndexNO(npId, indexNO);
-            }
-            return CommonResult.success();
-        }else {
-            return CommonResult.fail();
-        }
-    }
+    //删除训练处方内容 $
+//    @RequestMapping("/deletePlanContent/{id}")
+//    public CommonResult deletePlanContent(@PathVariable("id")long id){
+//        TWqxplanPrescription tWqxplanPrescription = tWqxplanPrescriptionService.findPlanContentById(id);
+//        Long indexNO = tWqxplanPrescription.getIndexNO();
+//        Long npId = tWqxplanPrescription.getNpId();
+//        if (tWqxplanPrescriptionService.deletePlanContent(id)==1){
+//            // 如果存在记录indexNo >= 删除记录的indexNo
+//            if(tWqxplanPrescriptionService.findPlanContByIndexNO(npId, indexNO) != null) {
+//                //如果存在后面 >= indexNo的记录 indexNO-1
+//                tWqxplanPrescriptionService.subIndexNO(npId, indexNO);
+//            }
+//            return CommonResult.success();
+//        }else {
+//            return CommonResult.fail();
+//        }
+//    }
 
 
 //    Redis
-    //添加处方内容页面（从查询redis中查询）
-    @RequestMapping("/getWQXPlan/{id}")
+    // 根据npId获取详细处方信息
+    @RequestMapping("/WQXPlanDetail/{id}")
     public CommonResult getWQXPlan(@PathVariable("id") String id){
         return CommonResult.success(redisUtil.hmget(id));
     }
 
     //处方内容从前端添加到redis
-    @RequestMapping("/saveWQXPlan")
-    public CommonResult saveWQXPlan(@RequestBody TWqxplanPersonal tWqxplanPersonal) throws Exception{
-        String key=String.valueOf(tWqxplanPersonal.getPlanId());    //redis的Key设置为PlanId
-        if (!redisUtil.hHasKey(key,tWqxplanPersonal.getIndexNO())){    //判断该条处方是否存在
-            redisUtil.hset(key,tWqxplanPersonal.getIndexNO(),tWqxplanPersonal);   //插入
+    @RequestMapping("/addPlanContent")
+    public CommonResult saveWQXPlan(@RequestBody TWqxplanPrescription tWqxplanPrescription) throws Exception{
+        String key = String.valueOf(tWqxplanPrescription.getNpId());    //redis的Key设置为PlanId
+        String item = String.valueOf(tWqxplanPrescription.getIndexNO());
+        if (!redisUtil.hHasKey(key, item)){    //判断该条处方是否存在
+            redisUtil.hset(key, item, tWqxplanPrescription);   //插入
             redisUtil.expire(key,300);  //redis有效期为5分钟
             return CommonResult.success(redisUtil.hmget(key));
         }else { //已经存在
-            log.info(tWqxplanPersonal.getPlanId()+"已经在redis中存在");
+            log.info(tWqxplanPrescription.getNpId()+"已经在redis中存在");
             return CommonResult.fail(redisUtil.hmget(key));
         }
     }
 
     //替换redis中的一条处方
-    @RequestMapping("/updateWQXplan")
-    public CommonResult updateWQXplan(@RequestBody TWqxplanPersonal tWqxplanPersonal){
-        String key=String.valueOf(tWqxplanPersonal.getPlanId());    //redis的Key设置为PlanId
+    @RequestMapping("/editPlanContent")
+    public CommonResult editWQXplan(@RequestBody TWqxplanPrescription tWqxplanPrescription){
+        String key = String.valueOf(tWqxplanPrescription.getNpId());    //redis的Key设置为PlanId
+        String item = String.valueOf(tWqxplanPrescription.getIndexNO());
         if(redisUtil.hasKey(key)){
-            redisUtil.hset(key,tWqxplanPersonal.getIndexNO(),tWqxplanPersonal);
+            redisUtil.hset(key, item, tWqxplanPrescription);
             return CommonResult.success(redisUtil.hmget(key));
         }else {
             return CommonResult.fail("处方不存在");
         }
     }
 
-    //在redisc处方中间插入一条处方，并把后面的序号+1
-    @RequestMapping("/insertWQXplan")
-    public CommonResult insertWQXplan(@RequestBody TWqxplanPersonal tWqxplanPersonal){
-        String key=String.valueOf(tWqxplanPersonal.getPlanId());    //redis的Key设置为PlanId
+    //在redis处方中间插入一条处方，并把后面的序号+1
+    @RequestMapping("/insertPlanContent")
+    public CommonResult insertWQXplan(@RequestBody TWqxplanPrescription tWqxplanPrescription){
+        String key = String.valueOf(tWqxplanPrescription.getNpId());    //redis的Key设置为PlanId
         if(redisUtil.hasKey(key)){
             Map<Object,Object> map=redisUtil.hmget(key);    //map取出redis所有的处方
             Set keySet = map.keySet();  //获取index集合对象
@@ -310,15 +303,15 @@ public class TWqxplanController {
             }
             ObjectMapper objectMapper=new ObjectMapper();   //object转实体类
             for (int a=0;a<list.size();a++){
-                if (Integer.valueOf(tWqxplanPersonal.getIndexNO())<=list.get(a)){
-                    String b= String.valueOf(1+list.get(a));
+                if (tWqxplanPrescription.getIndexNO() <= list.get(a)){
+                    Long b = Long.valueOf(1+list.get(a));
                     //object转TWqxplanPersonal实体类
-                    TWqxplanPersonal tWqxplanPersonal1=objectMapper.convertValue(map.get(String.valueOf(list.get(a))),TWqxplanPersonal.class);
-                    tWqxplanPersonal1.setIndexNO(b);
-                    redisUtil.hset(key,b,tWqxplanPersonal1);   //插入
+                    TWqxplanPrescription tWqxplanPrescription1 =objectMapper.convertValue(map.get(String.valueOf(list.get(a))),TWqxplanPrescription.class);
+                    tWqxplanPrescription1.setIndexNO(b);
+                    redisUtil.hset(key, String.valueOf(b),tWqxplanPrescription1);   //插入
                 }
             }
-            redisUtil.hset(key,tWqxplanPersonal.getIndexNO(),tWqxplanPersonal);   //插入
+            redisUtil.hset(key, String.valueOf(tWqxplanPrescription.getIndexNO()),tWqxplanPrescription);   //插入
             return CommonResult.success(redisUtil.hmget(key));
         }else {
             return CommonResult.fail("处方不存在");
@@ -327,9 +320,9 @@ public class TWqxplanController {
     }
 
     //前端删除redis中处方的某一条
-    @RequestMapping("/deleteWQXPlan")
+    @RequestMapping("/deletePlanContent")
     public CommonResult deleteWQXPlan(@RequestBody Map<String,String> map){
-        String key=map.get("planId");
+        String key=map.get("npId");
         String indexNO=map.get("indexNO");
         if (redisUtil.hHasKey(key,indexNO)){
             redisUtil.hdel(key,indexNO);  //删除表中index对应的值
@@ -340,15 +333,15 @@ public class TWqxplanController {
             Integer j=0;    //新redis对应的key
             for (int i=1;i<=map1.size()+1;i++){
                 //object转TWqxplanPersonal实体类
-                TWqxplanPersonal tWqxplanPersonal=objectMapper.convertValue(map1.get(String.valueOf(i)),TWqxplanPersonal.class);//object转实体类
-                if(null!=tWqxplanPersonal){
-                    Integer a=Integer.valueOf(tWqxplanPersonal.getIndexNO());
+                TWqxplanPrescription tWqxplanPrescription=objectMapper.convertValue(map1.get(String.valueOf(i)),TWqxplanPrescription.class);//object转实体类
+                if(null!=tWqxplanPrescription){
+                    Long a = tWqxplanPrescription.getIndexNO();
                     j=j+1;
                     if (a>Integer.valueOf(indexNO)){
-                        tWqxplanPersonal.setIndexNO(String.valueOf(a-1));
-                        map2.put( String.valueOf(j),tWqxplanPersonal);
+                        tWqxplanPrescription.setIndexNO(a-1);
+                        map2.put( String.valueOf(j),tWqxplanPrescription);
                     }else {
-                        map2.put( String.valueOf(j),tWqxplanPersonal);
+                        map2.put( String.valueOf(j),tWqxplanPrescription);
                     }
                 }
             }
@@ -360,11 +353,11 @@ public class TWqxplanController {
         }
     }
 
-    //根据planId删除处方表
-    @RequestMapping("/deleteWQXPlan/{planId}")
-    public CommonResult deleteWQXPlanbyplanId(@PathVariable("planId") String planId){
-        redisUtil.del(planId);
-        if (!redisUtil.hasKey(planId)){
+    //根据npId删除处方表
+    @RequestMapping("/deleteWQXTrainPlan/{npId}")
+    public CommonResult deleteWQXPlanbyplanId(@PathVariable("npId") String npId){
+        redisUtil.del(npId);
+        if (!redisUtil.hasKey(npId)){
             return CommonResult.success();
         }else {
             return CommonResult.fail();
@@ -375,13 +368,16 @@ public class TWqxplanController {
     @RequestMapping("/submitWQXPlan/{id}")
     public CommonResult submitWQXPlan(@PathVariable("id") String id){
         Map map=redisUtil.hmget(id);
-        List<TWqxplanPersonal> list=new ArrayList<>();
+        List<TWqxplanPrescription> list=new ArrayList<>();
         for (int i=1;i<=map.size();i++){
             String j=String.valueOf(i);
             ObjectMapper objectMapper=new ObjectMapper();   //object转TWqxplanPersonal实体类
-            list.add(objectMapper.convertValue(redisUtil.hget(id,j),TWqxplanPersonal.class));
+            list.add(objectMapper.convertValue(redisUtil.hget(id,j),TWqxplanPrescription.class));
         }
-        if (tWqxplanPersonalService.insertPlanContent(list)==list.size()){    //写入数据库
+        for(TWqxplanPrescription item : list)
+            item.setCreateTime(new Date());
+
+        if (tWqxplanPrescriptionService.insertPlanContentList(list)==list.size()){
             redisUtil.del(id);  //删除redis中的处方
             return CommonResult.success();
         }else {

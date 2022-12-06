@@ -32,4 +32,5 @@ public interface TWqxplanPrescriptionService extends IService<TWqxplanPrescripti
 
     int subIndexNO(Long npId, Long indexNO);
 
+    int insertPlanContentList(List<TWqxplanPrescription> list);
 }

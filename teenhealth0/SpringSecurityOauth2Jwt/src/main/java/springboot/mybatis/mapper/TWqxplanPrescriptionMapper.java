@@ -32,4 +32,6 @@ public interface TWqxplanPrescriptionMapper extends BaseMapper<TWqxplanPrescript
     TWqxplanPrescription findPlanContentById(long id);
 
     int subIndexNO(Long npId, Long indexNO);
+
+    int insertPlanContentList(List<TWqxplanPrescription> list);
 }
