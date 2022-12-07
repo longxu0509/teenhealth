@@ -59,6 +59,10 @@
         delete from t_wqxplan_prescription
         where id = #{id}
     </delete>
+    <delete id="deleteByNpID">
+        delete from t_wqxplan_prescription
+        where NP_id = #{id}
+    </delete>
 
     <!--新增处方训练动作-->
     <insert id="insertPlanContent" parameterType="springboot.mybatis.po.TWqxplanPrescription">
@@ -168,5 +172,13 @@
         t_wqxplan_prescription
         WHERE
         id =  #{id}
+    </select>
+    <select id="findPlanContentBySort"  resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        t_wqxplan_prescription
+        WHERE
+        sort =  #{sort}
     </select>
 </mapper>

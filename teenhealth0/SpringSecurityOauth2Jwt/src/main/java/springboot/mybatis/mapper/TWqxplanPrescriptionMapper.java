@@ -34,4 +34,8 @@ public interface TWqxplanPrescriptionMapper extends BaseMapper<TWqxplanPrescript
     int subIndexNO(Long npId, Long indexNO);
 
     int insertPlanContentList(List<TWqxplanPrescription> list);
+
+    TWqxplanPrescription findPlanContentBySort(String sort);
+
+    int deleteByNpID(String id);
 }
