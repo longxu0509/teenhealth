@@ -67,4 +67,14 @@ public class TWqxplanPrescriptionServiceImpl extends ServiceImpl<TWqxplanPrescri
     public int insertPlanContentList(List<TWqxplanPrescription> list) {
         return tWqxplanPrescriptionMapper.insertPlanContentList(list);
     }
+
+    @Override
+    public TWqxplanPrescription findPlanContentBySort(String sort) {
+        return tWqxplanPrescriptionMapper.findPlanContentBySort(sort);
+    }
+
+    @Override
+    public int deleteByNpID(String id) {
+        return tWqxplanPrescriptionMapper.deleteByNpID(id);
+    }
 }

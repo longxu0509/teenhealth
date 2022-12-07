@@ -275,6 +275,7 @@ public class TWqxplanController {
     //处方内容从前端添加到redis
     @RequestMapping("/addPlanContent")
     public CommonResult saveWQXPlan(@RequestBody TWqxplanPrescription tWqxplanPrescription) throws Exception{
+        tWqxplanPrescription.setCreateTime(new Date());
         String key = String.valueOf(tWqxplanPrescription.getNpId());    //redis的Key设置为PlanId
         String item = String.valueOf(tWqxplanPrescription.getIndexNO());
         if (!redisUtil.hHasKey(key, item)){    //判断该条处方是否存在
@@ -318,6 +319,7 @@ public class TWqxplanController {
                     //object转TWqxplanPersonal实体类
                     TWqxplanPrescription tWqxplanPrescription1 =objectMapper.convertValue(map.get(String.valueOf(list.get(a))),TWqxplanPrescription.class);
                     tWqxplanPrescription1.setIndexNO(b);
+                    tWqxplanPrescription1.setCreateTime(new Date());
                     redisUtil.hset(key, String.valueOf(b),tWqxplanPrescription1);   //插入
                 }
             }
@@ -326,7 +328,6 @@ public class TWqxplanController {
         }else {
             return CommonResult.fail("处方不存在");
         }
-
     }
 
     //前端删除redis中处方的某一条
@@ -384,15 +385,14 @@ public class TWqxplanController {
             ObjectMapper objectMapper=new ObjectMapper();   //object转TWqxplanPersonal实体类
             list.add(objectMapper.convertValue(redisUtil.hget(id,j),TWqxplanPrescription.class));
         }
-        for(TWqxplanPrescription item : list)
-            item.setCreateTime(new Date());
+        // 删除mysql里所有的NP_id = id的记录
+        tWqxplanPrescriptionService.deleteByNpID(id);
 
-        if (tWqxplanPrescriptionService.insertPlanContentList(list)==list.size()){
+        if (tWqxplanPrescriptionService.insertPlanContentList(list) == list.size()){
             redisUtil.del(id);  //删除redis中的处方
             return CommonResult.success();
-        }else {
+        } else
             return CommonResult.fail();
-        }
     }
 }
 
