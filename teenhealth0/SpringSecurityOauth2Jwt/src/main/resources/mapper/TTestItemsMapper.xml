@@ -12,15 +12,57 @@
         <result column="update_time" property="updateTime" />
     </resultMap>
 
+    <resultMap id="ResultMap1" type="springboot.mybatis.po.TTestItemsCustom">
+        <id column="id" property="id" />
+        <result column="test_name" property="testName" />
+        <result column="video_id" property="videoId" />
+        <result column="remark" property="remark" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <association property="tTrainingVideo" javaType="springboot.mybatis.po.TTrainingVideo">
+            <result column="sort" property="sort" />
+            <result column="file_name" property="fileName" />
+            <result column="save_path" property="savePath" />
+            <result column="ut1" property="updateTime" />
+            <result column="ct1" property="createTime" />
+        </association>
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, test_name, video_id, remark, create_time, update_time
     </sql>
 
+    <update id="editTestItem">
+        update t_test_items
+        <set>
+            <if test="testName != null">
+                test_name = #{testName},
+            </if>
+            <if test="videoId != null">
+                video_id = #{videoId},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
     <select id="findTestingVideo" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List" />
         FROM t_test_items
+    </select>
+
+    <select id="testItemstList" resultMap="ResultMap1">
+        select t.id, t.test_name, t.video_id, t.remark, t.create_time, t.update_time,
+               v.sort, v.file_name, v.save_path, v.update_time ut1, v.create_time ct1
+        from t_test_items t inner join t_training_video v
+        on t.video_id = v.id
     </select>
 
 </mapper>

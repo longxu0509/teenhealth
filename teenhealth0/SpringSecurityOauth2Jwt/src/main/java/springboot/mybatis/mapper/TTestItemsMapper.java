@@ -3,6 +3,7 @@ package springboot.mybatis.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import springboot.mybatis.po.TTestItems;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import springboot.mybatis.po.TTestItemsCustom;
 import springboot.mybatis.po.TTrainingVideo;
 
 import java.util.List;
@@ -20,4 +21,8 @@ public interface TTestItemsMapper extends BaseMapper<TTestItems> {
 
     //获取视频列表
     List<TTestItems> findTestingVideo();
+
+    List<TTestItemsCustom> testItemstList();
+
+    int editTestItem(TTestItems testItems);
 }

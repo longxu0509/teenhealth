@@ -80,16 +80,15 @@
   </sql>
   <sql id="Base_Column_List" >
 
-    id, login_name, password, phone, real_name, sex, head_portrait, create_time, update_time,
-    is_valid, remark
+    id, login_name, password, phone, real_name, sex, head_portrait, create_time, update_time, is_valid, remark
   </sql>
 
 <!--根据管理员用户登录名查找用户-->
-  <select id="selectUserByloginName" resultMap="BaseResultMap" parameterType="springboot.mybatis.po.TblUser" >
+  <select id="selectUserByloginName" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
-    <include refid="Base_Column_List" />
+        id, login_name, password, phone, real_name, sex, head_portrait, create_time,is_valid, remark
     from tbl_user
-    where login_name = #{loginName,jdbcType=VARCHAR}
+    where login_name = #{loginName}
   </select>
 
   <select id="selectAllUser" resultMap="BaseResultMap" parameterType="springboot.mybatis.po.TblUser">

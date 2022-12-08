@@ -7,7 +7,7 @@ spring:
     # 本地调试
     url: jdbc:mysql://localhost:3306/ai_traintest?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     # 阿里云服务器
-#    url: jdbc:mysql://47.97.157.98:3306/adolescent_health?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
+#    url: jdbc:mysql://47.122.6.103:3306/ai_traintest?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
     username: root
     password: "0509"
 #    password: jkzx:2021
@@ -102,7 +102,7 @@ mybatis:
 
 
 server:
-  port: 8081
+  port: 8080
 logging:
   level:
     springboot.mybatis.mapper: debug
