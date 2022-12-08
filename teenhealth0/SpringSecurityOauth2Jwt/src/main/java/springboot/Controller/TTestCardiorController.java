@@ -41,6 +41,9 @@ public class TTestCardiorController {
     @Autowired
     private TTestLowermfService tTestLowermfService;
 
+    @Autowired
+    private TTestItemsService tTestItemsService;
+
     //查询所有测试标准
     @RequestMapping("/testList/{id}")
     public CommonResult testList(@PathVariable("id") int id, @RequestBody PageInfo pageInfo) throws Exception{
@@ -232,6 +235,26 @@ public class TTestCardiorController {
         if (curRes2 >= preRes1)
             return CommonResult.fail("当前等级右区间应小于前一等级左区间");
         if(tTestLowermfService.updateTestLowermf(tTestLowermf, id)==1){
+            return CommonResult.success();
+        }else {
+            return CommonResult.fail();
+        }
+    }
+
+    //查询所有测试动作即训练视频信息
+    @RequestMapping("/testItemstList")
+    public CommonResult testItemstList(@RequestBody PageInfo pageInfo){
+        PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
+        List<TTestItemsCustom> list= tTestItemsService.testItemstList();
+        PageInfo pageInfo1=new PageInfo(list);
+        return CommonResult.success(pageInfo1);
+    }
+
+    //根据id修改测试动作对应的视频
+    @PostMapping("/editTestItem")
+    @ResponseBody
+    public CommonResult editTestItem(@RequestBody TTestItems testItems)throws Exception{
+        if(tTestItemsService.editTestItem(testItems)==1){
             return CommonResult.success();
         }else {
             return CommonResult.fail();
