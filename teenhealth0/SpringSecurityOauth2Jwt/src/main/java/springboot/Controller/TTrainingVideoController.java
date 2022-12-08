@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springboot.mybatis.po.CommonResult;
 import springboot.mybatis.po.TTrainingVideo;
+import springboot.mybatis.po.TWqxplanNp;
 import springboot.service.TTrainingVideoService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -43,7 +44,6 @@ public class TTrainingVideoController {
         List<TTrainingVideo> trainingVideoList=tTrainingVideoService.findTrainingVideo();
         return CommonResult.success(trainingVideoList);
     }
-
 
     //删除训练视频
     @RequestMapping(value = "/deleteVideo/{id}", method = RequestMethod.DELETE)
