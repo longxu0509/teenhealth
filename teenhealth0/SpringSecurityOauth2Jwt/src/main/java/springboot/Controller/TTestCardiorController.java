@@ -89,11 +89,17 @@ public class TTestCardiorController {
 
         if (id-1 >= 1) {
             TTestCardior  tTestCardior1 = tTestCardiorService.getTestById(id-1);
-            preRes1 = tTestCardior1.getTestResult1();
+            if (tTestCardior1 != null) {
+                if (tTestCardior1.getTestResult1() != null)
+                    preRes1 = tTestCardior1.getTestResult1();
+            }
         }
         if (id+1 <= 5) {
             TTestCardior tTestCardior2 = tTestCardiorService.getTestById(id+1);
-            postRes2 = tTestCardior2.getTestResult2();
+            if (tTestCardior2 != null) {
+                if (tTestCardior2.getTestResult1() != null)
+                    postRes2 = tTestCardior2.getTestResult2();
+            }
         }
         Integer curRes1 = tTestCardior.getTestResult1();
         Integer curRes2 = tTestCardior.getTestResult2();
@@ -121,11 +127,17 @@ public class TTestCardiorController {
 
         if (id-1 >= 1) {
             TTestCorestrength tTestCorestrength1 = tTestCorestrengthService.getTestById(id-1);
-            preRes1 = tTestCorestrength1.getTestResult1();
+            if (tTestCorestrength1 != null) {
+                if (tTestCorestrength1.getTestResult1() != null)
+                    preRes1 = tTestCorestrength1.getTestResult1();
+            }
         }
         if (id+1 <= 5) {
             TTestCorestrength tTestCorestrength2 = tTestCorestrengthService.getTestById(id+1);
-            postRes2 = tTestCorestrength2.getTestResult2();
+            if (tTestCorestrength2 != null) {
+                if (tTestCorestrength2.getTestResult1() != null)
+                    postRes2 = tTestCorestrength2.getTestResult2();
+            }
         }
         Integer curRes1 = tTestCorestrength.getTestResult1();
         Integer curRes2 = tTestCorestrength.getTestResult2();
@@ -153,11 +165,17 @@ public class TTestCardiorController {
 
         if (id-1 >= 1) {
             TTestCoordinate tTestCoordinate1 = tTestCoordinateService.getTestById(id-1);
-            preRes1 = tTestCoordinate1.getTestResult1();
+            if (tTestCoordinate1 != null) {
+                if (tTestCoordinate1.getTestResult1() != null)
+                    preRes1 = tTestCoordinate1.getTestResult1();
+            }
         }
         if (id+1 <= 5) {
             TTestCoordinate tTestCoordinate2 = tTestCoordinateService.getTestById(id+1);
-            postRes2 = tTestCoordinate2.getTestResult2();
+            if (tTestCoordinate2 != null) {
+                if (tTestCoordinate2.getTestResult1() != null)
+                    postRes2 = tTestCoordinate2.getTestResult1();
+            }
         }
         Integer curRes1 = tTestCoordinate.getTestResult1();
         Integer curRes2 = tTestCoordinate.getTestResult2();
@@ -186,11 +204,17 @@ public class TTestCardiorController {
 
         if (id-1 >= 1) {
             TTestUpmf tTestUpmf1 = tTestUpmfService.getTestById(id-1);
-            preRes1 = tTestUpmf1.getTestResult1();
+            if (tTestUpmf1 != null) {
+                if (tTestUpmf1.getTestResult1() != null)
+                    preRes1 = tTestUpmf1.getTestResult1();
+            }
         }
         if (id+1 <= 5) {
             TTestUpmf tTestUpmf2 = tTestUpmfService.getTestById(id+1);
-            postRes2 = tTestUpmf2.getTestResult2();
+            if (tTestUpmf2 != null) {
+                if (tTestUpmf2.getTestResult1() != null)
+                    postRes2 = tTestUpmf2.getTestResult1();
+            }
         }
         Integer curRes1 = tTestUpmf.getTestResult1();
         Integer curRes2 = tTestUpmf.getTestResult2();
@@ -218,11 +242,18 @@ public class TTestCardiorController {
 
         if (id-1 >= 1) {
             TTestLowermf testLowermf1 = tTestLowermfService.getTestById(id-1);
-            preRes1 = testLowermf1.getTestResult1();
+            if (testLowermf1 != null) {
+                if (testLowermf1.getTestResult1() != null)
+                    preRes1 = testLowermf1.getTestResult1();
+            }
         }
         if (id+1 <= 5) {
             TTestLowermf testLowermf2 = tTestLowermfService.getTestById(id+1);
-            postRes2 = testLowermf2.getTestResult2();
+            if (testLowermf2 != null) {
+                if (testLowermf2.getTestResult2() != null)
+                    postRes2 = testLowermf2.getTestResult2();
+            }
+
         }
         Integer curRes1 = tTestLowermf.getTestResult1();
         Integer curRes2 = tTestLowermf.getTestResult2();
