@@ -109,16 +109,16 @@ public class TWqxtrainingController {
                 o = adviceAndScore;
             } break;
             case 2: {
-                TTestCorestrength tTestCorestrength = tTestCorestrengthService.getAdviceAndScore(count);
-                studentPftest.setCorestrengthLevel(tTestCorestrength.getLevel());
-                studentPftest.setCorestrengthScore(tTestCorestrength.getScore());
-                o = tTestCorestrength;
-            } break;
-            case 3: {
                 TTestCoordinate tTestCoordinate = tTestCoordinateService.getAdviceAndScore(count);
                 studentPftest.setCoordinateLevel(tTestCoordinate.getLevel());
                 studentPftest.setCoordinateScore(tTestCoordinate.getScore());
                 o = tTestCoordinate;
+            } break;
+            case 3: {
+                TTestCorestrength tTestCorestrength = tTestCorestrengthService.getAdviceAndScore(count);
+                studentPftest.setCorestrengthLevel(tTestCorestrength.getLevel());
+                studentPftest.setCorestrengthScore(tTestCorestrength.getScore());
+                o = tTestCorestrength;
             } break;
             case 4: {
                 TTestUpmf tTestUpmf = tTestUpmfService.getAdviceAndScore(count);

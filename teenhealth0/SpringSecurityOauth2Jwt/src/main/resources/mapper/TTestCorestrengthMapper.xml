@@ -52,7 +52,7 @@
         where id = #{id}
     </update>
 
-    <select id="getAdviceAndScore" resultType="springboot.mybatis.po.TTestCorestrength">
+    <select id="getAdviceAndScore" parameterType="java.lang.Long" resultType="springboot.mybatis.po.TTestCorestrength">
         SELECT
             level, score, remark
         FROM
