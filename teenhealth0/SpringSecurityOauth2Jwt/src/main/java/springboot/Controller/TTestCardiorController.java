@@ -55,12 +55,12 @@ public class TTestCardiorController {
                 return CommonResult.success(pageInfo1);
             }
             case 2: {
-                List<TTestCorestrength> list =tTestCorestrengthService.testList();
+                List<TTestCoordinate> list =tTestCoordinateService.testList();
                 PageInfo pageInfo1=new PageInfo(list);
                 return CommonResult.success(pageInfo1);
             }
             case 3: {
-                List<TTestCoordinate> list =tTestCoordinateService.testList();
+                List<TTestCorestrength> list =tTestCorestrengthService.testList();
                 PageInfo pageInfo1=new PageInfo(list);
                 return CommonResult.success(pageInfo1);
             }

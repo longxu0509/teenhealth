@@ -5,12 +5,12 @@ spring:
     # 赣南医学院
 #    url: jdbc:mysql://localhost:3306/teenhealth0?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     # 本地调试
-    url: jdbc:mysql://localhost:3306/ai_traintest?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+#    url: jdbc:mysql://localhost:3306/ai_traintest?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     # 阿里云服务器
-#    url: jdbc:mysql://47.122.6.103:3306/ai_traintest?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
+    url: jdbc:mysql://47.122.6.103:3306/ai_traintest?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
     username: root
-    password: "0509"
-#    password: jkzx:2021
+#    password: "0509"
+    password: jkzx:2021
     # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
     # 扩展插件
