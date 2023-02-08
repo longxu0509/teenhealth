@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springboot.mybatis.mapper.TGuideVideosMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="springboot.mybatis.po.TGuideVideos">
+        <id column="id" property="id" />
+        <result column="action_type_id" property="actionTypeId" />
+        <result column="position_id" property="positionId" />
+        <result column="sort" property="sort" />
+        <result column="file_name" property="fileName" />
+        <result column="save_path" property="savePath" />
+        <result column="detail" property="detail" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, action_type_id, position_id, sort, file_name, save_path, detail, update_time, create_time
+    </sql>
+
+    <select id="getGuideVideoListByid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_guide_videos
+        where 1 = 1
+        <if test="actionTypeId != null">
+           AND action_type_id = #{actionTypeId}
+        </if>
+        <if test="positionId != null">
+           AND position_id = #{positionId}
+        </if>
+    </select>
+
+    <select id="findFileName" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_guide_videos
+        where id = #{videoId}
+    </select>
+
+</mapper>

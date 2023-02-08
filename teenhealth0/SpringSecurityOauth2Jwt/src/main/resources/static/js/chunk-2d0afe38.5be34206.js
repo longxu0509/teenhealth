@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0afe38"],{"0ff2":function(t,e,n){"use strict";n.r(e),n.d(e,"GetList",(function(){return s}));var u=n("22ce");function s(t){return Object(u["a"])({url:"/tStudentPftest/getStudentPftestLatest",method:"post",data:t})}}}]);

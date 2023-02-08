@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springboot.mybatis.mapper.TRiskMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="springboot.mybatis.po.TRisk">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="pull_up_cnt" property="pullUpCnt" />
+        <result column="pull_up_score" property="pullUpScore" />
+        <result column="pull_up_grade" property="pullUpGrade" />
+        <result column="push_up_cnt" property="pushUpCnt" />
+        <result column="push_up_score" property="pushUpScore" />
+        <result column="push_up_grade" property="pushUpGrade" />
+        <result column="sit_ups_cnt" property="sitUpsCnt" />
+        <result column="sit_ups_score" property="sitUpsScore" />
+        <result column="sit_ups_grade" property="sitUpsGrade" />
+        <result column="sit_forward" property="sitForward" />
+        <result column="sit_forward_score" property="sitForwardScore" />
+        <result column="sit_forward_grade" property="sitForwardGrade" />
+        <result column="eyes_close_stand" property="eyesCloseStand" />
+        <result column="eyes_close_stand_score" property="eyesCloseStandScore" />
+        <result column="eyes_close_stand_grade" property="eyesCloseStandGrade" />
+        <result column="jump" property="jump" />
+        <result column="jump_score" property="jumpScore" />
+        <result column="jump_grade" property="jumpGrade" />
+        <result column="runing" property="runing" />
+        <result column="runing_score" property="runingScore" />
+        <result column="runing_grade" property="runingGrade" />
+        <result column="score" property="score" />
+        <result column="result" property="result" />
+        <result column="report" property="report" />
+        <result column="course1_id" property="course1Id" />
+        <result column="course2_id" property="course2Id" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_id, pull_up_cnt, pull_up_score, pull_up_grade, push_up_cnt, push_up_score, push_up_grade, sit_ups_cnt, sit_ups_score, sit_ups_grade, sit_forward, sit_forward_score, sit_forward_grade, eyes_close_stand, eyes_close_stand_score, eyes_close_stand_grade, jump, jump_score, jump_grade, runing, runing_score, runing_grade, score, result, report, course1_id, course2_id, create_time, update_time
+    </sql>
+
+    <insert id="insertTestRecord">
+        insert into t_risk
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="pullUpCnt != null">
+                pull_up_cnt,
+            </if>
+            <if test="pullUpScore != null">
+                pull_up_score,
+            </if>
+            <if test="pullUpGrade != null">
+                pull_up_grade,
+            </if>
+            <if test="sitUpsCnt != null">
+                sit_ups_cnt,
+            </if>
+            <if test="sitUpsScore != null">
+                sit_ups_score,
+            </if>
+            <if test="sitUpsGrade != null">
+                sit_ups_grade,
+            </if>
+            <if test="pushUpCnt != null">
+                push_up_cnt,
+            </if>
+            <if test="pushUpScore != null">
+                push_up_score,
+            </if>
+            <if test="pushUpGrade != null">
+                push_up_grade,
+            </if>
+            <if test="runing != null">
+                runing,
+            </if>
+            <if test="runingScore != null">
+                runing_score,
+            </if>
+            <if test="runingGrade != null">
+                runing_grade,
+            </if>
+            <if test="jump != null">
+                jump,
+            </if>
+            <if test="jumpScore != null">
+                jump_score,
+            </if>
+            <if test="jumpGrade != null">
+                jump_grade,
+            </if>
+            <if test="sitForward != null">
+                sit_forward,
+            </if>
+            <if test="sitForwardScore != null">
+                sit_forward_score,
+            </if>
+            <if test="sitForwardGrade != null">
+                sit_forward_grade,
+            </if>
+            <if test="eyesCloseStand != null">
+                eyes_close_stand,
+            </if>
+            <if test="eyesCloseStandScore != null">
+                eyes_close_stand_score,
+            </if>
+            <if test="eyesCloseStandGrade != null">
+                eyes_close_stand_grade,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+            <if test="result != null">
+                result,
+            </if>
+            <if test="report != null">
+                report,
+            </if>
+            <if test="course1Id != null">
+                course1_id,
+            </if>
+            <if test="course2Id != null">
+                course2_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="pullUpCnt != null">
+                #{pullUpCnt},
+            </if>
+            <if test="pullUpScore != null">
+                #{pullUpScore},
+            </if>
+            <if test="pullUpGrade != null">
+                #{pullUpGrade},
+            </if>
+            <if test="sitUpsCnt != null">
+                #{sitUpsCnt},
+            </if>
+            <if test="sitUpsScore != null">
+                #{sitUpsScore},
+            </if>
+            <if test="sitUpsGrade != null">
+                #{sitUpsGrade},
+            </if>
+            <if test="pushUpCnt != null">
+                #{pushUpCnt},
+            </if>
+            <if test="pushUpScore != null">
+                #{pushUpScore},
+            </if>
+            <if test="pushUpGrade != null">
+                #{pushUpGrade},
+            </if>
+            <if test="runing != null">
+                #{runing},
+            </if>
+            <if test="runingScore != null">
+                #{runingScore},
+            </if>
+            <if test="runingGrade != null">
+                #{runingGrade},
+            </if>
+            <if test="jump != null">
+                #{jump},
+            </if>
+            <if test="jumpScore != null">
+                #{jumpScore},
+            </if>
+            <if test="jumpGrade != null">
+                #{jumpGrade},
+            </if>
+            <if test="sitForward != null">
+                #{sitForward},
+            </if>
+            <if test="sitForwardScore != null">
+                #{sitForwardScore},
+            </if>
+            <if test="sitForwardGrade != null">
+                #{sitForwardGrade},
+            </if>
+            <if test="eyesCloseStand != null">
+                #{eyesCloseStand},
+            </if>
+            <if test="eyesCloseStandScore != null">
+                #{eyesCloseStandScore},
+            </if>
+            <if test="eyesCloseStandGrade != null">
+                #{eyesCloseStandGrade},
+            </if>
+            <if test="score != null">
+                #{score},
+            </if>
+            <if test="result != null">
+                #{result},
+            </if>
+            <if test="report != null">
+                #{report},
+            </if>
+            <if test="course1Id != null">
+                #{course1Id},
+            </if>
+            <if test="course2Id != null">
+                #{course2Id},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+        </trim>
+    </insert>
+    <update id="addTestItem">
+        update t_risk
+        <set>
+            <if test="pullUpCnt != null">
+                pull_up_cnt = #{pullUpCnt},
+            </if>
+            <if test="pullUpScore != null">
+                pull_up_score = #{pullUpScore},
+            </if>
+            <if test="pullUpGrade != null">
+                pull_up_grade = #{pullUpGrade},
+            </if>
+            <if test="sitUpsCnt != null">
+                sit_ups_cnt = #{sitUpsCnt},
+            </if>
+            <if test="sitUpsScore != null">
+                sit_ups_score = #{sitUpsScore},
+            </if>
+            <if test="sitUpsGrade != null">
+                sit_ups_grade = #{sitUpsGrade},
+            </if>
+            <if test="pushUpCnt != null">
+                push_up_cnt = #{pushUpCnt},
+            </if>
+            <if test="pushUpScore != null">
+                push_up_score = #{pushUpScore},
+            </if>
+            <if test="pushUpGrade != null">
+                push_up_grade = #{pushUpGrade},
+            </if>
+            <if test="runing != null">
+                runing = #{runing},
+            </if>
+            <if test="runingScore != null">
+                runing_score = #{runingScore},
+            </if>
+            <if test="runingGrade != null">
+                runing_grade =#{runingGrade},
+            </if>
+            <if test="jump != null">
+                jump = #{jump},
+            </if>
+            <if test="jumpScore != null">
+                jump_score = #{jumpScore},
+            </if>
+            <if test="jumpGrade != null">
+                jump_grade = #{jumpGrade},
+            </if>
+            <if test="sitForward != null">
+                sit_forward = #{sitForward},
+            </if>
+            <if test="sitForwardScore != null">
+                sit_forward_score = #{sitForwardScore},
+            </if>
+            <if test="sitForwardGrade != null">
+                sit_forward_grade = #{sitForwardGrade},
+            </if>
+            <if test="eyesCloseStand != null">
+                eyes_close_stand = #{eyesCloseStand},
+            </if>
+            <if test="eyesCloseStandScore != null">
+                eyes_close_stand_score = #{eyesCloseStandScore},
+            </if>
+            <if test="eyesCloseStandGrade != null">
+                eyes_close_stand_grade = #{eyesCloseStandGrade},
+            </if>
+            <if test="score != null">
+                score = #{score},
+            </if>
+            <if test="result != null">
+                result = #{result},
+            </if>
+            <if test="report != null">
+                report = #{report},
+            </if>
+            <if test="course1Id != null">
+                course1_id = #{course1Id},
+            </if>
+            <if test="course2Id != null">
+                course2_id = #{course2Id},
+            </if>
+        </set>
+        where user_id= #{userId}
+        ORDER BY create_time DESC limit 1
+    </update>
+
+    <select id="findByUserId" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM t_risk
+        WHERE user_id = #{userID}
+        ORDER BY create_time DESC limit 1
+    </select>
+    <select id="getRiskList" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM t_risk
+        WHERE user_id = #{userID}
+        ORDER BY create_time DESC
+    </select>
+
+</mapper>
