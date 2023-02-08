@@ -37,15 +37,15 @@ public class CodeGenerator {
         dsc.setDbType(DbType.MYSQL);
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("0509");
-        dsc.setUrl("jdbc:mysql://localhost:3306/ai_traintest?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai");
+        dsc.setPassword("jkzx:2021");
+        dsc.setUrl("jdbc:mysql://47.122.6.103:3306/ai_traintest?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai");
         mpg.setDataSource(dsc);
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
         // strategy.setTablePrefix(new String[] { "sys_" });// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略(下划线转驼峰)
-        strategy.setInclude("t_student_pftest"); // 需要生成的表名
+        strategy.setInclude("t_course_detail", "t_course_info"); // 需要生成的表名
         strategy.setSuperServiceClass(null);
         strategy.setSuperServiceImplClass(null);
         strategy.setSuperMapperClass(null);

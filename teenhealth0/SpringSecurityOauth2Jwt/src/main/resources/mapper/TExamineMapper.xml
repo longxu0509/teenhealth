@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springboot.mybatis.mapper.TExamineMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="springboot.mybatis.po.TExamine">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="bmi_grade" property="bmiGrade" />
+        <result column="pull_up_cnt" property="pullUpCnt" />
+        <result column="pull_up_score" property="pullUpScore" />
+        <result column="pull_up_grade" property="pullUpGrade" />
+        <result column="sit_ups_cnt" property="sitUpsCnt" />
+        <result column="sit_ups_score" property="sitUpsScore" />
+        <result column="sit_ups_grade" property="sitUpsGrade" />
+        <result column="snake_running" property="snakeRunning" />
+        <result column="snake_runing_score" property="snakeRuningScore" />
+        <result column="snake_runing_grade" property="snakeRuningGrade" />
+        <result column="runing" property="runing" />
+        <result column="runing_score" property="runingScore" />
+        <result column="runing_grade" property="runingGrade" />
+        <result column="horse_grade" property="horseGrade" />
+        <result column="parallel_bars_grade" property="parallelBarsGrade" />
+        <result column="load_comb" property="loadComb" />
+        <result column="load_grade" property="loadGrade" />
+        <result column="score" property="score" />
+        <result column="result" property="result" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_id, bmi_grade, pull_up_cnt, pull_up_score, pull_up_grade, sit_ups_cnt, sit_ups_score, sit_ups_grade, snake_running, snake_runing_score, snake_runing_grade, runing, runing_score, runing_grade, horse_grade, parallel_bars_grade, load_comb, load_grade, score, result, create_time, update_time
+    </sql>
+
+    <insert id="insertTestRecord">
+        insert into t_examine
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="userId != null">
+            user_id,
+        </if>
+        <if test="pullUpCnt != null">
+            pull_up_cnt,
+        </if>
+        <if test="pullUpScore != null">
+            pull_up_score,
+        </if>
+        <if test="pullUpGrade != null">
+            pull_up_grade,
+        </if>
+        <if test="sitUpsCnt != null">
+            sit_ups_cnt,
+        </if>
+        <if test="sitUpsScore != null">
+            sit_ups_score,
+        </if>
+        <if test="sitUpsGrade != null">
+            sit_ups_grade,
+        </if>
+        <if test="runing != null">
+            runing,
+        </if>
+        <if test="runingScore != null">
+            runing_score,
+        </if>
+        <if test="runingGrade != null">
+            runing_grade,
+        </if>
+        <if test="snakeRunning != null">
+            snake_running,
+        </if>
+        <if test="snakeRuningScore != null">
+            snake_runing_score,
+        </if>
+        <if test="snakeRuningGrade != null">
+            snake_runing_grade,
+        </if>
+        <if test="horseGrade != null">
+            horse_grade,
+        </if>
+        <if test="parallelBarsGrade != null">
+            parallel_bars_grade,
+        </if>
+        <if test="loadComb != null">
+            load_comb,
+        </if>
+        <if test="loadGrade != null">
+            load_grade,
+        </if>
+        <if test="score != null">
+            score,
+        </if>
+        <if test="result != null">
+            result,
+        </if>
+        <if test="createTime != null">
+            create_time,
+        </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="pullUpCnt != null">
+                #{pullUpCnt},
+            </if>
+            <if test="pullUpScore != null">
+                #{pullUpScore},
+            </if>
+            <if test="pullUpGrade != null">
+                #{pullUpGrade},
+            </if>
+            <if test="sitUpsCnt != null">
+                #{sitUpsCnt},
+            </if>
+            <if test="sitUpsScore != null">
+                #{sitUpsScore},
+            </if>
+            <if test="sitUpsGrade != null">
+                #{sitUpsGrade},
+            </if>
+            <if test="runing != null">
+                #{runing},
+            </if>
+            <if test="runingScore != null">
+                #{runingScore},
+            </if>
+            <if test="runingGrade != null">
+                #{runingGrade},
+            </if>
+            <if test="snakeRunning != null">
+                #{snakeRunning},
+            </if>
+            <if test="snakeRuningScore != null">
+                #{snakeRuningScore},
+            </if>
+            <if test="snakeRuningGrade != null">
+                #{snakeRuningGrade},
+            </if>
+            <if test="horseGrade != null">
+                #{horseGrade},
+            </if>
+            <if test="parallelBarsGrade != null">
+                #{parallelBarsGrade},
+            </if>
+            <if test="loadComb != null">
+                #{loadComb},
+            </if>
+            <if test="loadGrade != null">
+                #{loadGrade},
+            </if>
+            <if test="score != null">
+                #{score},
+            </if>
+            <if test="result != null">
+                #{result},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="addTestItem">
+        update t_examine
+        <set>
+            <if test="pullUpCnt != null">
+                pull_up_cnt = #{pullUpCnt},
+            </if>
+            <if test="pullUpScore != null">
+                pull_up_score = #{pullUpScore},
+            </if>
+            <if test="pullUpGrade != null">
+                pull_up_grade = #{pullUpGrade},
+            </if>
+            <if test="sitUpsCnt != null">
+                sit_ups_cnt = #{sitUpsCnt},
+            </if>
+            <if test="sitUpsScore != null">
+                sit_ups_score = #{sitUpsScore},
+            </if>
+            <if test="sitUpsGrade != null">
+                sit_ups_grade = #{sitUpsGrade},
+            </if>
+            <if test="runing != null">
+                runing = #{runing},
+            </if>
+            <if test="runingScore != null">
+                runing_score = #{runingScore},
+            </if>
+            <if test="runingGrade != null">
+                runing_grade =#{runingGrade},
+            </if>
+            <if test="snakeRunning != null">
+                snake_running = #{snakeRunning},
+            </if>
+            <if test="snakeRuningScore != null">
+                snake_runing_score = #{snakeRuningScore},
+            </if>
+            <if test="snakeRuningGrade != null">
+                snake_runing_grade =#{snakeRuningGrade},
+            </if>
+            <if test="horseGrade != null">
+                horse_grade =#{horseGrade},
+            </if>
+            <if test="parallelBarsGrade != null">
+                parallel_bars_grade =#{parallelBarsGrade},
+            </if>
+            <if test="loadComb != null">
+                load_comb = #{loadComb},
+            </if>
+            <if test="loadGrade != null">
+                load_grade = #{loadGrade},
+            </if>
+            <if test="score != null">
+                score = #{score},
+            </if>
+            <if test="result != null">
+                result = #{result},
+            </if>
+        </set>
+        where user_id= #{userId}
+        ORDER BY create_time DESC limit 1
+    </update>
+
+    <select id="getTestScore" resultType="java.lang.Integer">
+        select score
+        from t_test_standard
+        where test_id = #{testId} and gender = #{gender} and age_group_id = #{age_group_id}
+        and test_result1 &lt;= #{count}  AND test_result2 &gt;= #{count}
+    </select>
+    <select id="findByUserId" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM t_examine
+        WHERE user_id = #{userID}
+        ORDER BY create_time DESC limit 1
+    </select>
+
+</mapper>

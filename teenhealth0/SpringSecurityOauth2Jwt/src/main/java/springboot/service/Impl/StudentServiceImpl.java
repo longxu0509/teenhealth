@@ -13,7 +13,8 @@ import java.util.List;
 @Service
 
 public class StudentServiceImpl implements StudentService {
-    @Autowired TStudentMapper tStudentMapper;
+    @Autowired
+    TStudentMapper tStudentMapper;
 
 //平台端
     //查询所有学生列表
