@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springboot.mybatis.mapper.TActionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="springboot.mybatis.po.TAction">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="action_name" property="actionName" />
+        <result column="action_type" property="actionType" />
+        <result column="action_position" property="actionPosition" />
+        <result column="action_path" property="actionPath" />
+        <result column="action_img" property="actionImg" />
+        <result column="is_count" property="isCount" />
+        <result column="is_ai" property="isAi" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, action_name, action_type, action_position, action_path, action_img, is_count, is_ai, calories, duration
+    </sql>
+    <select id="selectByCode" resultMap="BaseResultMap">
+        select *
+        from t_action
+        where code = #{actionCode} limit 1
+    </select>
+
+    <select id="getAIList" resultMap="BaseResultMap">
+        select *
+        from t_action
+        where is_ai = #{isAI}
+    </select>
+</mapper>

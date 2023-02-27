@@ -28,4 +28,18 @@
         and test_result1 &lt;= #{count}  AND test_result2 &gt;= #{count}
     </select>
 
+    <select id="getMaxCount" resultType="java.lang.Long">
+        select test_result1
+        from t_test_standard
+        where test_id = #{testId} and gender = #{gender} and age_group_id = #{age_group_id}
+        and score = 100
+    </select>
+
+    <select id="getMinTime" resultType="java.lang.Long">
+        select test_result2
+        from t_test_standard
+        where test_id = #{testId} and gender = #{gender} and age_group_id = #{age_group_id}
+          and score = 100
+    </select>
+
 </mapper>

@@ -1,6 +1,8 @@
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import springboot.Controller.terminal.TWqxtrainingController;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +32,18 @@ class test {
             System.out.println(s);
         }
     }
+
+//    @Test
+//    public void TimeTest() throws ParseException {
+//        DateFormat fmt =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Date startTime = fmt.parse("2023-02-13 15:50:34");
+//        Date endTime = fmt.parse("2023-02-13 18:59:34");
+//        if (TWqxtrainingController.isOverTime(endTime, startTime) == false)
+//            System.out.println("未超时");
+//        else
+//            System.out.println("超时");
+//
+//    }
 
 
 }

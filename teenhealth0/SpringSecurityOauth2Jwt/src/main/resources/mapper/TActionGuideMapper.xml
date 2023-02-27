@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springboot.mybatis.mapper.TActionGuideMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="springboot.mybatis.po.TActionGuide">
+        <id column="id" property="id" />
+        <result column="next_action_id" property="nextActionId" />
+        <result column="time" property="time" />
+        <result column="requirement" property="requirement" />
+        <result column="respiration" property="respiration" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, next_action_id, time, requirement, respiration
+    </sql>
+
+    <select id="selectNext" resultMap="BaseResultMap">
+        select *
+        from t_action_guide
+        where next_action_id = #{actionId}
+    </select>
+
+</mapper>

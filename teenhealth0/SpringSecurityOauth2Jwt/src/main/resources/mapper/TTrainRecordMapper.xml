@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springboot.mybatis.mapper.TTrainRecordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="springboot.mybatis.po.TTrainRecord">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="action_id" property="actionId" />
+        <result column="action_name" property="actionName" />
+        <result column="action_score" property="actionScore" />
+        <result column="action_cnt" property="actionCnt" />
+        <result column="action_grade" property="actionGrade" />
+        <result column="calories" property="calories" />
+        <result column="duration" property="duration" />
+        <result column="start_time" property="startTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_id, action_id, action_name, action_score, action_cnt, action_grade, calories, duration, start_time, create_time, update_time
+    </sql>
+
+    <insert id="insertRecord" parameterType="springboot.mybatis.po.TTrainRecord">
+        insert into t_train_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="actionId != null">
+                action_id,
+            </if>
+            <if test="actionCnt != null">
+                action_cnt,
+            </if>
+            <if test="actionName != null">
+                action_name,
+            </if>
+            <if test="actionGrade != null">
+                action_grade,
+            </if>
+            <if test="actionScore != null">
+                action_score,
+            </if>
+            <if test="calories != null">
+                calories,
+            </if>
+            <if test="duration != null">
+                duration,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="actionId != null">
+                #{actionId},
+            </if>
+            <if test="actionCnt != null">
+                #{actionCnt},
+            </if>
+            <if test="actionName != null">
+                #{actionName},
+            </if>
+            <if test="actionGrade != null">
+                #{actionGrade},
+            </if>
+            <if test="actionScore != null">
+                #{actionScore},
+            </if>
+            <if test="calories != null">
+                #{calories},
+            </if>
+            <if test="duration != null">
+                #{duration},
+            </if>
+            <if test="startTime != null">
+                #{startTime},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        select *
+        from t_train_record
+        where  user_id = #{userId} and action_id = #{code} order by create_time desc limit 1
+    </select>
+
+</mapper>
