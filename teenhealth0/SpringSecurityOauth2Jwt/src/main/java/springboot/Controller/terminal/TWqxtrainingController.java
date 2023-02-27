@@ -1,11 +1,14 @@
 package springboot.Controller.terminal;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sun.corba.se.impl.ior.OldJIDLObjectKeyTemplate;
+import com.sun.xml.internal.dtdparser.DTDEventListener;
 import io.swagger.models.auth.In;
 import javafx.util.Pair;
+import org.apache.commons.beanutils.locale.converters.DoubleLocaleConverter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,6 +20,8 @@ import springboot.service.*;
 import javax.naming.InsufficientResourcesException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -88,6 +93,43 @@ public class TWqxtrainingController {
     @Autowired
     private TCourseDetailService tCourseDetailService;
 
+
+    @Autowired
+    private TUserEvalService tUserEvalService;
+
+    @Autowired
+    private TEvalEventService tEvalEventService;
+
+    @Autowired
+    private TEvalReportService tEvalReportService;
+
+    @Autowired
+    private TActionEventService tActionEventService;
+
+    @Autowired
+    private TDictService tDictService;
+
+    @Autowired
+    private TActionService tActionService;
+
+    @Autowired
+    private TCourseMetaService tCourseMetaService;
+
+    @Autowired
+    private TReportCourseService tReportCourseService;
+
+    @Autowired
+    private TActionGuideService tActionGuideService;
+
+    @Autowired
+    private TDetailService tDetailService;
+
+    @Autowired
+    private TTrainRecordService tTrainRecordService;
+
+    @Autowired
+    private TActionRequirementService tActionRequirementService;
+
     private String userUploadpath="/media/AITraining/userUploads/";    //阿里云上传用户训练文件地址
     private String moxingpath="/usr/java/xunlianmoxing/";   //阿里云算法模型文件地址
 //    private String uploadpath = "D:\\Works\\WQXtest\\uploadpath\\";    //本地地址教学视频地址
@@ -119,8 +161,8 @@ public class TWqxtrainingController {
     @PostMapping(value = "/testTrainingUpload", produces = {"application/json;charset=UTF-8"})
     public CommonResult testTrainingResult(@RequestBody StudentTestInfo studentTestInfo)throws Exception{
         Long studentId = studentTestInfo.getUserId();
-        Long testId = studentTestInfo.getTestId();
-        Long count = studentTestInfo.getCount();
+        Long testId = studentTestInfo.getActionId();
+        Long count = studentTestInfo.getCount().longValue();
         String level = null;
         Integer score = 0;
         Object o = null;
@@ -178,19 +220,46 @@ public class TWqxtrainingController {
         }
     }
 
-    public String getGrade(int score) {
-        String str;
-        if (score >= 90) {
-            str = "优秀";
-        } else if (score >= 80) {
-            str = "良好";
-        } else if (score >= 70) {
-            str = "平均";
-        } else if (score >= 60) {
-            str = "低于平均";
-        } else {
-            str = "弱";
+    public String getGrade(String userType, Integer score) {
+        String str = "";
+        if (userType.equals("一类")) {
+            if (score >= 105) {
+                str = Grade.FIVE.getName();
+            } else if (score >= 85) {
+                str = Grade.FOUR.getName();
+            } else if (score >= 65) {
+                str = Grade.THREE.getName();
+            } else if (score >= 55) {
+                str = Grade.TWO.getName();
+            } else {
+                str = Grade.ONE.getName();
+            }
+        } else if (userType.equals("二类")) {
+            if (score >= 100) {
+                str = Grade.FIVE.getName();
+            } else if (score >= 80) {
+                str = Grade.FOUR.getName();
+            } else if (score >= 60) {
+                str = Grade.THREE.getName();
+            } else if (score >= 50) {
+                str = Grade.TWO.getName();
+            } else {
+                str = Grade.ONE.getName();
+            }
+        } else if (userType.equals("三类")) {
+            if (score >= 95) {
+                str = Grade.FIVE.getName();
+            } else if (score >= 75) {
+                str = Grade.FOUR.getName();
+            } else if (score >= 55) {
+                str = Grade.THREE.getName();
+            } else if (score >= 45) {
+                str = Grade.TWO.getName();
+            } else {
+                str = Grade.ONE.getName();
+            }
         }
+
         return str;
     }
 
@@ -210,8 +279,8 @@ public class TWqxtrainingController {
     @PostMapping(value = "/testCapabilityUpload", produces = {"application/json;charset=UTF-8"})
     public CommonResult testCapabilityUpload(@RequestBody StudentTestInfo studentTestInfo)throws Exception{
         Long userID = studentTestInfo.getUserId();
-        Long testId = studentTestInfo.getTestId();
-        Long count = studentTestInfo.getCount();
+        Long testId = studentTestInfo.getActionId();
+        Long count = studentTestInfo.getCount().longValue();
         // 根据userID 查找出用户的性别年龄信息。
         TUser tuser = tUserService.selectById(userID);
         if (tuser == null)
@@ -231,32 +300,32 @@ public class TWqxtrainingController {
             case 1: {  // 俯卧撑
                 tCapability.setPushUpCnt(count.intValue());
                 tCapability.setPushUpScore(score);
-                tCapability.setPushUpGrade(getGrade(score));
+                tCapability.setPushUpGrade(getGrade("二类", score));
             } break;
             case 2: { // 仰卧起做
                 tCapability.setSitUpsCnt(count.intValue());
                 tCapability.setSitUpsScore(score);
-                tCapability.setSitUpsGrade(getGrade(score));
+                tCapability.setSitUpsGrade(getGrade("二类", score));
             } break;
             case 3: { // 原地纵跳
                 tCapability.setJump(count.intValue());
                 tCapability.setJumpScore(score);
-                tCapability.setJumpGrade(getGrade(score));
+                tCapability.setJumpGrade(getGrade("二类", score));
             } break;
             case 4: { // 坐位体前屈
                 tCapability.setSitForward(count.intValue());
                 tCapability.setSitForwardScore(score);
-                tCapability.setSitForwardGrade(getGrade(score));
+                tCapability.setSitForwardGrade(getGrade("二类", score));
             } break;
             case 6: { // 引体向上
                 tCapability.setPullUpCnt(count.intValue());
                 tCapability.setPullUpScore(score);
-                tCapability.setPullUpGrade(getGrade(score));
+                tCapability.setPullUpGrade(getGrade("二类", score));
             } break;
             case 7: { // 跑步
                 tCapability.setRuning(count.intValue());
                 tCapability.setRuningScore(score);
-                tCapability.setRuningGrade(getGrade(score));
+                tCapability.setRuningGrade(getGrade("二类", score));
             } break;
             default:
                 break;
@@ -465,8 +534,8 @@ public class TWqxtrainingController {
     @PostMapping(value = "/testRiskUpload", produces = {"application/json;charset=UTF-8"})
     public CommonResult testRiskUpload(@RequestBody StudentTestInfo studentTestInfo)throws Exception{
         Long userID = studentTestInfo.getUserId();
-        Long testId = studentTestInfo.getTestId();
-        Long count = studentTestInfo.getCount();
+        Long testId = studentTestInfo.getActionId();
+        Long count = studentTestInfo.getCount().longValue();
         // 根据userID 查找出用户的性别年龄信息。
         TUser tuser = tUserService.selectById(userID);
         if (tuser == null)
@@ -702,8 +771,8 @@ public class TWqxtrainingController {
     @PostMapping(value = "/testExamineUpload", produces = {"application/json;charset=UTF-8"})
     public CommonResult testExamineUpload(@RequestBody StudentTestInfo studentTestInfo)throws Exception{
         Long userID = studentTestInfo.getUserId();
-        Long testId = studentTestInfo.getTestId();
-        Long count = studentTestInfo.getCount();
+        Long testId = studentTestInfo.getActionId();
+        Double count = studentTestInfo.getCount();
         // 根据userID 查找出用户的性别年龄信息。
         TUser tuser = tUserService.selectById(userID);
         if (tuser == null)
@@ -717,29 +786,33 @@ public class TWqxtrainingController {
         TExamine tExamine = new TExamine();
         tExamine.setUserId(userID);
         Integer score = 0;
-        if (testId != 11L)
-            tExamineService.getTestScore(testId, gender, age_group_id, count);
+        if (testId != 11L) {
+            if (testId == 8L)
+                score = tExamineService.getTestScore(testId, gender, age_group_id, new Double(count*100).longValue());
+            else
+                score = tExamineService.getTestScore(testId, gender, age_group_id, count.longValue());
+        }
 
         switch (testId.intValue()) {
             case 2: { // 仰卧起做
                 tExamine.setSitUpsCnt(count.intValue());
                 tExamine.setSitUpsScore(score);
-                tExamine.setSitUpsGrade(getGrade(score));
+                tExamine.setSitUpsGrade(getGrade("二类",score));
             } break;
             case 6: { // 引体向上
                 tExamine.setPullUpCnt(count.intValue());
                 tExamine.setPullUpScore(score);
-                tExamine.setPullUpGrade(getGrade(score));
+                tExamine.setPullUpGrade(getGrade("二类", score));
             } break;
             case 7: { // 3000跑步
                 tExamine.setRuning(count.intValue());
                 tExamine.setRuningScore(score);
-                tExamine.setRuningGrade(getGrade(score));
+                tExamine.setRuningGrade(getGrade("二类", score));
             } break;
             case 8: { // 蛇形跑
                 tExamine.setSnakeRunning(count.intValue());
                 tExamine.setSnakeRuningScore(score);
-                tExamine.setSnakeRuningGrade(getGrade(score));
+                tExamine.setSnakeRuningGrade(getGrade("二类", score));
             } break;
             case 11: { // 负重组合
                 tExamine.setLoadComb(count.intValue());
@@ -1040,16 +1113,15 @@ public class TWqxtrainingController {
 
 
     //指导视频文件下载
-    @RequestMapping(value = "/videodownload/{videoId}")
-    public CommonResult videoDownload(@PathVariable("videoId") Integer videoId, HttpServletResponse response)throws IOException {
-        TGuideVideos tGuideVideos = tGuideVideosService.findFileName(videoId);
-
-        if (null==tGuideVideos){
+    @RequestMapping(value = "/downloadVideo/{videoCode}")
+    public CommonResult getVideo(@PathVariable("videoCode") String videoCode, HttpServletResponse response)throws IOException {
+        TAction tAction = tActionService.selectByCode(videoCode);
+        if (null==tAction){
             return CommonResult.fail("文件不存在!");
         }else {
-            String filename =tGuideVideos.getFileName();     //+".mp4" 感觉id查询文件名称
-            String path=tGuideVideos.getSavePath();
-            File file = new File(path + filename);
+            String path= "/media/AITraining/uploads/" + videoCode + "-" + tAction.getActionName() + ".mp4.mp4";
+            String filename = tAction.getActionName() + ".mp4";
+            File file = new File(path);
             if (file.exists()){
                 String downloadFileName = new String(filename.getBytes("UTF-8"), "iso-8859-1");     //防止中文乱码
                 response.addHeader("Content-Disposition","attachment;fileName="+downloadFileName);
@@ -1090,6 +1162,59 @@ public class TWqxtrainingController {
             }
         }
     }
+
+
+//    //指导视频文件下载
+//    @RequestMapping(value = "/videodownload/{videoId}")
+//    public CommonResult videoDownload(@PathVariable("videoId") Integer videoId, HttpServletResponse response)throws IOException {
+//        TGuideVideos tGuideVideos = tGuideVideosService.findFileName(videoId);
+//
+//        if (null==tGuideVideos){
+//            return CommonResult.fail("文件不存在!");
+//        }else {
+//            String filename =tGuideVideos.getFileName();     //+".mp4" 感觉id查询文件名称
+//            String path=tGuideVideos.getSavePath();
+//            File file = new File(path + filename);
+//            if (file.exists()){
+//                String downloadFileName = new String(filename.getBytes("UTF-8"), "iso-8859-1");     //防止中文乱码
+//                response.addHeader("Content-Disposition","attachment;fileName="+downloadFileName);
+//                byte[] buffer=new byte[1024];
+//                FileInputStream fis=null;
+//                BufferedInputStream bis=null;
+//                try {
+//                    fis=new FileInputStream(file);
+//                    bis=new BufferedInputStream(fis);
+//                    OutputStream os=response.getOutputStream();
+//                    int i=bis.read(buffer);
+//                    while (i!=-1){
+//                        os.write(buffer,0,i);
+//                        i=bis.read(buffer);
+//                    }
+//                    return CommonResult.success();
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }finally {
+//                    if (bis!=null){
+//                        try{
+//                            bis.close();
+//                        }catch (IOException e){
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                    if (fis!=null){
+//                        try{
+//                            fis.close();
+//                        }catch (IOException e){
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//                return CommonResult.success();
+//            }else {
+//                return CommonResult.fail();
+//            }
+//        }
+//    }
 
     //指导视频文件下载
     @RequestMapping(value = "/JTFileDownload/{filename}")
@@ -1258,8 +1383,8 @@ public class TWqxtrainingController {
     }
 
     //根据course_id获取课程详情
-    @GetMapping("/getCourseDetail/{courseId}")
-    public CommonResult getCourseDetail(@PathVariable("courseId") Long courseId){
+    @GetMapping("/getCourseDetail_bak/{courseId}")
+    public CommonResult getCourseDetail_bak(@PathVariable("courseId") Long courseId){
         TCourseInfo tCourseInfo = tCourseInfoService.getCourseById(courseId);
         if (tCourseInfo == null){
             return CommonResult.fail("课程不存在");
@@ -1271,5 +1396,657 @@ public class TWqxtrainingController {
             return CommonResult.success(tCourseInfoCustom);
         }
     }
+
+    // 根据userID创建评估事件
+    @PostMapping(value = "/createEvalEvent")
+    public CommonResult createEvalEvent(@RequestBody Map<String, Object> params)throws Exception{
+        Long userID = ((Integer)params.get("userID")).longValue();
+        DateFormat fmt =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date startTime = fmt.parse((String) params.get("startTime"));
+
+        // t_eval_event表中插入一条记录
+        TEvalEvent tEvalEvent = new TEvalEvent();
+        tEvalEvent.setCreateTime(new Date());
+        // 获取字典里的配置倒计时
+        String countdown = tDictService.getVal("countdown");
+        tEvalEvent.setCountdown(Integer.valueOf(countdown));
+        tEvalEvent.setStatus(0);
+        tEvalEvent.setStartTime(startTime);
+        tEvalEventService.insertEvent(tEvalEvent);
+
+        // 获取刚刚插入记录的id
+        Long eventId = tEvalEvent.getId();
+
+        // 向t_eval_report表中插入一条记录，包含userID
+        TEvalReport teValReport = new TEvalReport();
+        teValReport.setUserId(userID);
+        if (tEvalReportService.insertReport(teValReport) != 0)
+            System.out.println("插入成功");
+        else
+            return CommonResult.fail();
+        Long reportId = teValReport.getId();
+
+        // 向 t_user_eval表插入一条数据
+        TUserEval tUserEval = new TUserEval();
+        tUserEval.setUserId(userID);
+        tUserEval.setReportId(reportId);
+        tUserEval.setEvalEventId(eventId);
+        tUserEval.setCreateTime(new Date());
+        if (tUserEvalService.insertUserEval(tUserEval) != 0)
+            System.out.println("插入成功");
+        else
+            return CommonResult.fail();
+
+        // 向t_action_event表插入6记录
+        TActionEvent tActionEvent = new TActionEvent();
+
+        tActionEvent.setActionStatus(0); // 0表示没有测试
+        tActionEvent.setMaxScore(300);
+        tActionEvent.setEvalEventId(eventId);
+        tActionEvent.setCreateTime(new Date());
+        // 3000米
+        tActionEvent.setActionName(Action.LRUNNING.getName());
+        tActionEvent.setActionId(Action.LRUNNING.getIndex());
+        tActionEvent.setType(Action.LRUNNING.getType());
+        tActionEvent.setPosition(Action.LRUNNING.getPosition());
+        tActionEvent.setUnit("秒");
+        if (tActionEventService.insertActionEvent(tActionEvent) != 0)
+            System.out.println("插入成功");
+        else
+            return CommonResult.fail();
+
+        // 30米*2 蛇形跑
+        tActionEvent.setActionName(Action.SRUNNING.getName());
+        tActionEvent.setActionId(Action.SRUNNING.getIndex());
+        tActionEvent.setType(Action.SRUNNING.getType());
+        tActionEvent.setPosition(Action.SRUNNING.getPosition());
+        tActionEvent.setUnit("秒");
+        if (tActionEventService.insertActionEvent(tActionEvent) != 0)
+            System.out.println("插入成功");
+        else
+            return CommonResult.fail();
+
+        // 俯卧撑
+        tActionEvent.setMaxScore(150);
+        tActionEvent.setActionName(Action.PUSHUP.getName());
+        tActionEvent.setActionId(Action.PUSHUP.getIndex());
+        tActionEvent.setType(Action.PUSHUP.getType());
+        tActionEvent.setPosition(Action.PUSHUP.getPosition());
+        tActionEvent.setImg("http://47.122.6.103:8080/tph/service/JTFileDownload/action-fwc.jpg");
+        tActionEvent.setDuration("120");
+        tActionEvent.setUnit("个");
+        if (tActionEventService.insertActionEvent(tActionEvent) != 0)
+            System.out.println("插入成功");
+        else
+            return CommonResult.fail();
+        // 引体向上
+        tActionEvent.setActionName(Action.PULLUP.getName());
+        tActionEvent.setActionId(Action.PULLUP.getIndex());
+        tActionEvent.setType(Action.PULLUP.getType());
+        tActionEvent.setPosition(Action.PULLUP.getPosition());
+        tActionEvent.setImg("http://47.122.6.103:8080/tph/service/JTFileDownload/action-ytxs.jpg");
+        tActionEvent.setDuration("120");
+        tActionEvent.setUnit("个");
+        if (tActionEventService.insertActionEvent(tActionEvent) != 0)
+            System.out.println("插入成功");
+        else
+            return CommonResult.fail();
+
+        // 仰卧起做
+        tActionEvent.setActionName(Action.SITUP.getName());
+        tActionEvent.setActionId(Action.SITUP.getIndex());
+        tActionEvent.setType(Action.SITUP.getType());
+        tActionEvent.setPosition(Action.SITUP.getPosition());
+        tActionEvent.setImg("http://47.122.6.103:8080/tph/service/JTFileDownload/action-ywqz.jpg");
+        tActionEvent.setDuration("120");
+        tActionEvent.setUnit("个");
+        if (tActionEventService.insertActionEvent(tActionEvent) != 0)
+            System.out.println("插入成功");
+        else
+            return CommonResult.fail();
+
+        // 单腿臀桥
+        tActionEvent.setActionName(Action.LEGHIGBRIDGE.getName());
+        tActionEvent.setActionId(Action.LEGHIGBRIDGE.getIndex());
+        tActionEvent.setType(Action.LEGHIGBRIDGE.getType());
+        tActionEvent.setPosition(Action.LEGHIGBRIDGE.getPosition());
+        tActionEvent.setImg("http://47.122.6.103:8080/tph/service/JTFileDownload/action-dttq.jpg");
+        tActionEvent.setDuration("120");
+        tActionEvent.setUnit("个");
+        if (tActionEventService.insertActionEvent(tActionEvent) != 0)
+            System.out.println("插入成功");
+        else
+            return CommonResult.fail();
+
+        return CommonResult.success(startTime);
+    }
+
+
+    // 客户端上传动作评估结果
+    @PostMapping(value = "/evalActionUpload", produces = {"application/json;charset=UTF-8"})
+    public CommonResult evalActionUpload(@RequestBody StudentTestInfo studentTestInfo)throws Exception{
+        Long userID = studentTestInfo.getUserId();
+        Long actionId = studentTestInfo.getActionId();
+        Double count = studentTestInfo.getCount();
+        Integer calories = studentTestInfo.getCalories();
+        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date startTime = fmt.parse(studentTestInfo.getStartTime());  // 动作测试时间
+
+        // 根据传入的userid 查询 t_user_eval表的最新的一条评估事件id eval_event_id
+        TUserEval tUserEval = tUserEvalService.selectByUserID(userID);
+        // 根据id 获取t_eval_event 获取评估事件的开始时间 判断是否超时
+        TEvalEvent tEvalEvent = tEvalEventService.selectByID(tUserEval.getEvalEventId());
+
+        if (isOverTime(startTime, tEvalEvent.getStartTime()) == true)
+            return CommonResult.fail("超时, 请重新评估");
+
+        // 根据userID 查找出用户的性别年龄信息。
+        TUser tuser = tUserService.selectById(userID);
+        String userType = tuser.getType();
+
+        if (tuser == null)
+            return CommonResult.fail("该用户不存在");
+        int age = tuser.getAge();
+        int gender = tuser.getGender();
+        int age_group_id = 1;
+        if (age > 24)
+            age_group_id += Math.ceil((age - 24)/3.0);
+
+
+        // 创建一个动作测试事件
+        TActionEvent tActionEvent = new TActionEvent();
+
+        tActionEvent.setEvalEventId(tUserEval.getEvalEventId());
+        tActionEvent.setStartTime(startTime);
+        tActionEvent.setCalories(calories);
+
+        Integer score = 0;
+        if (actionId == Action.SRUNNING.getIndex())
+            score = tTestStandardService.getTestScore(actionId, gender, age_group_id, (long)(count*100));
+        else
+            score = tTestStandardService.getTestScore(actionId, gender, age_group_id, count.longValue());
+        tActionEvent.setActionId(actionId.intValue());
+        tActionEvent.setActionCnt(count);
+        tActionEvent.setActionScore(score);
+        tActionEvent.setActionGrade(getGrade(userType, score));  // 根据不同让人员类别 评定等级
+        if (Grade.getGrade(getGrade(userType, score)) <= 2)  // 不合格需要加入 advice
+            tActionEvent.setAdvice(tDictService.getVal(Action.getName(actionId.intValue())));
+        tActionEvent.setActionStatus(1);
+        System.out.println(userID + " " + actionId + " " + count);
+
+        // 向测试动作事件表中更新一条记录 根据评估事件id 测试动作id
+        if (tActionEventService.updateByID(tActionEvent) == 0)
+            return CommonResult.fail("更新数据失败");
+
+        // 每次更新完 获取t_action_event表中当前评估事件id下 action_status为1的个数 个数为6则更新
+        // t_eval_event表中的所有评估时间完成的状态值为1
+        if (tActionEventService.getSuccessCnt(tUserEval.getEvalEventId()) == 6) {
+            //
+            if (tEvalEventService.updateStatusByID(tUserEval.getEvalEventId()) == 0)
+                return CommonResult.fail("更新数据失败");
+        }
+
+        return CommonResult.success();
+    }
+
+
+    // 客户端上传动作评估结果
+    @PostMapping(value = "/AIFreeTraining", produces = {"application/json;charset=UTF-8"})
+    public CommonResult AIFreeTraining(@RequestBody StudentTestInfo studentTestInfo)throws Exception{
+        Long userID = studentTestInfo.getUserId();
+        Long actionId = studentTestInfo.getActionId();
+        Double count = studentTestInfo.getCount();
+        Integer calories = studentTestInfo.getCalories();
+        String duration = studentTestInfo.getDuration();
+        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date startTime = fmt.parse(studentTestInfo.getStartTime());  // 动作测试时间
+
+        // 根据userID 查找出用户的性别年龄信息。
+        TUser tuser = tUserService.selectById(userID);
+//        String userType = tuser.getType();
+
+        if (tuser == null)
+            return CommonResult.fail("该用户不存在");
+        int age = tuser.getAge();
+//        int gender = tuser.getGender();
+//        int age_group_id = 1;
+//        if (age > 24)
+//            age_group_id += Math.ceil((age - 24)/3.0);
+
+        TAction tAction = tActionService.selectByCode(actionId.toString());
+        // 创建训练记录
+        TTrainRecord tTrainRecord = new TTrainRecord();
+        tTrainRecord.setUserId(userID);
+        tTrainRecord.setActionId(actionId);
+        tTrainRecord.setStartTime(startTime);
+        tTrainRecord.setDuration(duration);
+        tTrainRecord.setCalories(calories);
+        tTrainRecord.setActionName(tAction.getActionName());
+        tTrainRecord.setActionCnt(count.intValue());
+
+        tTrainRecord.setCreateTime(new Date());
+
+//        Integer score = 0;
+//        if (actionId == Action.SRUNNING.getIndex())
+//            score = tTestStandardService.getTestScore(actionId, gender, age_group_id, (long)(count*100));
+//        else
+//            score = tTestStandardService.getTestScore(actionId, gender, age_group_id, count.longValue());
+//        tTrainRecord.setActionScore(score);
+//        tTrainRecord.setActionGrade(getGrade(userType, score));
+
+        tTrainRecordService.insertRecord(tTrainRecord);
+
+        return CommonResult.success(tTrainRecord);
+    }
+
+
+    @PostMapping("/test")
+    public CommonResult TestApi(@RequestBody StudentTestInfo studentTestInfo) throws ParseException {
+        Long userID = studentTestInfo.getUserId();
+        Long actionId = studentTestInfo.getActionId();
+        Double count = studentTestInfo.getCount();
+        // 根据userID 查找出用户的性别年龄信息。
+        TUser tuser = tUserService.selectById(userID);
+        if (tuser == null)
+            return CommonResult.fail("该用户不存在");
+        int age = tuser.getAge();
+        int gender = tuser.getGender();
+        int age_group_id = 1;
+        if (age > 24)
+            age_group_id += Math.ceil((age - 24)/3.0);
+
+        Integer score = 0;
+        if (actionId == Action.SRUNNING.getIndex())
+            score = tTestStandardService.getTestScore(actionId, gender, age_group_id, (long)(count*100));
+        else
+            score = tTestStandardService.getTestScore(actionId, gender, age_group_id, count.longValue());
+        return CommonResult.success(score);
+    }
+
+    public  boolean isOverTime(Date nowDate, Date startDate) {
+
+        long nd = 1000 * 24 * 60 * 60;//每天毫秒数
+
+        long nh = 1000 * 60 * 60;//每小时毫秒数
+
+        long nm = 1000 * 60;//每分钟毫秒数
+
+        long diff = nowDate.getTime() - startDate.getTime(); // 获得两个时间的毫秒时间差异
+
+        long day = diff / nd;   // 计算差多少天
+
+        long hour = diff % nd / nh; // 计算差多少小时
+
+        long min = diff % nd % nh / nm;  // 计算差多少分钟
+
+        System.out.println(day + "天" + hour + "小时" + min + "分钟");
+        if (day == 0 && hour < 4)
+            return false;
+        return true;
+    }
+
+
+    //根据user_id获取用户最新一次运动评估的信息
+    @GetMapping("/getEvalInfo/{userId}")
+    public CommonResult getEvalInfo(@PathVariable("userId") Long userId){
+        // 1. 根据userID 获取用户最新的一条评估事件
+        TUserEval tUserEval = tUserEvalService.selectByUserID(userId);
+        Long evalEventID = tUserEval.getEvalEventId();
+
+        TEvalEventCustom tEvalEventCustom = new TEvalEventCustom();
+        // 2. 查询evalEventID 对应的所有评估事件
+        BeanUtils.copyProperties(tEvalEventService.selectByID(evalEventID), tEvalEventCustom);
+        Integer totalTime = tEvalEventService.getTotalTime(evalEventID);
+        Integer totalCalories = tEvalEventService.getTotalCalories(evalEventID);
+        List<TActionEvent> tActionEventList = tActionEventService.selectList(evalEventID);
+        tEvalEventCustom.setTActionEventList(tActionEventList);
+        tEvalEventCustom.setTotalTime(totalTime);
+        tEvalEventCustom.setTotalCalories(totalCalories);
+        return CommonResult.success(tEvalEventCustom);
+    }
+
+    private String getTotalGrade(int totalScore) {
+        String tmp;
+        if (totalScore >= 550) {
+            tmp = "优秀";
+        } else if (totalScore >= 500) {
+            tmp = "良好";
+        } else if (totalScore >= 450) {
+            tmp = "处于平均";
+        } else if (totalScore >= 400) {
+            tmp = "低于平均";
+        } else
+            tmp = "不合格";
+        return tmp;
+    }
+
+    // 根据用户id获取用户运动能力评评估报告 返回user最新的评估报告
+    @GetMapping("/getEvalReport/{userId}")
+    public CommonResult getEvalReport(@PathVariable("userId") Long userId){
+        // 1. 根据userID 获取用户最新的一条评估事件id 和 最新的评估报告id
+        TUserEval tUserEval = tUserEvalService.selectByUserID(userId);
+        Long evalEventID = tUserEval.getEvalEventId();
+        Long reportId = tUserEval.getReportId();
+        // 2. 判断评估事件状态是否完成
+        TEvalEvent tEvalEvent = tEvalEventService.selectByID(evalEventID);
+        if (tEvalEvent.getStatus() == 0)
+            return CommonResult.fail("评估未完成");
+
+        List<TActionEvent> tActionEventList = tActionEventService.selectList(evalEventID);
+        if (tReportCourseService.selectByReportId(reportId) == 0) {
+            // 没有生成课程开始生成课程
+            // 3. 计算评估总分 总等级 报告到report表中
+            int totalScore = 0;
+            boolean gradeFlage = false; // 默认为false 如果有一项不合格 为true
+            StringBuilder report = new StringBuilder();  // 文字评估结果
+//            List<TActionEvent> tActionEventList = tActionEventService.selectList(evalEventID);
+            TReportCourse tReportCourse = new TReportCourse();
+            tReportCourse.setReportId(reportId);
+//            List<Pair<Integer, Integer>> list = new ArrayList<>();
+            for (TActionEvent actionEvent : tActionEventList) {
+                totalScore += actionEvent.getActionScore();
+                report.append(actionEvent.getType());
+//                list.add(new Pair<>(actionEvent.getActionId(), actionEvent.getActionScore()));
+                // 获得单项评估的等级1 2 3 4 5
+                int level = Grade.getGrade(actionEvent.getActionGrade());
+                report.append(actionEvent.getActionGrade() + ",");
+                if (level <= 2)
+                    gradeFlage = true;
+                // 根据评估的等级和部位 去课程库里找课程  热身 拉伸的课程全部范围 力量随机找两个
+                String position = actionEvent.getPosition();
+                System.out.println("position:" + position);
+                System.out.println("level:" + level);
+                // 根据部位+等级+热身 三个字段查询 所有热身动作课程 加入到course列表
+                List<TCourseMeta> tCourses = tCourseMetaService.selectByConditinon("热身", position, level);
+                tReportCourse.setCourseCode(tCourses.get(0).getCode());
+                tReportCourseService.insertItem(tReportCourse);
+                tReportCourse.setCourseCode(tCourses.get(1).getCode());
+                tReportCourseService.insertItem(tReportCourse);
+
+                // 根据部位+等级+拉升 三个字段查询 所有拉伸动作课程 加入到course列表
+                tCourses = tCourseMetaService.selectByConditinon("拉伸", position, level);
+                tReportCourse.setCourseCode(tCourses.get(0).getCode());
+                tReportCourseService.insertItem(tReportCourse);
+                tReportCourse.setCourseCode(tCourses.get(1).getCode());
+                tReportCourseService.insertItem(tReportCourse);
+
+                // 根据部位+等级+力量 三个字段查询 所有拉伸动作课程 在返回列表里随机选择两个课程
+                tCourses = tCourseMetaService.selectByConditinon("力量", position, level);
+                tReportCourse.setCourseCode(tCourses.get(0).getCode());
+                tReportCourseService.insertItem(tReportCourse);
+                tReportCourse.setCourseCode(tCourses.get(1).getCode());
+                tReportCourseService.insertItem(tReportCourse);
+                //
+                System.out.println("创建课程……");
+            }
+            report.append("建议您根据系统推荐的训练处方进行运动能力提升/运动风险改善训练。");
+
+            TEvalReport tEvalReport = new TEvalReport();
+            tEvalReport.setId(reportId);
+            tEvalReport.setUserId(userId);
+            tEvalReport.setCreateTime(new Date());
+            tEvalReport.setScore(totalScore);
+            if (gradeFlage)
+                tEvalReport.setGrade("不合格（因单项不合格）");
+            else
+                tEvalReport.setGrade(getTotalGrade(totalScore));
+
+            String preReport = "您的整体运动评估结果: " + tEvalReport.getGrade() + "。其中, 您的";
+            tEvalReport.setReport(preReport + report);
+            if (tEvalReportService.updateReport(tEvalReport) == 0)
+                return CommonResult.fail("评估报告创建失败");
+        }
+        TEvalReportCustom tEvalReportCustom = new TEvalReportCustom();
+        TEvalReport tEvalReport = tEvalReportService.selectByrReportId(reportId);
+        BeanUtils.copyProperties(tEvalReport, tEvalReportCustom);
+
+        List<TCourseMeta> tCourseMetaList = new ArrayList<>();
+        List<TReportCourse> tReportCourses = tReportCourseService.selectListById(reportId);
+
+        for (TReportCourse tReportCourse : tReportCourses) {
+            TCourseMeta tCourseMeta = tCourseMetaService.selectByCode(tReportCourse.getCourseCode());
+            tCourseMetaList.add(tCourseMeta);
+        }
+        tEvalReportCustom.setTCourseList(tCourseMetaList);
+        tEvalReportCustom.setTActionEventList(tActionEventList);
+//        // 按成绩从小到大排序
+//        Collections.sort(list, (p1, p2) -> p1.getValue().compareTo(p2.getValue()));
+//
+//        for (Pair<Integer, Integer> pair : list) {
+//            System.out.println(pair.getKey() + ": " + pair.getValue());
+//        }
+//        int minAction1 = list.get(0).getKey();
+//        if (minAction1 == Action.SRUNNING.getIndex() || minAction1 == Action.SITUP.getIndex() || minAction1 == Action.LEGHIGBRIDGE.getIndex()) {
+//            // 推荐 1 课程
+//            System.out.println("课程1");
+//        } else if (minAction1 == Action.PUSHUP.getIndex() || minAction1 == Action.PULLUP.getIndex()) {
+//            // 推荐 2 课程
+//            System.out.println("课程2");
+//        } else if (minAction1 == Action.LRUNNING.getIndex()) {
+//            // 推荐 2 课程
+//            System.out.println("课程3");
+//        }
+        return CommonResult.success(tEvalReportCustom);
+    }
+
+    // 根据用户id获取用户运动能力评评估报告 返回user所有
+    @GetMapping("/getHistoryEvalReport/{userId}")
+    public CommonResult getHistoryEvalReport(@PathVariable("userId") Long userId){
+        // 1. 根据userID 获取用户所有的按时间倒序排列的评估事件id 和评估报告id
+        List<TUserEval> tUserEvalList = tUserEvalService.selectAll(userId);
+        List<TEvalReport> tEvalReportList = new ArrayList<>();
+        for (TUserEval tUserEval : tUserEvalList) {
+            Long reportId = tUserEval.getReportId();
+            TEvalReport tEvalReport = tEvalReportService.selectByrReportId(reportId);
+            if (tEvalReport.getCreateTime() == null)
+                continue;
+            tEvalReportList.add(tEvalReport);
+        }
+        return CommonResult.success(tEvalReportList);
+    }
+
+    // 根据用户id获取用户运动能力评评估报告 返回user所有
+    @GetMapping("/getLatestEvalReport/{userId}")
+    public CommonResult getLatestEvalReport(@PathVariable("userId") Long userId){
+        // 1. 根据userID 获取用户所有的按时间倒序排列的评估事件id 和评估报告id
+        TUserEval tUserEval = tUserEvalService.selectLatest(userId);
+
+        Long reportId = tUserEval.getReportId();
+        TEvalReport tEvalReport = tEvalReportService.selectByrReportId(reportId);
+        if (tEvalReport.getCreateTime() == null)
+            return CommonResult.success(null);
+        return CommonResult.success(tEvalReport);
+    }
+
+
+    // 根据用户id获取用户运动能力评评估报告 返回user所有
+    @GetMapping("/getActionDetail/{code}")
+    public CommonResult getActionDetail(@PathVariable("code") String code){
+
+        TActionRequirement tActionRequirement = tActionRequirementService.getByCode(code);
+        TAction tAction = tActionService.selectByCode(code);
+        if (null == tAction)
+            return CommonResult.fail("查询详情失败");
+        TActionDetail tActionDetail = new TActionDetail();
+        BeanUtils.copyProperties(tAction, tActionDetail);
+        tActionDetail.setRequirement(tActionRequirement.getRequirement());
+        tActionDetail.setDetail(tActionRequirement.getDetail());
+        return CommonResult.success(tActionDetail);
+    }
+
+    // 根据reportId 获取报告
+    @GetMapping("/getEvalReportById/{reportId}")
+    public CommonResult getEvalReportById(@PathVariable("reportId") Long reportId){
+        // 1. 根据reportId 获取评估事件id 和 userId
+        TUserEval tUserEval = tUserEvalService.selectByReportId(reportId);
+        Long userId = tUserEval.getUserId();
+        Long evalEventID = tUserEval.getEvalEventId();
+
+        // 2. 判断评估事件状态是否完成
+        TEvalEvent tEvalEvent = tEvalEventService.selectByID(evalEventID);
+        if (tEvalEvent.getStatus() == 0)
+            return CommonResult.fail("评估未完成");
+
+        List<TActionEvent> tActionEventList = tActionEventService.selectList(evalEventID);
+        if (tReportCourseService.selectByReportId(reportId) == 0) {
+            // 没有生成课程开始生成课程
+            // 3. 计算评估总分 总等级 报告到report表中
+            int totalScore = 0;
+            boolean gradeFlage = false; // 默认为false 如果有一项不合格 为true
+            StringBuilder report = new StringBuilder();  // 文字评估结果
+            TReportCourse tReportCourse = new TReportCourse();
+            tReportCourse.setReportId(reportId);
+            for (TActionEvent actionEvent : tActionEventList) {
+                totalScore += actionEvent.getActionScore();
+                report.append(actionEvent.getType());
+                int level = Grade.getGrade(actionEvent.getActionGrade());
+                report.append(actionEvent.getActionGrade() + ",");
+                if (level <= 2)
+                    gradeFlage = true;
+                // 根据评估的等级和部位 去课程库里找课程  热身 拉伸的课程全部范围 力量随机找两个
+                String position = actionEvent.getPosition();
+                System.out.println("position:" + position);
+                System.out.println("level:" + level);
+                // 根据部位+等级+热身 三个字段查询 所有热身动作课程 加入到course列表
+                List<TCourseMeta> tCourses = tCourseMetaService.selectByConditinon("热身", position, level);
+                tReportCourse.setCourseCode(tCourses.get(0).getCode());
+                tReportCourseService.insertItem(tReportCourse);
+                tReportCourse.setCourseCode(tCourses.get(1).getCode());
+                tReportCourseService.insertItem(tReportCourse);
+
+                // 根据部位+等级+拉升 三个字段查询 所有拉伸动作课程 加入到course列表
+                tCourses = tCourseMetaService.selectByConditinon("拉伸", position, level);
+                tReportCourse.setCourseCode(tCourses.get(0).getCode());
+                tReportCourseService.insertItem(tReportCourse);
+                tReportCourse.setCourseCode(tCourses.get(1).getCode());
+                tReportCourseService.insertItem(tReportCourse);
+
+                // 根据部位+等级+力量 三个字段查询 所有拉伸动作课程 在返回列表里随机选择两个课程
+                tCourses = tCourseMetaService.selectByConditinon("力量", position, level);
+                tReportCourse.setCourseCode(tCourses.get(0).getCode());
+                tReportCourseService.insertItem(tReportCourse);
+                tReportCourse.setCourseCode(tCourses.get(1).getCode());
+                tReportCourseService.insertItem(tReportCourse);
+                //
+                System.out.println("创建课程……");
+            }
+            report.append("建议您根据系统推荐的训练处方进行运动能力提升/运动风险改善训练。");
+
+            TEvalReport tEvalReport = new TEvalReport();
+            tEvalReport.setId(reportId);
+            tEvalReport.setUserId(userId);
+            tEvalReport.setCreateTime(new Date());
+            tEvalReport.setScore(totalScore);
+            if (gradeFlage)
+                tEvalReport.setGrade("不合格（因单项不合格）");
+            else
+                tEvalReport.setGrade(getTotalGrade(totalScore));
+
+            String preReport = "您的整体运动评估结果: " + tEvalReport.getGrade() + "。其中, 您的";
+            tEvalReport.setReport(preReport + report);
+            if (tEvalReportService.updateReport(tEvalReport) == 0)
+                return CommonResult.fail("评估报告创建失败");
+        }
+        TEvalReportCustom tEvalReportCustom = new TEvalReportCustom();
+        TEvalReport tEvalReport = tEvalReportService.selectByrReportId(reportId);
+        BeanUtils.copyProperties(tEvalReport, tEvalReportCustom);
+
+        List<TCourseMeta> tCourseMetaList = new ArrayList<>();
+        List<TReportCourse> tReportCourses = tReportCourseService.selectListById(reportId);
+
+        for (TReportCourse tReportCourse : tReportCourses) {
+            TCourseMeta tCourseMeta = tCourseMetaService.selectByCode(tReportCourse.getCourseCode());
+            tCourseMetaList.add(tCourseMeta);
+        }
+        tEvalReportCustom.setTCourseList(tCourseMetaList);
+        tEvalReportCustom.setTActionEventList(tActionEventList);
+        return CommonResult.success(tEvalReportCustom);
+    }
+
+
+    // 根据用户id获取用户运动能力评评估报告 返回user最新的评估报告
+    @GetMapping("/getNextAction/{evalEventId}")
+    public CommonResult getNextAction(@PathVariable("evalEventId") Long evalEventId) {
+        // 根据评估事件id 获取未完成评估的动作
+        TActionEvent tActionEvent = tActionEventService.selectNext(evalEventId);
+        // 根据评估事件id 获取当前已完成的时间最新的
+        TActionEvent currentActionEvent = tActionEventService.selectCurrent(evalEventId);
+
+        if (tActionEvent == null)
+            return CommonResult.fail("评估动作已完成");
+        // 根据actionID 去查询设备指导
+        TActionGuide tActionGuide = tActionGuideService.selectById(tActionEvent.getActionId());
+        // 封装对象
+        TActionGuideCustom tActionGuideCustom = new TActionGuideCustom();
+        BeanUtils.copyProperties(tActionGuide, tActionGuideCustom);
+        tActionGuideCustom.setTActionEvent(tActionEvent);
+        tActionGuideCustom.setCurrentAction(currentActionEvent);
+        return CommonResult.success(tActionGuideCustom);
+    }
+
+    // 根据course_Code获取课程详情
+    @GetMapping("/getCourseDetail/{courseCode}")
+    public CommonResult getCourseDetail(@PathVariable("courseCode") String courseCode){
+        TCourseMeta tCourseMeta = tCourseMetaService.selectByCode(courseCode);
+        if (tCourseMeta == null){
+            return CommonResult.fail("课程不存在");
+        }else {
+            List<TDetail> tDetailList = tDetailService.selectByCode(courseCode);
+            List<TActionCustom> tActionCustomList = new ArrayList<>();
+            TCourseMetaCustom tCourseMetaCustom = new TCourseMetaCustom();
+            BeanUtils.copyProperties(tCourseMeta, tCourseMetaCustom);
+
+            for (int i = 0; i < tDetailList.size(); i++) {
+                TActionCustom tActionCustomTmp = new TActionCustom();
+                String actionCode = tDetailList.get(i).getActionCode();
+                TAction tAction = tActionService.selectByCode(actionCode);
+                BeanUtils.copyProperties(tAction, tActionCustomTmp);
+                tActionCustomTmp.setCount(tDetailList.get(i).getCount());
+                tActionCustomTmp.setTimes(tDetailList.get(i).getTimes());
+                tActionCustomTmp.setGap(tDetailList.get(i).getGap());
+                tActionCustomList.add(tActionCustomTmp);
+            }
+            tCourseMetaCustom.setTActionCustomList(tActionCustomList);
+            return CommonResult.success(tCourseMetaCustom);
+        }
+    }
+
+    // 根据course_Code获取课程详情
+    @GetMapping("/getActionList/{isAI}")
+    public CommonResult getAIActions(@PathVariable("isAI") Integer isAI){
+        List<TAction> tActionList = tActionService.getAIList(isAI);
+        if (tActionList == null){
+            return CommonResult.fail("获取课程列表失败");
+        }else {
+            return CommonResult.success(tActionList);
+        }
+    }
+
+    // 根据course_Code获取课程详情
+    @GetMapping("/getCourseList/{isAI}")
+    public CommonResult getAICourseList(@PathVariable("isAI") Integer isAI){
+        List<TCourseMeta> tCourseMetaList = tCourseMetaService.getCourseList(isAI);
+        if (tCourseMetaList == null){
+            return CommonResult.fail("获取课程失败");
+        }else {
+            return CommonResult.success(tCourseMetaList);
+        }
+    }
+
+
+    @GetMapping("/getTrainResult/{userId}/{code}")
+    public CommonResult getAICourseList(@PathVariable("userId") Long userId, @PathVariable("code") Long code){
+        TAction tAction = tActionService.selectByCode(code.toString());
+        TTrainRecordCustom tTrainRecordCustom = new TTrainRecordCustom();
+        TTrainRecord tTrainRecord = tTrainRecordService.selectByUserId(userId, code);
+        BeanUtils.copyProperties(tTrainRecord, tTrainRecordCustom);
+        tTrainRecordCustom.setActionImg(tAction.getActionImg());
+        if (tTrainRecord == null){
+            return CommonResult.fail("");
+        }else {
+            return CommonResult.success(tTrainRecordCustom);
+        }
+    }
+
 
 }

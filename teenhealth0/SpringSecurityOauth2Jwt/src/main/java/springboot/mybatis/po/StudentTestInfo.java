@@ -1,6 +1,9 @@
 package springboot.mybatis.po;
 
+import io.swagger.models.auth.In;
 import lombok.Data;
+
+import java.util.Date;
 
 /**
  * @author xulong
@@ -9,15 +12,17 @@ import lombok.Data;
  */
 @Data
 public class StudentTestInfo {
-    // 学生id
+    // 学生账户
     private Long userId;
 
     // 测试动作id
-    private Long testId;
+    private Long actionId;
 
-    // 测试动作name
-    private String testName;
+    private Integer calories;
 
+    private String startTime;
     // 测试动作计数
-    private Long count;
+    private Double count;
+
+    private String duration;
 }

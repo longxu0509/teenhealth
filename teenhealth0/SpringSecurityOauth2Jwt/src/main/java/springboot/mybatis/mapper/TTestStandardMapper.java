@@ -15,5 +15,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 @Mapper
 public interface TTestStandardMapper extends BaseMapper<TTestStandard> {
 
-    int getTestScore(Long testId, int gender, int age_group_id, Long count);
+    Integer getTestScore(Long testId, int gender, int age_group_id, Long count);
+
+    Long getMaxCount(Long testId, int gender, int age_group_id);
+
+    Long getMinTime(Long testId, int gender, int age_group_id);
+
+    Long getMaxTime(Long testId, int gender, int age_group_id);
 }

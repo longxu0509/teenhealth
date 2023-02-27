@@ -13,5 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface TTestStandardService extends IService<TTestStandard> {
 
-    int getTestScore(Long testId, int gender, int age_group_id, Long count);
+    Integer getTestScore(Long testId, int gender, int age_group_id, Long count);
 }

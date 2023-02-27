@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springboot.mybatis.mapper.TEvalEventMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="springboot.mybatis.po.TEvalEvent">
+        <id column="id" property="id" />
+        <result column="status" property="status" />
+        <result column="countdown" property="countdown" />
+        <result column="start_time" property="startTime" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, status, countdown, start_time, create_time, update_time
+    </sql>
+
+    <insert id="insertEvent" parameterType="springboot.mybatis.po.TEvalEvent"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into t_eval_event
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="startTime != null">
+                #{startTime},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateStatusByID">
+        update t_eval_event
+        <set>
+            <if test="status != null">
+                status = 1,
+            </if>
+        </set>
+        where id= #{evalEventId}
+    </update>
+
+    <select id="selectByID" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_eval_event
+        where id = #{evalEventId}
+    </select>
+
+    <select id="getTotalTime" resultType="java.lang.Integer">
+        select timestampdiff(second,(select min(start_time)
+                                     from t_action_event
+                                     where eval_event_id = #{evalEventId} AND action_status = 1 AND action_id != 8 AND action_id != 7), (select max(start_time)
+        from t_action_event
+        where eval_event_id =  #{evalEventId} AND action_status = 1 AND action_id != 8 AND action_id != 7)) as difftime;
+    </select>
+
+    <select id="getTotalCalories" resultType="java.lang.Integer">
+        select sum(calories) from t_action_event where eval_event_id = #{evalEventId};
+    </select>
+
+</mapper>

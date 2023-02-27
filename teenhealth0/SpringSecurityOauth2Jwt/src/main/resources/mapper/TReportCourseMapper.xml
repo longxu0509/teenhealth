@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springboot.mybatis.mapper.TReportCourseMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="springboot.mybatis.po.TReportCourse">
+        <id column="report_id" property="reportId" />
+        <result column="course_code" property="courseCode" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        report_id, course_code, update_time, create_time
+    </sql>
+
+    <insert id="insertItem">
+        insert into t_report_course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="reportId != null">
+                report_id,
+            </if>
+            <if test="courseCode != null">
+                course_code,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="reportId != null">
+                #{reportId},
+            </if>
+            <if test="courseCode != null">
+                #{courseCode},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectByReportId" resultType="java.lang.Integer">
+        select count(*) from t_report_course where report_id = #{reportId}
+    </select>
+
+    <select id="selectListById" resultMap="BaseResultMap">
+        select * from t_report_course where report_id = #{reportId}
+    </select>
+
+</mapper>
